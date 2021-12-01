@@ -1,0 +1,27 @@
+.btn
+{
+    position: center;
+    width: 10%;
+    height: 30px;
+    font-size:14px;
+    margin-top: 17px;
+}
+
+
+
+#searchbar{
+    position: center;
+    width: 33%;
+    height: 10px;
+    margin-left: 33%;
+    padding:15px;
+    border-radius: 10px;
+}
+
+.address{
+    margin-left: 80%;
+    padding:0;
+    position:absolute;
+    bottom:5px;
+    text-align: center;
+}
