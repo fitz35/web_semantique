@@ -41,23 +41,30 @@ function getArtist(name){
 
 function displayResult(data){
     console.log(data.results.bindings);
-    var listSong = "<ul>";
+    var listSong = new Set();
+
+    
     data.results.bindings.forEach((element, index, array) => {
         replaceInAllClasses("name", element.name.value);
         replaceInAllClasses("birthDay", element.birthDay.value);
         replaceInAllClasses("birthName", element.birthName.value);
 
-        if (element.titleSing.type === "uri")
+        listSong.add(element.titleSing);
+    });
+
+    var htmlSong = "<ul>";
+    for(let song of listSong){
+        if (song.type === "uri")
         {
-            listSong += "<li><a href='" + element.titleSing.value + "' target='_blank'>" + element.titleSing.value + "</a></li>";
+            htmlSong += "<li><a href='" + song.value + "' target='_blank'>" + song.value + "</a></li>";
         }
         else {
-            listSong += "<li>" + element.titleSing.value + "</li>";
+            htmlSong += "<li>" + song.value + "</li>";
         }
-    });
-    listSong += "</ul>";
+    }
+    htmlSong += "</ul>";
 
-    replaceInAllClasses("titleSing", listSong);
+    replaceInAllClasses("titleSing", htmlSong);
 }
 
 function replaceInAllClasses(classes, replace){
