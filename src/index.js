@@ -16,7 +16,7 @@ function repaintResearch() {
 
 function hideSearchPage(){
     //Hide element
-    document.getElementById("searchbar").style.visibility="hidden"; // cache
+    document.getElementById("searchbar").style.visibility="hidden";
     document.getElementById("sousTitre").style.visibility="hidden"; // cache
     document.getElementById("monBtn").style.visibility="hidden"; // cache
     document.getElementById("album").style.visibility="hidden"; // cache
