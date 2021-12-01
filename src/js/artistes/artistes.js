@@ -43,20 +43,26 @@ function displayResult(data){
     console.log(data.results.bindings);
     var listSong = "<ul>";
     data.results.bindings.forEach((element, index, array) => {
-        document.getElementById("name").innerHTML = element.name.value;
-        document.getElementById("birthDay").innerHTML = element.birthDay.value;
-        document.getElementById("birthName").innerHTML = element.birthName.value;
+        replaceInAllClasses("name", element.name.value);
+        replaceInAllClasses("birthDay", element.birthDay.value);
+        replaceInAllClasses("birthName", element.birthName.value);
 
         if (element.titleSing.type === "uri")
         {
-            console.log("test");
-          contenuTableau += "<li><a href='" + element.titleSing.value + "' target='_blank'>" + element.titleSing.value + "</a></li>";
+            listSong += "<li><a href='" + element.titleSing.value + "' target='_blank'>" + element.titleSing.value + "</a></li>";
         }
         else {
-          contenuTableau += "<li>" + element.titleSing.value + "</li>";
+            listSong += "<li>" + element.titleSing.value + "</li>";
         }
     });
     listSong += "</ul>";
 
-    document.getElementById("titleSing").innerHTML = listSong;
+    replaceInAllClasses("titleSing", listSong);
+}
+
+function replaceInAllClasses(classes, replace){
+    const elements = document.getElementsByClassName(classes);
+    for(var i = 0 ; i < elements.length; i++){
+        elements.item(i).innerHTML = replace;
+    }
 }
