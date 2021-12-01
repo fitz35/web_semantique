@@ -8,6 +8,18 @@
 }
 
 
+#btnSearch {
+    line-height: 12px;
+    width: 78px;
+    font-size: 11pt;
+    font-family: tahoma;
+    margin-top: 1px;
+    margin-right: 4px;
+    position:absolute;
+    top:0;
+    right:0;
+}
+
 
 #searchbar{
     position: center;
