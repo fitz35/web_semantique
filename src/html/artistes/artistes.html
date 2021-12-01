@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>artists</title>
+  <script src="../../js/artistes/artistes.js"></script>
+</head>
+<body>
+    <table>
+        <thead>
+
+        </thead>
+        <tbody>
+            <tr>
+                <!--birth day-->
+                <td>
+                    birth day :
+                </td>
+                <td id="birthDay">
+                    
+                </td>
+                <!--birth name-->
+                <td>
+                    birth name :
+                </td>
+                <td id="birthName">
+                    
+                </td>
+            </tr>
+            <tr>
+                <!--name-->
+                <td>
+                    name :
+                </td>
+                <td id="name">
+                    
+                </td>
+                <!--birth name-->
+                <td>
+                    birth name :
+                </td>
+                <td id="birthName">
+                    
+                </td>
+            </tr>
+            <tr>
+                <!--title sing-->
+                <td>
+                    title sing :
+                </td>
+                <td id="titleSing" colspan="3">
+                    
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        const url_string = window.location.href;
+        const url = new URL(url_string);
+        const name = url.searchParams.get("name");
+        getArtist(name);
+    </script>
+</body>
+</html>
