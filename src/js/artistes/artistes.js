@@ -15,13 +15,15 @@ function getArtistDetails(name){
      PREFIX dbpedia: <http://dbpedia.org/>
      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
      \n
-        SELECT ?abstract ?name ?dateOfBirth ?startDate ?birthName WHERE {
+        SELECT ?abstract ?name ?dateOfBirth ?startDate ?birthName ?job WHERE {
          ?a dbo:abstract ?abstract.
          ?a dbo:birthDate ?dateOfBirth.
          ?a dbo:birthName ?birthName.
          ?a dbo:activeYearsStartYear ?startDate.
          ?a  dbp:name ?name .
-         FILTER(regex ( ?name , "^(?-i)(${name})$" ) && langMatches( lang( ?abstract ) ,"EN"))
+         ?a gold:hypernym ?j.
+         ?j rdfs:label ?job.
+         FILTER(regex ( ?name , "^(?i)(${name})$" ) && langMatches( lang( ?abstract ) ,"EN") && langMatches( lang( ?job ) ,"EN"))
          }
          LIMIT 50`
          
@@ -55,11 +57,13 @@ function getArtistSongs(name){
      PREFIX dbpedia: <http://dbpedia.org/>
      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
      \n
-     SELECT  ?name ?song WHERE {
+     SELECT ?songName ?song WHERE {
         ?a dbo:abstract ?abstract.
         ?a  dbp:name ?name .
-        ?song dbo:artist ?a
-        FILTER(regex ( ?name , "^(?i)(Lady Gaga)$" ) && langMatches( lang( ?abstract ) ,"EN"))
+        ?song dbo:artist ?a.
+        ?song gold:hypernym dbr:Song.
+        ?song dbp:name ?songName.
+        FILTER(regex ( ?name , "^(?-i)(${name})$" ) && langMatches( lang( ?abstract ) ,"EN"))
         }
         `
        // Encodage de l'URL à transmettre à DBPedia
@@ -90,10 +94,9 @@ function afficherListeResultats(data){
             var resultTableList=document.getElementsByClassName("titleSing");
             for(let parcours of resultTableList)
             {
-                parcours.innerHTML+= `<li> <a href="#">${v.song.value}</a></li>`;
+                parcours.innerHTML+= `<li> <a href="${v.song.value}">${v.songName.value}</a></li>`;
                 
             }
-            
         
       }
 )};
@@ -108,6 +111,12 @@ function afficherResultats(data){
             {
                 parcours.innerHTML=v.dateOfBirth.value;
             }
+            var resutTable=document.getElementsByClassName("job");
+            for(let parcours of resutTable)
+            {
+                parcours.innerHTML=v.job.value;
+            }
+            
             var resutTable=document.getElementsByClassName("details");
             for(let parcours of resutTable)
             {
