@@ -4,31 +4,33 @@
     <meta charset="utf-8">
     <title>MUSIK'IF</title>
     <link rel="stylesheet" href="index.css">
-    <script src="script.js"></script>
+    <script src="index.js"></script>
 </head>
 
 <body>
 <!-- Contenu principal -->
-<h1 style="text-align: center;">Welcome to MUSIK'IF</h1>
+<h1 style="text-align: center;" id="titre">Welcome to MUSIK'IF</h1>
+<button id="btnSearch" onclick="repaintResearch()" style="visibility: hidden">New research</span></button>
 
-<h2 style="text-align: center;">The best musical search engine!</h2>
+
+<h2 style="text-align: center;" id="sousTitre">The best musical search engine!</h2>
 <br>
 <br>
 <br>
 <div style="text-align: center;">
-    <input type="checkbox" id="artist" name="artist">
-    <label for="artist">Artist</label>
+    <input type="checkbox" id="artist" name="artist" onclick="checkBox()">
+    <label for="artist" id="artistLabel">Artist</label>
 
-    <input type="checkbox" id="album" name="album">
-    <label for="album">Album</label>
+    <input type="checkbox" id="album" name="album" onclick="checkBox()">
+    <label for="album" id="albumLabel">Album</label>
 
-    <input type="checkbox" id="title" name="title">
-    <label for="title">Title</label>
+    <input type="checkbox" id="title" name="title" onclick="checkBox()">
+    <label for="title" id="titleLabel">Title</label>
 </div>
 
 <input id="searchbar" class= "searchbar" onkeyup="search_music()" type="text"
        name="search" placeholder="Search.." style="align-content: center;">
-<button id="monBtn" class="btn">Validate</span></button>
+<button id="monBtn" class="btn" onclick="validateResearch()">Validate</span></button>
 
 <br>
 <br>
