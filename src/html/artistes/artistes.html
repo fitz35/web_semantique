@@ -8,9 +8,6 @@
 <body>
     <h1 class="name"></h1>
     <table>
-        <thead>
-
-        </thead>
         <tbody>
             <tr>
                 <!--birth day-->
@@ -47,12 +44,23 @@
             <tr>
                 <!--title sing-->
                 <td>
-                    title sing :
+                    details:
                 </td>
-                <td class="titleSing" colspan="3">
+                <td class="details" colspan="3">
                     
                 </td>
             </tr>
+            <tr>
+                <!--title sing-->
+                <td class="title">
+                    title sing :
+                </td>
+                <td class="titleSing" colspan="3">
+                    link to song:
+                    
+                </td>
+            </tr>
+
         </tbody>
     </table>
 
@@ -60,7 +68,8 @@
         const url_string = window.location.href;
         const url = new URL(url_string);
         const name = url.searchParams.get("name");
-        getArtist(name);
+        getArtistDetails(name);
+        getArtistSongs(name);
     </script>
 </body>
 </html>
