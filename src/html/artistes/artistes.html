@@ -60,11 +60,18 @@
             </tr>
             <tr>
                 <!--title sing-->
+                <td>
+                    total number of songs sung :
+                </td>
+                <td class="total"></td>
+            </tr>
+            <tr>
+                <!--title sing-->
                 <td class="title">
                     title sing :
                 </td>
-                <td class="titleSing" colspan="3">
-                    link to song:
+                <td colspan="3">
+                  <ol class="titleSing"></ol>
                     
                 </td>
             </tr>
@@ -78,6 +85,7 @@
         const name = url.searchParams.get("name");
         getArtistDetails(name);
         getArtistSongs(name);
+        getNumberOfSongs(name);
     </script>
 </body>
 </html>
