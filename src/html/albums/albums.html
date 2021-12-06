@@ -40,13 +40,15 @@ td, th {
 	    height: 100%;
 	    float: left;
 	    background-color: rgba(0, 128, 111, 0.185);
+      
     }
 
     #droite {
 	    width: 60%;
-	    height: 100%;
-	    float: left;
+	    float: right;
 	    background-color: rgba(0, 128, 111, 0.185);
+      height: 100vh;
+
     }
 
     .sansbord {
@@ -59,6 +61,7 @@ td, th {
 
 <body>
     <div id="gauche">
+      <br><br> <center><h2>Albums Title</h2></center><br><br>
         <center><img src= "./COCO.PNG" sizes="(min-width: 600px) 200px, 50vw"></center>
         
         <!--ul>
@@ -66,40 +69,41 @@ td, th {
         </ul-->
     </div>
     <div id="droite">
-        <h2>General description</h2>
+      <br><br><h4>Artist: </h4><a href="./artistes.html" target=_blank>artist</a><br><br>
+        <h4>General description</h4>
         <p></p>
         <br><br>
         <table class="sansbord" style="width:100%">
             <tbody>
-            <tr class="table-primary" scope="col"  style="font-size: large;font-weight: bold;">
-                <th scope="col">Artist</th>
+            <tr class="table-primary" scope="col"  style="font-size: small;font-weight: bold;">
+                
                 <th scope="col">producer</th>
+                <th scope="col">Genre</th>
                 <th scope="col">Release date</th>
-                <th scope="col">List of sounds</th>
+                <th scope="col">Label</th>
                 <th scope="col">Duration</th>
+                <th scope="col">Salesamount</th>
+                <th scope="col">Award</th>
             </tr>
             <tr>
-                <td><a href="./artistes.html" target=_blank>artist</a></td>
+                <td></td>
+                <td></td>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
               </tr></tbody>
         </table><br>
-        <table class="sansbord">
+        <table class="sansbord" style="width:50%">
             <tbody>
-            <tr>
-                <th>Genre</th>
-                <th>Label</th>
-                <th>Salesamount</th>
+            <tr class="table-primary" scope="col"  style="font-size: small;font-weight: bold;">
+                <th>List of sounds</th>
                 <th>Other albums to consult</th>
-                <th>Award</th>
+                
             </tr>
             </tbody>
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
                 <td></td>
                 <td></td>
               </tr>
