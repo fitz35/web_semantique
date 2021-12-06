@@ -16,18 +16,19 @@ function getArtistDetails(name){
      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
      \n
         SELECT ?abstract ?name ?dateOfBirth ?startDate ?birthName  ?job WHERE {
-         {?a dbo:abstract ?abstract.
-         ?a dbo:birthDate ?dateOfBirth.
-         ?a dbo:birthName ?birthName.
-         ?a dbo:activeYearsStartYear ?startDate.
-         ?a  dbp:name ?name .}
-         UNION
+         dbr:${name} dbo:abstract ?abstract.
+         dbr:${name} dbo:birthDate ?dateOfBirth.
+         dbr:${name} dbo:birthName ?birthName.
+         dbr:${name} dbo:activeYearsStartYear ?startDate.
+         dbr:${name} dbp:name ?name.
+         
+         OPTIONAL
          {
-             ?a gold:hypernym ?j.
+            dbr:${name} gold:hypernym ?j.
              ?j rdfs:label ?job.
          }
        
-         FILTER(regex ( ?name , "^(?i)(${name})$" ) && langMatches( lang( ?abstract ) ,"EN") )
+         FILTER(langMatches( lang( ?abstract ) ,"EN") && langMatches( lang( ?job ) ,"EN") )
          }
          LIMIT 50`
          
@@ -62,12 +63,12 @@ function getArtistSongs(name){
      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
      \n
      SELECT ?songName ?song WHERE {
-        ?a dbo:abstract ?abstract.
-        ?a  dbp:name ?name .
-        ?song dbo:artist ?a.
+        dbr:${name} dbo:abstract ?abstract.
+        dbr:${name}  dbp:name ?name .
+        ?song dbo:artist dbr:${name}.
         ?song gold:hypernym dbr:Song.
         ?song dbp:name ?songName.
-        FILTER(regex ( ?name , "^(?-i)(${name})$" ) && langMatches( lang( ?abstract ) ,"EN"))
+        FILTER(langMatches( lang( ?abstract ) ,"EN"))
         }
         `
        // Encodage de l'URL à transmettre à DBPedia
