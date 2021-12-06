@@ -91,7 +91,7 @@ limit 1`;
   }
 
   // Affichage des résultats dans un tableau
-  function afficherResultats(data)
+  function afficherResultatsDescription(data)
   {
     var desc;
     data.results.bindings.forEach(r => {

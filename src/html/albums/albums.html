@@ -34,9 +34,14 @@ td, th {
   border: solid 0px #000000;
   margin: 0px 0px 0px 0px;
 }
+p {
+  width: 90%;
+  height: 20%;
+  border: none;
+}
 
     #gauche {
-	    width: 40%;
+	    width: 30%;
 	    height: 100%;
 	    float: left;
 	    background-color: rgba(0, 128, 111, 0.185);
@@ -44,7 +49,7 @@ td, th {
     }
 
     #droite {
-	    width: 60%;
+	    width: 70%;
 	    float: right;
 	    background-color: rgba(0, 128, 111, 0.185);
       height: 100vh;
@@ -56,12 +61,16 @@ td, th {
         text-align:right;
         border-spacing: 15px;
     }
+
+    .auto {
+        overflow: auto;
+    }
   </style>
 </head>
 
-<body>
+<body onload ="appel()">
     <div id="gauche">
-      <br><br> <center><h2>Albums Title</h2></center><br><br>
+      <br><br> <center><h2 id="name"></h2></center><br><br>
         <center><img src= "./COCO.PNG" sizes="(min-width: 600px) 200px, 50vw"></center>
         
         <!--ul>
@@ -69,9 +78,9 @@ td, th {
         </ul-->
     </div>
     <div id="droite">
-      <br><br><h4>Artist: </h4><a href="./artistes.html" target=_blank>artist</a><br><br>
-        <h4>General description</h4>
-        <p></p>
+      <br><br><h4>Artist: </h4><a id="artist" href="./artistes.html" target=_blank>artist</a><br><br>
+        <h4 >General description</h4><br>
+        <p class="auto" id="description"></p>
         <br><br>
         <table class="sansbord" style="width:100%">
             <tbody>
@@ -111,7 +120,7 @@ td, th {
         <!--ul>
             
         </ul-->
-        <button onclick="rechercher()">Rechercher</button>
+        <!--button onclick="appel()">Rechercher</button-->
     </div>
 
 <!--button onclick="rechercher()">Rechercher</button-->
