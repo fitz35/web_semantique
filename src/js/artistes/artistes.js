@@ -14,15 +14,25 @@ function getArtistDetails(name){
      PREFIX dbpedia: <http://dbpedia.org/>
      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
      \n
-        SELECT ?abstract ?name ?dateOfBirth ?startDate ?birthName ?job WHERE {
-         ?a dbo:abstract ?abstract.
-         ?a dbo:birthDate ?dateOfBirth.
-         ?a dbo:birthName ?birthName.
-         ?a dbo:activeYearsStartYear ?startDate.
-         ?a  dbp:name ?name .
-         ?a gold:hypernym ?j.
-         ?j rdfs:label ?job.
-         FILTER(regex ( ?name , "^(?i)(${name})$" ) && langMatches( lang( ?abstract ) ,"EN") && langMatches( lang( ?job ) ,"EN"))
+        SELECT ?abstract ?name ?dateOfBirth ?startDate ?birthName  ?job ?image ?description WHERE {
+         dbr:${name} dbo:abstract ?abstract.
+         dbr:${name} dbo:birthDate ?dateOfBirth.
+         dbr:${name} dbo:birthName ?birthName.
+         dbr:${name} dbo:activeYearsStartYear ?startDate.
+         dbr:${name} dbp:name ?name.
+         
+         OPTIONAL
+         {
+            dbr:${name} gold:hypernym ?j.
+             ?j rdfs:label ?job.
+         }
+         OPTIONAL
+         {
+            dbr:${name} dbo:thumbnail ?image.
+            dbr:${name} dbp:caption ?description.
+         }
+       
+         FILTER(langMatches( lang( ?abstract ) ,"EN") && langMatches( lang( ?job ) ,"EN") && langMatches( lang( ?description), "EN")   )
          }
          LIMIT 50`
          
@@ -57,12 +67,10 @@ function getArtistSongs(name){
      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
      \n
      SELECT ?songName ?song WHERE {
-        ?a dbo:abstract ?abstract.
-        ?a  dbp:name ?name .
-        ?song dbo:artist ?a.
+        dbr:${name}  dbp:name ?name .
+        ?song dbo:artist dbr:${name}.
         ?song gold:hypernym dbr:Song.
         ?song dbp:name ?songName.
-        FILTER(regex ( ?name , "^(?-i)(${name})$" ) && langMatches( lang( ?abstract ) ,"EN"))
         }
         `
        // Encodage de l'URL à transmettre à DBPedia
@@ -77,12 +85,84 @@ function getArtistSongs(name){
              afficherListeResultats(results);
          }
 }
-
-
-
-xmlhttp.open("GET", url, true);
+    xmlhttp.open("GET", url, true);
     xmlhttp.send();
 };
+
+
+function getArtistAwards(name){
+    var contenu_requete =     
+    `PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+     PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+     PREFIX dc: <http://purl.org/dc/elements/1.1/>
+     PREFIX : <http://dbpedia.org/resource/>
+     PREFIX dbpedia2: <http://dbpedia.org/property/>
+     PREFIX dbpedia: <http://dbpedia.org/>
+     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+     \n
+     SELECT ?awardListName WHERE {
+        dbr:Lady_Gaga  dbp:name ?name .
+        dbr:Lady_Gaga  dbp:awards ?awardLink.
+        ?awardLink dbo:wikiPageWikiLink ?awardList.
+       ?awardList foaf:name ?awardListName
+
+        }
+        `
+       // Encodage de l'URL à transmettre à DBPedia
+     var url_base = "http://dbpedia.org/sparql";
+     var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
+ 
+     // Requête HTTP et affichage des résultats
+     var xmlhttp = new XMLHttpRequest();
+     xmlhttp.onreadystatechange = function() {
+         if (this.readyState == 4 && this.status == 200) {
+             var results = JSON.parse(this.responseText);
+             afficherListeResultats(results);
+         }
+}
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+};
+
+
+
+function getNumberOfSongs(name){
+    var contenu_requete =     
+    `PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+     PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+     PREFIX dc: <http://purl.org/dc/elements/1.1/>
+     PREFIX : <http://dbpedia.org/resource/>
+     PREFIX dbpedia2: <http://dbpedia.org/property/>
+     PREFIX dbpedia: <http://dbpedia.org/>
+     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+     \n
+     SELECT (COUNT (?songName) AS ?total) WHERE {
+        dbr:${name}  dbp:name ?name .
+        ?song dbo:artist dbr:${name}.
+        ?song gold:hypernym dbr:Song.
+        ?song dbp:name ?songName.
+        }
+        `
+       // Encodage de l'URL à transmettre à DBPedia
+     var url_base = "http://dbpedia.org/sparql";
+     var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
+ 
+     // Requête HTTP et affichage des résultats
+     var xmlhttp = new XMLHttpRequest();
+     xmlhttp.onreadystatechange = function() {
+         if (this.readyState == 4 && this.status == 200) {
+             var results = JSON.parse(this.responseText);
+             afficherTotal(results);
+         }
+}
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+};
+
 
 
 function afficherListeResultats(data){
@@ -93,7 +173,7 @@ function afficherListeResultats(data){
             var resultTableList=document.getElementsByClassName("titleSing");
             for(let parcours of resultTableList)
             {
-                parcours.innerHTML+= `<li> <a href="${v.song.value}">${v.songName.value}</a></li>`;
+                parcours.innerHTML+=`<li> <a href="${v.song.value}">${v.songName.value}</a></li>`;
                 
             }
         
@@ -105,35 +185,48 @@ function afficherResultats(data){
     console.log(data);
     data.results.bindings.forEach((v, i) => {
         
-            var resutTable=document.getElementsByClassName("birthDay");
+            afficheDansToutesClasses("birthDay", v.dateOfBirth.value);
+
+            var resutTable=document.getElementsByClassName("image");
             for(let parcours of resutTable)
             {
-                parcours.innerHTML=v.dateOfBirth.value;
-            }
-            var resutTable=document.getElementsByClassName("job");
-            for(let parcours of resutTable)
-            {
-                parcours.innerHTML=v.job.value;
+                if(v.image!=undefined)
+                {
+                    parcours.innerHTML="<img src=\""+ v.image.value+ "\" alt=\""+ v.description.value +"\">";
+                }
+                if(v.image==undefined && v.description!=null)
+                {
+                    parcours.innerHTML="<alt=\""+ v.description.value +"\">";
+                }
+               
             }
             
-            var resutTable=document.getElementsByClassName("details");
-            for(let parcours of resutTable)
+            afficheDansToutesClasses("details", v.abstract.value);
+            afficheDansToutesClasses("birthName", v.birthName.value);
+            afficheDansToutesClasses("name", v.name.value);
+            if (v.job != undefined)
             {
-                parcours.innerHTML=v.abstract.value;
-            }
-            var resutTable=document.getElementsByClassName("birthName");
-            for(let parcours of resutTable)
-            {
-                parcours.innerHTML=v.birthName.value;
-            }
-            var resutTable=document.getElementsByClassName("name");
-            for(let parcours of resutTable)
-            {
-                parcours.innerHTML=v.name.value;
+                afficheDansToutesClasses("job", v.job.value);
             }
         
       }
 )};
+
+function afficherTotal(data){
+    console.log(data);
+    data.results.bindings.forEach((v, i) => {
+            afficheDansToutesClasses("total", v.total.value);
+        }
+)};
+
+function afficheDansToutesClasses(classe, aAfficher){
+    var resutTable=document.getElementsByClassName(classe);
+    for(let parcours of resutTable)
+    {
+        parcours.innerHTML=aAfficher;
+                
+    }
+}
 
    
     
