@@ -15,7 +15,7 @@ function getArtistDetails(name){
      PREFIX dbpedia: <http://dbpedia.org/>
      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
      \n
-        SELECT ?abstract ?name ?dateOfBirth ?startDate ?birthName  ?job WHERE {
+        SELECT ?abstract ?name ?dateOfBirth ?startDate ?birthName  ?job ?image ?description WHERE {
          dbr:${name} dbo:abstract ?abstract.
          dbr:${name} dbo:birthDate ?dateOfBirth.
          dbr:${name} dbo:birthName ?birthName.
@@ -27,8 +27,13 @@ function getArtistDetails(name){
             dbr:${name} gold:hypernym ?j.
              ?j rdfs:label ?job.
          }
+         OPTIONAL
+         {
+            dbr:${name} dbo:thumbnail ?image.
+            dbr:${name} dbp:caption ?description.
+         }
        
-         FILTER(langMatches( lang( ?abstract ) ,"EN") && langMatches( lang( ?job ) ,"EN") )
+         FILTER(langMatches( lang( ?abstract ) ,"EN") && langMatches( lang( ?job ) ,"EN") && langMatches( lang( ?description), "EN")   )
          }
          LIMIT 50`
          
@@ -63,12 +68,10 @@ function getArtistSongs(name){
      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
      \n
      SELECT ?songName ?song WHERE {
-        dbr:${name} dbo:abstract ?abstract.
         dbr:${name}  dbp:name ?name .
         ?song dbo:artist dbr:${name}.
         ?song gold:hypernym dbr:Song.
         ?song dbp:name ?songName.
-        FILTER(langMatches( lang( ?abstract ) ,"EN"))
         }
         `
        // Encodage de l'URL à transmettre à DBPedia
@@ -116,6 +119,20 @@ function afficherResultats(data){
             {
                 parcours.innerHTML=v.dateOfBirth.value;
             }
+
+            var resutTable=document.getElementsByClassName("image");
+            for(let parcours of resutTable)
+            {
+                if(v.image!=undefined)
+                {
+                    parcours.innerHTML="<img src=\""+ v.image.value+ "\" alt=\""+ v.description.value +"\">";
+                }
+                if(v.image==undefined && v.description!=null)
+                {
+                    parcours.innerHTML="<alt=\""+ v.description.value +"\">";
+                }
+               
+            }
             
                   
             var resutTable=document.getElementsByClassName("details");
@@ -136,7 +153,7 @@ function afficherResultats(data){
             var resutTable=document.getElementsByClassName("job");
             for(let parcours of resutTable)
             {
-               if (v.job.value != null)
+               if (v.job != undefined)
                {
                 parcours.innerHTML=v.job.value;
                }
