@@ -10,7 +10,7 @@ function appel() {
     rechercherLabel();
     rechercherDuree();
     rechercherTitres();
-    
+    rechercherPrix();
 }
 //
 //
@@ -217,8 +217,8 @@ PREFIX dbpedia2: <http://dbpedia.org/property/>
 PREFIX dbpedia: <http://dbpedia.org/>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-SELECT ?released WHERE {
-?album dbp:released ?released; dbo:wikiPageID ?id.
+SELECT ?cover WHERE {
+?album dbp:cover ?cover; dbo:wikiPageID ?id.
 filter(?id = 7615743)
 }
 limit 1`;
@@ -242,9 +242,11 @@ limit 1`;
   function afficherResultatsImage(data)
   {
     var cover;
+    cover = "http://commons.wikimedia.org/wiki/Special:FilePath/";
     data.results.bindings.forEach(r => {
-      cover = r.cover.value;
+      cover += r.cover.value;
     });
+    cover+= "?width=300"
 
     document.getElementById("cover").innerHTML = cover;
   }
@@ -519,10 +521,61 @@ SELECT ?Songtitle WHERE {
   // Affichage des résultats dans un tableau
   function afficherResultatsTitres(data)
   {
-    var totallength;
+    var listeTitres;
+    listeTitres = "<ul>"
     data.results.bindings.forEach(r => {
-      totallength = r.totallength.value;
+      listeTitres += "<li>" + r.Songtitle.value + "</li>";
     });
+      
+    listeTitres += "</ul>"
+    document.getElementById("titres").innerHTML = listeTitres;
+  }
 
-    document.getElementById("titres").innerHTML = totallength;
+//
+//
+//Recuperer les prix de l album 
+//
+function rechercherPrix() {
+    var contenu_requete = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX : <http://dbpedia.org/resource/>
+PREFIX dbpedia2: <http://dbpedia.org/property/>
+PREFIX dbpedia: <http://dbpedia.org/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?Songtitle WHERE {
+    ?album a dbo:Album; dbp:name ?name; dbo:wikiPageID ?id; dbp:title ?Songtitle.
+    FILTER(?id = 7615743)
+    }`;
+    // Encodage de l'URL à transmettre à DBPedia
+    var url_base = "http://dbpedia.org/sparql";
+    var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
+
+    // Requête HTTP et affichage des résultats
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var results = JSON.parse(this.responseText);
+            afficherResultatsPrix(results);
+        }
+    };
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+  }
+
+  // Affichage des résultats dans un tableau
+  function afficherResultatsPrix(data)
+  {
+    var listePrix;
+    listePrix = "<ul>"
+    data.results.bindings.forEach(r => {
+      listePrix += "<li>" + r.Songtitle.value + "</li>";
+    });
+      
+    listePrix += "</ul>"
+    document.getElementById("titres").innerHTML = listeTitres;
   }
