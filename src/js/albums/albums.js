@@ -221,7 +221,7 @@ SELECT ?cover WHERE {
 ?album dbp:cover ?cover; dbo:wikiPageID ?id.
 filter(?id = 7615743)
 }
-limit 1`;
+limit 1 `;
     // Encodage de l'URL à transmettre à DBPedia
     var url_base = "http://dbpedia.org/sparql";
     var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";

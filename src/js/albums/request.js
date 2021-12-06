@@ -42,7 +42,7 @@ limit 1
 //Image de l album
 SELECT ?cover WHERE {
 ?album dbp:cover ?cover; dbo:wikiPageID ?id.
-filter(?id = PARAMID)
+filter(?id = 7615743)
 }
 limit 1
 
@@ -91,7 +91,7 @@ SELECT ?Songtitle WHERE {
 //Requete pour retrouver les prix de l'album
 SELECT ?name ?album ?awards WHERE {
     ?album a dbo:Album; dbp:name ?name; dbp:award ?awards; dbo:wikiPageID ?id.
-    FILTER(?id = PARAMID &&  langMatches (lang(?awards) , "EN"))
+    FILTER(?id = 7615743 &&  langMatches (lang(?awards) , "EN"))
 }
 
 
