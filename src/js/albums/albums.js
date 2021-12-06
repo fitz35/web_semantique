@@ -3,6 +3,13 @@ function appel() {
     rechercherNom();
     rechercherDescription();
     rechercherArtiste();
+    rechercherDateSortie();
+    rechercherImage();
+    rechercherProducteur();
+    rechercherVentes();
+    rechercherLabel();
+    rechercherDuree();
+    //rechercherTitres();
     
 }
 //
@@ -146,4 +153,387 @@ limit 1`;
     });
 
     document.getElementById("artist").innerHTML = artist;
+  }
+//
+//
+//Recuperer la de sortie de l album
+//
+function rechercherDateSortie() {
+    var contenu_requete = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX : <http://dbpedia.org/resource/>
+PREFIX dbpedia2: <http://dbpedia.org/property/>
+PREFIX dbpedia: <http://dbpedia.org/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?released WHERE {
+?album dbp:released ?released; dbo:wikiPageID ?id.
+filter(?id = 7615743)
+}
+limit 1`;
+    // Encodage de l'URL à transmettre à DBPedia
+    var url_base = "http://dbpedia.org/sparql";
+    var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
+
+    // Requête HTTP et affichage des résultats
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var results = JSON.parse(this.responseText);
+            afficherResultatsDateSortie(results);
+        }
+    };
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+  }
+
+  // Affichage des résultats dans un tableau
+  function afficherResultatsDateSortie(data)
+  {
+    var released;
+    data.results.bindings.forEach(r => {
+      released = r.released.value;
+    });
+
+    document.getElementById("released").innerHTML = released;
+  }
+//
+//
+//Recuperer l image de l album
+//
+function rechercherImage() {
+    var contenu_requete = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX : <http://dbpedia.org/resource/>
+PREFIX dbpedia2: <http://dbpedia.org/property/>
+PREFIX dbpedia: <http://dbpedia.org/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?released WHERE {
+?album dbp:released ?released; dbo:wikiPageID ?id.
+filter(?id = 7615743)
+}
+limit 1`;
+    // Encodage de l'URL à transmettre à DBPedia
+    var url_base = "http://dbpedia.org/sparql";
+    var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
+
+    // Requête HTTP et affichage des résultats
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var results = JSON.parse(this.responseText);
+            afficherResultatsImage(results);
+        }
+    };
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+  }
+
+  // Affichage des résultats dans un tableau
+  function afficherResultatsImage(data)
+  {
+    var cover;
+    cover = "http://commons.wikimedia.org/wiki/Special:FilePath/";
+    data.results.bindings.forEach(r => {
+      cover += r.cover.value;
+    });
+    cover+= "?width=300"
+
+    document.getElementById("cover").innerHTML = cover;
+  }
+  //function afficherResultatsImage(data)
+  //{
+  //  var cover;
+  //  data.results.bindings.forEach(r => {
+  //    cover = r.cover.value;
+  //  });
+  //
+  //  document.getElementById("cover").innerHTML = cover;
+  //}
+//
+//
+//Recuperer le producteur de l album
+//
+function rechercherProducteur() {
+    var contenu_requete = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX : <http://dbpedia.org/resource/>
+PREFIX dbpedia2: <http://dbpedia.org/property/>
+PREFIX dbpedia: <http://dbpedia.org/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?producer WHERE {
+    ?album a dbo:Album; dbo:wikiPageID ?id; dbp:producer ?producer.
+    FILTER(?id = 7615743)
+    }`;
+    // Encodage de l'URL à transmettre à DBPedia
+    var url_base = "http://dbpedia.org/sparql";
+    var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
+
+    // Requête HTTP et affichage des résultats
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var results = JSON.parse(this.responseText);
+            afficherResultatsProducteur(results);
+        }
+    };
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+  }
+
+  // Affichage des résultats dans un tableau
+  function afficherResultatsProducteur(data)
+  {
+    var producer;
+    data.results.bindings.forEach(r => {
+      producer = r.producer.value;
+    });
+
+    document.getElementById("producer").innerHTML = producer;
+  }
+//
+//
+//Recuperer les ventes de l album
+//
+function rechercherVentes() {
+    var contenu_requete = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX : <http://dbpedia.org/resource/>
+PREFIX dbpedia2: <http://dbpedia.org/property/>
+PREFIX dbpedia: <http://dbpedia.org/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT (max(?salesamount) as ?sales) WHERE {
+    ?album a dbo:Album; dbp:name ?name; dbo:wikiPageID ?id; dbp:salesamount ?salesamount.
+    FILTER(?id = 7615743)
+    }
+    group by ?name ?album ?sales`;
+    // Encodage de l'URL à transmettre à DBPedia
+    var url_base = "http://dbpedia.org/sparql";
+    var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
+
+    // Requête HTTP et affichage des résultats
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var results = JSON.parse(this.responseText);
+            afficherResultatsVentes(results);
+        }
+    };
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+  }
+
+  // Affichage des résultats dans un tableau
+  function afficherResultatsVentes(data)
+  {
+    var sales;
+    data.results.bindings.forEach(r => {
+      sales = r.sales.value;
+    });
+
+    document.getElementById("sales").innerHTML = sales;
+  }
+//
+//
+//Recuperer le label de l album
+//
+function rechercherLabel() {
+    var contenu_requete = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX : <http://dbpedia.org/resource/>
+PREFIX dbpedia2: <http://dbpedia.org/property/>
+PREFIX dbpedia: <http://dbpedia.org/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?label WHERE {
+    ?album a dbo:Album; dbp:name ?name; dbo:wikiPageID ?id; dbp:label ?label.
+    FILTER(?id = 7615743)
+    }`;
+    // Encodage de l'URL à transmettre à DBPedia
+    var url_base = "http://dbpedia.org/sparql";
+    var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
+
+    // Requête HTTP et affichage des résultats
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var results = JSON.parse(this.responseText);
+            afficherResultatsLabel(results);
+        }
+    };
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+  }
+
+  // Affichage des résultats dans un tableau
+  function afficherResultatsLabel(data)
+  {
+    var label;
+    data.results.bindings.forEach(r => {
+      label = r.label.value;
+    });
+
+    document.getElementById("label").innerHTML = label;
+  }
+//
+//
+//Recuperer le genre de l album
+//
+function rechercherGenre() {
+    var contenu_requete = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX : <http://dbpedia.org/resource/>
+PREFIX dbpedia2: <http://dbpedia.org/property/>
+PREFIX dbpedia: <http://dbpedia.org/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?genre WHERE {
+    ?album a dbo:Album; dbp:name ?name; dbo:wikiPageID ?id; dbp:genre ?genre.
+    FILTER(?id = 7615743 &&  langMatches (lang(?genre) , "EN"))
+    }`;
+    // Encodage de l'URL à transmettre à DBPedia
+    var url_base = "http://dbpedia.org/sparql";
+    var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
+
+    // Requête HTTP et affichage des résultats
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var results = JSON.parse(this.responseText);
+            afficherResultatsGenre(results);
+        }
+    };
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+  }
+
+  // Affichage des résultats dans un tableau
+  function afficherResultatsGenre(data)
+  {
+    var genre;
+    data.results.bindings.forEach(r => {
+      genre = r.genre.value;
+    });
+
+    document.getElementById("genre").innerHTML = genre;
+  }
+//
+//
+//Recuperer la duree de l album
+//
+function rechercherDuree() {
+    var contenu_requete = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX : <http://dbpedia.org/resource/>
+PREFIX dbpedia2: <http://dbpedia.org/property/>
+PREFIX dbpedia: <http://dbpedia.org/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT (max(?length) as ?totallength) WHERE {
+    ?album a dbo:Album; dbp:name ?name; dbo:wikiPageID ?id; dbp:totalLength ?length.
+    FILTER(?id = 7615743)
+    }
+    group by ?name ?album ?totallength`;
+    // Encodage de l'URL à transmettre à DBPedia
+    var url_base = "http://dbpedia.org/sparql";
+    var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
+
+    // Requête HTTP et affichage des résultats
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var results = JSON.parse(this.responseText);
+            afficherResultatsDuree(results);
+        }
+    };
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+  }
+
+  // Affichage des résultats dans un tableau
+  function afficherResultatsDuree(data)
+  {
+    var totallength;
+    data.results.bindings.forEach(r => {
+      totallength = r.totallength.value;
+    });
+
+    document.getElementById("totallength").innerHTML = totallength;
+  }
+//
+//
+//Recuperer les titres de l album 
+//
+function rechercherTitres() {
+    var contenu_requete = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX : <http://dbpedia.org/resource/>
+PREFIX dbpedia2: <http://dbpedia.org/property/>
+PREFIX dbpedia: <http://dbpedia.org/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?Songtitle WHERE {
+    ?album a dbo:Album; dbp:name ?name; dbo:wikiPageID ?id; dbp:title ?Songtitle.
+    FILTER(?id = 7615743)
+    }`;
+    // Encodage de l'URL à transmettre à DBPedia
+    var url_base = "http://dbpedia.org/sparql";
+    var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
+
+    // Requête HTTP et affichage des résultats
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var results = JSON.parse(this.responseText);
+            afficherResultatsTitres(results);
+        }
+    };
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+  }
+
+  // Affichage des résultats dans un tableau
+  function afficherResultatsTitres(data)
+  {
+    var totallength;
+    data.results.bindings.forEach(r => {
+      totallength = r.totallength.value;
+    });
+
+    document.getElementById("titres").innerHTML = totallength;
   }
