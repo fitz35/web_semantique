@@ -1,9 +1,9 @@
 //Requete pour chercher un album
 SELECT ?album ?name (max(?sales) as ?maxsales) ?id WHERE {
 ?album a dbo:Album; dbp:name ?name; dbp:salesamount ?sales; dbo:wikiPageID ?id.
-filter regex(?name,"PARAM_SEARCH")
+filter regex(?name,"(?i)black")
 }
-group by ?name ?album ?maxsales
+group by ?name ?album ?maxsales ?id
 order by desc(?maxsales)
 limit 50
 
