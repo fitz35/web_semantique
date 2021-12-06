@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+    <link rel="stylesheet" href="titres.css">
+
+</head>
+
+<body>
+
+<h1 >Single page</h1>
+
+<a href="#" onclick=infosTitle('http://dbpedia.org/resource/Snow_Halation')>http://dbpedia.org/resource/Snow_Halation</a>
+</br>
+</br>
+
+<div id="infosTitle">
+    <div id="generalInfos">
+        <div id="pochetteAlbum">
+            <img src="https://images.ladepeche.fr/api/v1/images/view/6130fc52d286c25f4a342194/full/image.jpg?v=1" width="200" />
+        </div>
+        <div id="">
+            <h1 id="title">Title : </h1>
+            <h2 id="artistName">Artist : </h2>
+            <h2 id="albumTitle">Album : Unknown</h2>
+            <p id="genreMusical">Musical style :  </p>
+        </div>
+    </div>
+    <div>
+        <h4>Abstract :</h4>
+        <p id="abstract"></p>
+    </div>
+</div>
+
+</br>
+</br>
+<a href="#" onclick=moreSingles("ABBA")>More singles from the artist :</a>
+<p id="moreInfos"></p>
+
+<script>
+
+    // Affichage des résultats dans un tableau
+    function afficherInfosTitle(data)
+    {
+        // Tableau pour mémoriser l'ordre des variables ; sans doute pas nécessaire
+        // pour vos applications, c'est juste pour la démo sous forme de tableau
+        var index = [];
+
+        var contenuTableau = "<tr>";
+
+        data.head.vars.forEach((v, i) => {
+            contenuTableau += "<th>" + v + "</th>";
+            index.push(v);
+        });
+
+        var title="";
+        var albumTitle="";
+        var artistName="";
+        var pochette="";
+        var genreMusical="";
+        var abstract="";
+        data.results.bindings.forEach(r => {
+            if(r.title){
+                title=r.title.value;
+                document.getElementById("title").append(title);
+            }
+            if(r.albumTitle){
+                albumTitle=r.albumTitle.value;
+                document.getElementById("albumTitle").append(albumTitle);
+            }
+            if(r.artistName){
+                artistName=r.artistName.value;
+                document.getElementById("artistName").append(artistName);
+            }
+            if(r.pochette){
+                pochette=r.pochette.value;
+                document.getElementById("pochette").append(pochette);
+            }
+            if(r.genreMusical){
+                genreMusical=r.genreMusical.value;
+                document.getElementById("genreMusical").append(genreMusical);
+            }
+            if(r.abs){
+                abstract=r.abs.value;
+                document.getElementById("abstract").append(abstract);
+            }
+        });
+    }
+
+    function infosTitle(ressource) {
+        indexSlash=ressource.lastIndexOf("/");
+        ressource=ressource.substring(indexSlash+1);
+
+        var contenu_requete = `
+        PREFIX owl: <http://www.w3.org/2002/07/owl#>
+        PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+        PREFIX dc: <http://purl.org/dc/elements/1.1/>
+        PREFIX dbr: <http://dbpedia.org/resource/>
+        PREFIX dbpedia2: <http://dbpedia.org/property/>
+        PREFIX dbpedia: <http://dbpedia.org/>
+        PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+        SELECT DISTINCT ?title,?albumTitle,?artistName,?pochette, ?genreMusical, ?abs WHERE {
+        ?s a dbo:Song.
+        OPTIONAL
+        {
+        ?s dbo:abstract ?abs.
+        }
+        OPTIONAL
+        {
+        ?s dbo:album ?album.
+        ?album rdfs:label ?albumTitle;
+        dbp:cover ?pochette.
+        }
+        OPTIONAL
+        {?s rdfs:label ?title.}
+        OPTIONAL
+        {
+        ?s dbo:artist ?artist.
+        ?artist rdfs:label ?artistName.
+        }
+        OPTIONAL
+        {
+        ?s dbo:genre ?genre.
+        ?genre rdfs:label ?genreMusical.
+        }
+
+        FILTER(
+        ?s = dbr:`+ressource+` &&
+        langMatches(lang(?title),"EN") &&
+        langMatches(lang(?albumTitle),"EN") &&
+        langMatches(lang(?artistName),"EN") &&
+        langMatches(lang(?genreMusical),"EN") &&
+        langMatches(lang(?abs),"EN")
+        )
+        }`
+
+        // Encodage de l'URL à transmettre à DBPedia
+        var url_base = "http://dbpedia.org/sparql";
+        var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
+
+        // Requête HTTP et affichage des résultats
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var results = JSON.parse(this.responseText);
+                afficherInfosTitle(results);
+            }
+        };
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+    }
+
+    function moreSingles (artistName)
+    {
+        //document.getElementById("artistName").childNodes[1].data
+        console.log(artistName);
+        //console.log(document.getElementById("artistName").lastChild.data);
+        var query = `
+        PREFIX owl: <http://www.w3.org/2002/07/owl#>
+        PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+        PREFIX dc: <http://purl.org/dc/elements/1.1/>
+        PREFIX dbr: <http://dbpedia.org/resource/>
+        PREFIX dbpedia2: <http://dbpedia.org/property/>
+        PREFIX dbpedia: <http://dbpedia.org/>
+        PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+        SELECT DISTINCT ?songName
+        WHERE {
+            ?artistName a dbo:Band.
+            ?artistName rdfs:label ?artist.
+            ?artistName ^dbo:artist ?song.
+            ?song dbp:name ?songName.
+            FILTER(langMatches(lang(?artist),"EN") && regex(?artist, "`+artistName+`") )
+        }`
+        var url = "https://dbpedia.org/sparql/?query="+encodeURIComponent(query)+"&format=json";
+        // Requête HTTP et affichage des résultats
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+
+                var results = JSON.parse(this.responseText);
+                //afficherInfosTitle(results);
+                results.results.bindings.forEach(r => {
+                    //console.log(r.songName.value);
+                    document.getElementById("moreInfos").append(r.songName.value +" | ");
+                });
+            }
+        };
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+
+    }
+</script>
+
+</body>
+</html>

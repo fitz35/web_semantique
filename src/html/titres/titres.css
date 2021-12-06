@@ -1,0 +1,23 @@
+
+table, th, td {
+    border: 1px solid black;
+}
+body{
+    width: 80%;
+    margin: auto;
+}
+#infosTitle{
+    border: 2px solid black;
+    padding: 2%;
+}
+#generalInfos{
+    display: flex;
+    flex-direction: row;
+}
+#pochetteAlbum{
+    margin-left: 2%;
+    margin-right: 2%;
+}
+#abstract{
+    text-align: justify;
+}
