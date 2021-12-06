@@ -103,8 +103,8 @@ function getArtistAwards(name){
      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
      \n
      SELECT ?awardListName ?awardList WHERE {
-        dbr:Lady_Gaga  dbp:name ?name .
-        dbr:Lady_Gaga  dbp:awards ?awardLink.
+        dbr:${name}  dbp:name ?name .
+        dbr:${name}  dbp:awards ?awardLink.
         ?awardLink dbo:wikiPageWikiLink ?awardList.
        ?awardList foaf:name ?awardListName
 
