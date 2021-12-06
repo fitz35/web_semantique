@@ -250,6 +250,15 @@ limit 1 `;
 
     document.getElementById("cover").innerHTML = cover;
   }
+  //function afficherResultatsImage(data)
+  //{
+  //  var cover;
+  //  data.results.bindings.forEach(r => {
+  //    cover = r.cover.value;
+  //  });
+  //
+  //  document.getElementById("cover").innerHTML = cover;
+  //}
 //
 //
 //Recuperer le producteur de l album
