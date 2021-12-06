@@ -103,7 +103,7 @@ function getArtistAwards(name){
      PREFIX dbpedia: <http://dbpedia.org/>
      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
      \n
-     SELECT ?awardListName WHERE {
+     SELECT ?awardListName ?awardList WHERE {
         dbr:Lady_Gaga  dbp:name ?name .
         dbr:Lady_Gaga  dbp:awards ?awardLink.
         ?awardLink dbo:wikiPageWikiLink ?awardList.
@@ -120,7 +120,7 @@ function getArtistAwards(name){
      xmlhttp.onreadystatechange = function() {
          if (this.readyState == 4 && this.status == 200) {
              var results = JSON.parse(this.responseText);
-             afficherListeResultats(results);
+             afficherListeAwards(results);
          }
 }
     xmlhttp.open("GET", url, true);
@@ -170,7 +170,6 @@ function afficherListeResultats(data){
     console.log(data);
     data.results.bindings.forEach((v, i) => {
         
-            var resutTable=document.getElementsByClassName("title");
             var resultTableList=document.getElementsByClassName("titleSing");
             for(let parcours of resultTableList)
             {
@@ -180,6 +179,30 @@ function afficherListeResultats(data){
         
       }
 )};
+
+
+function afficherListeAwards(data){
+    console.log(data);
+    data.results.bindings.forEach((v, i) => {
+        
+            var resultTableList=document.getElementsByClassName("awards");
+            for(let parcours of resultTableList)
+            {
+               if(v.awardListName.value!= "")
+               {
+                parcours.innerHTML+=`<li> <a href="${v.awardList.value}">${v.awardListName.value}</a></li>`;
+               }
+               else
+               {
+                parcours.innerHTML+=`<li> <a href="${v.awardList.value}">${v.awardList.value}</a></li>`; 
+               }
+                
+                
+            }
+        
+      }
+)};
+
 
 
 function afficherResultats(data){
