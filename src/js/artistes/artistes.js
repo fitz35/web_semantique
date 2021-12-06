@@ -15,15 +15,19 @@ function getArtistDetails(name){
      PREFIX dbpedia: <http://dbpedia.org/>
      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
      \n
-        SELECT ?abstract ?name ?dateOfBirth ?startDate ?birthName ?job WHERE {
-         ?a dbo:abstract ?abstract.
+        SELECT ?abstract ?name ?dateOfBirth ?startDate ?birthName  ?job WHERE {
+         {?a dbo:abstract ?abstract.
          ?a dbo:birthDate ?dateOfBirth.
          ?a dbo:birthName ?birthName.
          ?a dbo:activeYearsStartYear ?startDate.
-         ?a  dbp:name ?name .
-         ?a gold:hypernym ?j.
-         ?j rdfs:label ?job.
-         FILTER(regex ( ?name , "^(?i)(${name})$" ) && langMatches( lang( ?abstract ) ,"EN") && langMatches( lang( ?job ) ,"EN"))
+         ?a  dbp:name ?name .}
+         UNION
+         {
+             ?a gold:hypernym ?j.
+             ?j rdfs:label ?job.
+         }
+       
+         FILTER(regex ( ?name , "^(?i)(${name})$" ) && langMatches( lang( ?abstract ) ,"EN") )
          }
          LIMIT 50`
          
@@ -111,12 +115,8 @@ function afficherResultats(data){
             {
                 parcours.innerHTML=v.dateOfBirth.value;
             }
-            var resutTable=document.getElementsByClassName("job");
-            for(let parcours of resutTable)
-            {
-                parcours.innerHTML=v.job.value;
-            }
             
+                  
             var resutTable=document.getElementsByClassName("details");
             for(let parcours of resutTable)
             {
@@ -131,6 +131,15 @@ function afficherResultats(data){
             for(let parcours of resutTable)
             {
                 parcours.innerHTML=v.name.value;
+            }
+            var resutTable=document.getElementsByClassName("job");
+            for(let parcours of resutTable)
+            {
+               if (v.job.value != null)
+               {
+                parcours.innerHTML=v.job.value;
+               }
+                
             }
         
       }
