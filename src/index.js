@@ -1,5 +1,3 @@
-
-
 function repaintResearch() {
     document.getElementById("searchbar").style.visibility="visible"; // cache
     document.getElementById("sousTitre").style.visibility="visible"; // cache
@@ -34,10 +32,10 @@ function hideSearchPage(){
 function validateResearch(){
     hideSearchPage();
 
-
     var value = search_music(); //The value in the search bar
     if(document.getElementById("artist").checked==true){
         console.log("Rechercher l'artiste : "+value);
+        //getListArtists(value);
         //document.body.appendChild(document.createTextNode('Hello!'));
         //window.location.href="https://www.google.com/"
     }

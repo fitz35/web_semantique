@@ -1,6 +1,5 @@
 function getListArtists(search){
-    
-   
+
 };
 
 function getArtistDetails(name){
