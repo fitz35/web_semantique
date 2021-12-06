@@ -15,8 +15,14 @@
 <body>
 
 <h1 >Single page</h1>
+<a href="#" onclick=infosTitle('https://dbpedia.org/page/Snow_Magic_Fantasy')>Ressource</a>
+<br>
+<a href="#" onclick=infosTitle('https://dbpedia.org/page/15_Feet_of_Snow')>Ressource 1 multiple genre musical</a>
+<br>
+<a href="#" onclick=infosTitle("https://dbpedia.org/page/Anything_for_You_(Snow_song)")>Ressource 2 illegal character</a>
 
-<a href="#" onclick=infosTitle('http://dbpedia.org/resource/Snow_Halation')>http://dbpedia.org/resource/Snow_Halation</a>
+
+
 </br>
 </br>
 <style type="text/css">
@@ -44,13 +50,14 @@
 <div id="infosTitle">
     <div id="generalInfos">
         <div id="pochetteAlbum">
+            <p id="pochette"></p>
             <img src="https://images.ladepeche.fr/api/v1/images/view/6130fc52d286c25f4a342194/full/image.jpg?v=1" width="200" />  
         </div>
         <div id="">
-            <h1 id="title">Title : </h1>
-            <h2 id="artistName">Artist : </h2>
-            <h2 id="albumTitle">Album : Unknown</h2>
-            <p id="genreMusical">Musical style :  </p>
+            <h1 id="title"></h1>
+            <h2 id="artistName"></h2>
+            <h2 id="albumTitle"></h2>
+            <p id="genreMusical"></p>
         </div>
     </div>
     <div>
@@ -80,37 +87,92 @@
     var genreMusical="";
     var abstract="";
     data.results.bindings.forEach(r => {
-      if(r.title){
+      /*if(r.title){
         title=r.title.value;
         document.getElementById("title").append(title);
       }
       if(r.albumTitle){
         albumTitle=r.albumTitle.value;
         document.getElementById("albumTitle").append(albumTitle);
+      }else{
+        document.getElementById("albumTitle").append("Unknown");
       }
       if(r.artistName){
         artistName=r.artistName.value;
         document.getElementById("artistName").append(artistName);
-      }
-      if(r.pochette){
-        pochette=r.pochette.value;
+      }else{
+        document.getElementById("artistName").append("Unknown");
+      }*/
+      if(r.pochette && r.pochette.value!=""){
         document.getElementById("pochette").append(pochette);
+      }else{
+        document.getElementById("pochetteAlbum").innerHTML="<img "+ 
+                                                            "src=\"https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg\"' "+
+                                                            "width='200' alt='No album photo'/>" ;
       }
-      if(r.genreMusical){
+      /*if(r.genreMusical){
        genreMusical=r.genreMusical.value;
         document.getElementById("genreMusical").append(genreMusical);
+      }else{
+        document.getElementById("genreMusical").append("Unknown");
       }
       if(r.abs){
         abstract=r.abs.value;
         document.getElementById("abstract").append(abstract);
+      }else{
+        document.getElementById("abstract").append("Nothing to say about this title.");
+      }*/
+
+      if(r.title && !title.includes(r.title.value)){
+        console.log("title",title!= r.title.value);
+        title+=r.title.value;
+        console.log(title);
       }
+
+      if(r.albumTitle && !albumTitle.includes(r.albumTitle.value)){
+        albumTitle+=r.albumTitle.value;
+      }
+
+      if(r.artistName && !artistName.includes(r.artistName.value)){
+        artistName+=r.artistName.value;
+      }
+
+      
+      if(r.genreMusical && !genreMusical.includes(r.genreMusical.value)){
+       genreMusical+=r.genreMusical.value;
+      }
+      if(r.abs && !abstract.includes(r.abs.value)){
+        abstract+=r.abs.value;
+      }
+        console.log(title);
+
+      
+
     });
-    // console.log(title);
-    // console.log(albumTitle);
-    // console.log(artistName);
-    // console.log(pochette);
-    // console.log(genreMusical);
-    // console.log(abstract);
+    document.getElementById("title").innerHTML="Title : "+title;
+    if(albumTitle!=""){
+        document.getElementById("albumTitle").innerHTML="Album : "+albumTitle;
+    }else{
+        document.getElementById("albumTitle").innerHTML="Album : Unknown";
+    }
+
+    if(artistName!=""){
+        document.getElementById("artistName").innerHTML="Artist : "+artistName;
+    }else{
+        document.getElementById("artistName").innerHTML="Artist : Unknown";
+    }
+
+    if(genreMusical!=""){
+        document.getElementById("genreMusical").innerHTML="Musical style : "+genreMusical;
+    }else{
+        document.getElementById("genreMusical").innerHTML="Musical style : Unknown";
+    }
+
+    if(abstract!=""){
+        document.getElementById("abstract").innerHTML=abstract;
+    }else{
+        document.getElementById("abstract").innerHTML="Nothing to say about this title.";
+    }
 
   }
 
@@ -120,7 +182,8 @@
    function infosTitle(ressource) {
     indexSlash=ressource.lastIndexOf("/");
     ressource=ressource.substring(indexSlash+1);
-
+    var ressource2=unescape( encodeURIComponent( ressource+"&" ) );
+    console.log("ressource",ressource2);
     var contenu_requete = `
         PREFIX owl: <http://www.w3.org/2002/07/owl#>
         PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
@@ -133,7 +196,7 @@
         PREFIX dbpedia: <http://dbpedia.org/>
         PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-        SELECT DISTINCT ?title,?albumTitle,?artistName,?pochette, ?genreMusical, ?abs WHERE {
+        SELECT DISTINCT ?title,?albumTitle,?artistName,?pochette,?genreMusical,?abs WHERE {
         ?s a dbo:Song.
         OPTIONAL
         {
@@ -166,7 +229,8 @@
         langMatches(lang(?genreMusical),"EN") && 
         langMatches(lang(?abs),"EN")
         )
-        }`
+        }
+        GROUP BY ?s`
 
     // Encodage de l'URL à transmettre à DBPedia
     var url_base = "http://dbpedia.org/sparql";
