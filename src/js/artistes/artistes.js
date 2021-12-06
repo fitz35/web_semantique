@@ -186,11 +186,7 @@ function afficherResultats(data){
     console.log(data);
     data.results.bindings.forEach((v, i) => {
         
-            var resutTable=document.getElementsByClassName("birthDay");
-            for(let parcours of resutTable)
-            {
-                parcours.innerHTML=v.dateOfBirth.value;
-            }
+            afficheDansToutesClasses("birthDay", v.dateOfBirth.value);
 
             var resutTable=document.getElementsByClassName("image");
             for(let parcours of resutTable)
@@ -206,30 +202,12 @@ function afficherResultats(data){
                
             }
             
-                  
-            var resutTable=document.getElementsByClassName("details");
-            for(let parcours of resutTable)
+            afficheDansToutesClasses("details", v.abstract.value);
+            afficheDansToutesClasses("birthName", v.birthName.value);
+            afficheDansToutesClasses("name", v.name.value);
+            if (v.job != undefined)
             {
-                parcours.innerHTML=v.abstract.value;
-            }
-            var resutTable=document.getElementsByClassName("birthName");
-            for(let parcours of resutTable)
-            {
-                parcours.innerHTML=v.birthName.value;
-            }
-            var resutTable=document.getElementsByClassName("name");
-            for(let parcours of resutTable)
-            {
-                parcours.innerHTML=v.name.value;
-            }
-            var resutTable=document.getElementsByClassName("job");
-            for(let parcours of resutTable)
-            {
-               if (v.job != undefined)
-               {
-                parcours.innerHTML=v.job.value;
-               }
-                
+                afficheDansToutesClasses("job", v.job.value);
             }
         
       }
@@ -238,14 +216,18 @@ function afficherResultats(data){
 function afficherTotal(data){
     console.log(data);
     data.results.bindings.forEach((v, i) => {
-        
-            var resutTable=document.getElementsByClassName("total");
-            for(let parcours of resutTable)
-            {
-                parcours.innerHTML=v.total.value;
-            }
+            afficheDansToutesClasses("total", v.total.value);
         }
-    )};
+)};
+
+function afficheDansToutesClasses(classe, aAfficher){
+    var resutTable=document.getElementsByClassName(classe);
+    for(let parcours of resutTable)
+    {
+        parcours.innerHTML=aAfficher;
+                
+    }
+}
 
    
     
