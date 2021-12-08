@@ -1,3 +1,4 @@
+/*
 //Requete pour chercher un album
 SELECT ?album ?name (max(?sales) as ?maxsales) ?id WHERE {
 ?album a dbo:Album; dbp:name ?name; dbp:salesamount ?sales; dbo:wikiPageID ?id.
@@ -94,7 +95,7 @@ SELECT ?awards WHERE {
     FILTER(?id = 7615743 &&  langMatches (lang(?awards) , "EN"))
 }
 
-
+*/
 
 
 

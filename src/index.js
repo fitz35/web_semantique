@@ -12,6 +12,8 @@ function repaintResearch() {
     document.getElementById("resultats").style.visibility="hidden"; // cache
     document.getElementById("infosTitle").style.visibility="hidden"; // cache
     document.getElementById("resultatsArtist").style.visibility="hidden"; // cache
+    document.getElementById("resultatsAlbum").style.visibility="hidden"; // cache
+
 
 
     document.getElementById("linkMoreInfos").style.visibility="hidden"; // cache
@@ -42,6 +44,8 @@ function hideSearchPage(){
     document.getElementById("infosTitle").style.visibility="hidden"; // cache
 
     document.getElementById("resultatsArtist").style.visibility="hidden"; // cache
+    document.getElementById("resultatsAlbum").style.visibility="hidden"; // cache
+
 
 
     document.getElementById("linkMoreInfos").style.visibility="hidden"; // cache
@@ -60,13 +64,14 @@ function validateResearch(){
     }
     if(document.getElementById("album").checked==true){
         console.log("Rechercher l'album : "+value);
+        document.getElementById("resultatsAlbum").style.visibility="visible"; // cache
+        rechercherAlbum(value);
     }
     if(document.getElementById("title").checked==true){
         console.log("Rechercher le titre : "+value);
         document.getElementById("resultats").style.visibility="visible"; // cache
         document.getElementById("infosTitle").style.visibility="visible"; // cache
         rechercherTitre(value);
-
     }
     document.getElementById("artist").checked=false;
     document.getElementById("album").checked=false;
