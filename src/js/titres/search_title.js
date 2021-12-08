@@ -1,5 +1,7 @@
-function rechercher() {
-  var entredTitle = document.getElementById("title").value;
+function rechercherTitre(entredTitle) {
+    //$("#infosTitle").hide();
+    //$("#spinner").show();
+    //var entredTitle = document.getElementById("title").value;
 
   var searchedTitle = entredTitle.replace(/ /g,"_"); // turn " " to "_"
 
@@ -55,17 +57,17 @@ function afficherResultats(data)
   // pour vos applications, c'est juste pour la démo sous forme de tableau
   var index = [];
 
-  var urlRessource = "http://google.com/"; 
+  var urlRessource = "http://google.com/";
   var contenuTableau = "<div id='containerTitle'>";
   var idImg = 0;
 
   data.results.bindings.forEach(r => {
     contenuTableau += "<div class='element'>";
       urlRessource =  r.s.value;
-      
+
       var rightCover = r.covers.value.replace(/ /g,"_"); // turn " " to "_"
-      var path = 'http://en.wikipedia.org/wiki/Special:FilePath/'+ rightCover; 
-      var defaultPath = 'https://ae01.alicdn.com/kf/HTB1BuhPdL1H3KVjSZFHq6zKppXar/Record-Decal-Music-Note-Vinyl-Wall-Decals-Album-Stickers-Bedroom-Home-Decoration-Retro-Art-Murals-Living.jpg_Q90.jpg_.webp'; 
+      var path = 'http://en.wikipedia.org/wiki/Special:FilePath/'+ rightCover;
+      var defaultPath = 'https://ae01.alicdn.com/kf/HTB1BuhPdL1H3KVjSZFHq6zKppXar/Record-Decal-Music-Note-Vinyl-Wall-Decals-Album-Stickers-Bedroom-Home-Decoration-Retro-Art-Murals-Living.jpg_Q90.jpg_.webp';
       contenuTableau += '<div id='+idImg+'> <img  src="'+path + '" width="200" alt=" " ></div>';
       contenuTableau += "<div><a href=# onclick=infosTitle(\""+ urlRessource +"\")>" + r.title.value + "</a></div>";
       contenuTableau += "<div><a href=# onclick=infosTitle(\""+ urlRessource +"\")>" + r.feat.value + "</a></div>";
