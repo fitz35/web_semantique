@@ -4,9 +4,26 @@
     <meta charset="utf-8">
     <title>MUSIK'IF</title>
     <link rel="stylesheet" href="index.css">
-    <script src="index.js"></script>
-</head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Titres -->
+    <script type="text/javascript" src="./js/titres/title_on_click.js"></script>
+    <script type="text/javascript" src="./js/titres/search_title.js"></script>
 
+
+    <link rel="stylesheet" href="titres.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- ----- -->
+    <script src="index.js"></script>
+
+</head>
+<!-- Titres -->
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#infosTitle").hide();
+        $("#spinner").hide();
+    });
+</script>
+<!-- ----- -->
 <body>
 <!-- Contenu principal -->
 <h1 style="text-align: center;" id="titre">Welcome to MUSIK'IF</h1>
@@ -31,11 +48,26 @@
 <input id="searchbar" class= "searchbar" onkeyup="search_music()" type="text"
        name="search" placeholder="Search.." style="align-content: center;">
 <button id="monBtn" class="btn" onclick="validateResearch()">Validate</span></button>
+<!-- Titres -->
+<div id="spinner" class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+</div>
+<table id="resultats">
+
+</table>
+<div id="infosTitle">
+</div>
+</br>
+</br>
+<a id="linkMoreInfos" href="#" onclick=moreSingles(document.getElementById("artistName").innerText.substring(document.getElementById("artistName").innerText.lastIndexOf(":")+1)) style="visibility: hidden">More singles from the artist :</a>
+<p id="moreInfos"></p>
+<!-- ----- -->
+
 
 <br>
 <br>
 <br>
-<address class= "address">Fait le 1 décembre 2021<br>
+<address id="address" class= "address">Fait le 1 décembre 2021<br>
     par l'hexanome 4124.</address></h1>
 
 

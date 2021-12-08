@@ -9,6 +9,12 @@ function repaintResearch() {
     document.getElementById("title").style.visibility="visible"; // cache
     document.getElementById("titleLabel").style.visibility="visible"; // cache
 
+    document.getElementById("resultats").style.visibility="hidden"; // cache
+    document.getElementById("infosTitle").style.visibility="hidden"; // cache
+
+    document.getElementById("linkMoreInfos").style.visibility="hidden"; // cache
+    document.getElementById("moreInfos").style.visibility="hidden"; // cache
+
     document.getElementById("btnSearch").style.visibility="hidden"; // cache
 }
 
@@ -26,7 +32,15 @@ function hideSearchPage(){
     document.getElementById("title").style.visibility="hidden"; // cache
     document.getElementById("titleLabel").style.visibility="hidden"; // cache
 
+    document.getElementById("address").style.visibility="hidden"; // cache
+
+
     document.getElementById("btnSearch").style.visibility="visible"; // cache
+    document.getElementById("resultats").style.visibility="visible"; // cache
+    document.getElementById("infosTitle").style.visibility="visible"; // cache
+
+    document.getElementById("linkMoreInfos").style.visibility="hidden"; // cache
+    document.getElementById("moreInfos").style.visibility="hidden"; // cache
 }
 
 function validateResearch(){
@@ -35,15 +49,15 @@ function validateResearch(){
     var value = search_music(); //The value in the search bar
     if(document.getElementById("artist").checked==true){
         console.log("Rechercher l'artiste : "+value);
-        //getListArtists(value);
-        //document.body.appendChild(document.createTextNode('Hello!'));
-        //window.location.href="https://www.google.com/"
+
     }
     if(document.getElementById("album").checked==true){
         console.log("Rechercher l'album : "+value);
     }
     if(document.getElementById("title").checked==true){
         console.log("Rechercher le titre : "+value);
+        rechercherTitre(value);
+
     }
     document.getElementById("artist").checked=false;
     document.getElementById("album").checked=false;
