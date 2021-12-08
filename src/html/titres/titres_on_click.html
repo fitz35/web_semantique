@@ -13,7 +13,7 @@
             Ressource
         </a>
         <br>
-        <a href="#" onclick=infosTitle('https://dbpedia.org/page/15_Feet_of_Snow')>
+        <a href="#" onclick=infosTitle('https://dbpedia.org/page/Rolling_in_the_Deep')>
             Ressource 1 multiple genre musical
         </a>
         <br>
@@ -42,5 +42,9 @@
                 <p id="abstract"></p>
             </div>
         </div>
+        </br>
+        </br>
+        <a id="linkMoreInfos" href="#" onclick=moreSingles(document.getElementById("artistName").innerText.substring(document.getElementById("artistName").innerText.lastIndexOf(":")+1)) style="visibility: hidden">More singles from the artist :</a>
+        <p id="moreInfos"></p>
     </body>
 </html>
