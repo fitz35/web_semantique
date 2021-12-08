@@ -46,7 +46,7 @@ function getArtistDetails(name){
      xmlhttp.onreadystatechange = function() {
          if (this.readyState == 4 && this.status == 200) {
              var results = JSON.parse(this.responseText);
-             afficherResultats(results);
+             afficherResultatsArtistDetails(results);
          }
     }
     xmlhttp.open("GET", url, true);
@@ -204,10 +204,10 @@ function afficherListeAwards(data){
 
 
 
-function afficherResultats(data){
+function afficherResultatsArtistDetails(data){
     console.log(data);
     data.results.bindings.forEach((v, i) => {
-        
+
             afficheDansToutesClasses("birthDay", v.dateOfBirth.value);
 
             var resutTable=document.getElementsByClassName("image");

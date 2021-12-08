@@ -3,7 +3,7 @@ function rechercherTitre(entredTitle) {
     $("#spinner").show();
     $("#resultats").hide();
 
-  var entredTitle = document.getElementById("title").value;
+  //var entredTitle = document.getElementById("title").value;
 
   var searchedTitle = entredTitle.replace(/ /g,"_"); // turn " " to "_"
 

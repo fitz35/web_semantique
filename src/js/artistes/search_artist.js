@@ -36,7 +36,7 @@ function rechercherArtist(entredTitle) {
       if (this.readyState == 4 && this.status == 200) {
           var results = JSON.parse(this.responseText);
         console.log(results);
-        afficherResultats(results);
+        afficherResultatsArtiste(results);
       }
   };
   xmlhttp.open("GET", url, true);
@@ -44,7 +44,7 @@ function rechercherArtist(entredTitle) {
 }
 
 // Affichage des résultats dans un tableau
-function afficherResultats(data)
+function afficherResultatsArtiste(data)
 {
   // Tableau pour mémoriser l'ordre des variables ; sans doute pas nécessaire
   // pour vos applications, c'est juste pour la démo sous forme de tableau
@@ -59,7 +59,6 @@ function afficherResultats(data)
   var page = path.replace("index.html","");
 
   data.results.bindings.forEach(r => {
-
     var rightCover = r.name.value.replace(/ /g,"_"); // turn " " to "_"
     var newRightCover = r.name.value;
     console.log("file://"+page + "html/artistes/artistes.html?name="+ rightCover);
