@@ -13,30 +13,33 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 `
 //Appel de toutes les fonctions de recherche
 function appel() {
-    rechercherNom();
-    rechercherDescription();
-    rechercherArtiste();
-    rechercherDateSortie();
-    rechercherGenre();
-    rechercherImage();
-    rechercherProducteur();
-    rechercherVentes();
-    rechercherLabel();
-    rechercherDuree();
-    rechercherTitres();
-    rechercherPrix();
+  var albumId = window.location.search.substring(1);
+  console.log(albumId)
+  rechercherNom(albumId);
+  rechercherDescription(albumId);
+  rechercherArtiste(albumId);
+  rechercherDateSortie(albumId);
+  rechercherGenre(albumId);
+  rechercherImage(albumId);
+  rechercherProducteur(albumId);
+  rechercherVentes(albumId);
+  rechercherLabel(albumId);
+  rechercherDuree(albumId);
+  rechercherTitres(albumId);
+  rechercherPrix(albumId);
 }
 //
 //
 //Recuperer le nom de l album
 //
-function rechercherNom() {
+function rechercherNom(idParam) {
     var contenu_requete = queryHeader + 
     `SELECT ?name WHERE {
     ?album dbp:name ?name; dbo:wikiPageID ?id.
-    filter(?id = 7615743)
+    filter(?id = idParam)
     }
     limit 1`;
+    contenu_requete = contenu_requete.replace("idParam", idParam);
     // Encodage de l'URL à transmettre à DBPedia
     var url_base = "http://dbpedia.org/sparql";
     var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
@@ -68,13 +71,14 @@ function rechercherNom() {
 //
 //Recuperer la description de l album
 //
-function rechercherDescription() {
+function rechercherDescription(idParam) {
     var contenu_requete = queryHeader + 
     `SELECT ?desc WHERE {
     ?album dbo:abstract ?desc; dbo:wikiPageID ?id.
-    filter(?id = 7615743 && langMatches(lang(?desc),"EN"))
+    filter(?id = idParam && langMatches(lang(?desc),"EN"))
     }
     limit 1`;
+    contenu_requete = contenu_requete.replace("idParam", idParam);
     // Encodage de l'URL à transmettre à DBPedia
     var url_base = "http://dbpedia.org/sparql";
     var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
@@ -105,13 +109,14 @@ function rechercherDescription() {
 //
 //Recuperer le nom de l artiste de l album
 //
-function rechercherArtiste() {
+function rechercherArtiste(idParam) {
     var contenu_requete = queryHeader + 
     `SELECT ?artist WHERE {
     ?album dbp:artist ?artist; dbo:wikiPageID ?id.
-    filter(?id = 7615743 && langMatches(lang(?artist),"EN"))
+    filter(?id = idParam && langMatches(lang(?artist),"EN"))
     }
     limit 1`;
+    contenu_requete = contenu_requete.replace("idParam", idParam);
     // Encodage de l'URL à transmettre à DBPedia
     var url_base = "http://dbpedia.org/sparql";
     var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
@@ -142,13 +147,14 @@ function rechercherArtiste() {
 //
 //Recuperer la de sortie de l album
 //
-function rechercherDateSortie() {
+function rechercherDateSortie(idParam) {
     var contenu_requete = queryHeader + 
     `SELECT ?released WHERE {
     ?album dbp:released ?released; dbo:wikiPageID ?id.
-    filter(?id = 7615743)
+    filter(?id = idParam)
     }
     limit 1`;
+    contenu_requete = contenu_requete.replace("idParam", idParam);
     // Encodage de l'URL à transmettre à DBPedia
     var url_base = "http://dbpedia.org/sparql";
     var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
@@ -180,13 +186,14 @@ function rechercherDateSortie() {
 //
 //Recuperer l image de l album
 //
-function rechercherImage() {
+function rechercherImage(idParam) {
     var contenu_requete = queryHeader + 
     `SELECT ?cover WHERE {
     ?album dbp:cover ?cover; dbo:wikiPageID ?id.
-    filter(?id = 196945)
+    filter(?id = idParam)
     }
     limit 1 `;
+    contenu_requete = contenu_requete.replace("idParam", idParam);
     // Encodage de l'URL à transmettre à DBPedia
     var url_base = "http://dbpedia.org/sparql";
     var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
@@ -232,12 +239,13 @@ function rechercherImage() {
 //
 //Recuperer le producteur de l album
 //
-function rechercherProducteur() {
-      var contenu_requete = queryHeader + 
-      `SELECT ?producer WHERE {
-      ?album a dbo:Album; dbo:wikiPageID ?id; dbp:producer ?producer.
-      FILTER(?id = 7615743)
-      }`;
+function rechercherProducteur(idParam) {
+    var contenu_requete = queryHeader + 
+    `SELECT ?producer WHERE {
+    ?album a dbo:Album; dbo:wikiPageID ?id; dbp:producer ?producer.
+    FILTER(?id = idParam)
+    }`;
+    contenu_requete = contenu_requete.replace("idParam", idParam);
     // Encodage de l'URL à transmettre à DBPedia
     var url_base = "http://dbpedia.org/sparql";
     var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
@@ -269,13 +277,14 @@ function rechercherProducteur() {
 //
 //Recuperer les ventes de l album
 //
-function rechercherVentes() {
+function rechercherVentes(idParam) {
     var contenu_requete = queryHeader + 
     `SELECT (max(?salesamount) as ?sales) WHERE {
     ?album a dbo:Album; dbp:name ?name; dbo:wikiPageID ?id; dbp:salesamount ?salesamount.
-    FILTER(?id = 7615743)
+    FILTER(?id = idParam)
     }
     group by ?name ?album ?sales`;
+    contenu_requete = contenu_requete.replace("idParam", idParam);
     // Encodage de l'URL à transmettre à DBPedia
     var url_base = "http://dbpedia.org/sparql";
     var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
@@ -306,12 +315,13 @@ function rechercherVentes() {
 //
 //Recuperer le label de l album
 //
-function rechercherLabel() {
+function rechercherLabel(idParam) {
     var contenu_requete = queryHeader + 
     `SELECT ?label WHERE {
     ?album a dbo:Album; dbp:name ?name; dbo:wikiPageID ?id; dbp:label ?label.
-    FILTER(?id = 7615743)
+    FILTER(?id = idParam)
     }`;
+    contenu_requete = contenu_requete.replace("idParam", idParam);
     // Encodage de l'URL à transmettre à DBPedia
     var url_base = "http://dbpedia.org/sparql";
     var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
@@ -344,12 +354,13 @@ function rechercherLabel() {
 //
 //Recuperer le genre de l album
 //
-function rechercherGenre() {
+function rechercherGenre(idParam) {
     var contenu_requete = queryHeader + 
     `SELECT ?genre WHERE {
     ?album a dbo:Album; dbp:name ?name; dbo:wikiPageID ?id; dbp:genre ?genre.
-    FILTER(?id = 7615743 &&  langMatches (lang(?genre) , "EN"))
+    FILTER(?id = idParam &&  langMatches (lang(?genre) , "EN"))
     }`;
+    contenu_requete = contenu_requete.replace("idParam", idParam);
     // Encodage de l'URL à transmettre à DBPedia
     var url_base = "http://dbpedia.org/sparql";
     var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
@@ -381,13 +392,14 @@ function rechercherGenre() {
 //
 //Recuperer la duree de l album
 //
-function rechercherDuree() {
+function rechercherDuree(idParam) {
     var contenu_requete = queryHeader + 
     `SELECT (max(?length) as ?totallength) WHERE {
     ?album a dbo:Album; dbp:name ?name; dbo:wikiPageID ?id; dbp:totalLength ?length.
-    FILTER(?id = 7615743)
+    FILTER(?id = idParam)
     }
     group by ?name ?album ?totallength`;
+    contenu_requete = contenu_requete.replace("idParam", idParam);
     // Encodage de l'URL à transmettre à DBPedia
     var url_base = "http://dbpedia.org/sparql";
     var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
@@ -418,12 +430,13 @@ function rechercherDuree() {
 //
 //Recuperer les titres de l album 
 //
-function rechercherTitres() {
+function rechercherTitres(idParam) {
     var contenu_requete = queryHeader + 
     `SELECT ?Songtitle WHERE {
     ?album a dbo:Album; dbp:name ?name; dbo:wikiPageID ?id; dbp:title ?Songtitle.
-    FILTER(?id = 7615743)
+    FILTER(?id = idParam)
     }`;
+    contenu_requete = contenu_requete.replace("idParam", idParam);
     // Encodage de l'URL à transmettre à DBPedia
     var url_base = "http://dbpedia.org/sparql";
     var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
@@ -460,12 +473,13 @@ function rechercherTitres() {
 //
 //Recuperer les prix de l album 
 //
-function rechercherPrix() {
+function rechercherPrix(idParam) {
     var contenu_requete = queryHeader + 
     `SELECT ?Songtitle WHERE {
     ?album a dbo:Album; dbp:name ?name; dbo:wikiPageID ?id; dbp:title ?Songtitle.
-    FILTER(?id = 7615743)
+    FILTER(?id = idParam)
     }`;
+    contenu_requete = contenu_requete.replace("idParam", idParam);
     // Encodage de l'URL à transmettre à DBPedia
     var url_base = "http://dbpedia.org/sparql";
     var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
@@ -492,5 +506,5 @@ function rechercherPrix() {
     });
       
     listePrix += "</ul>"
-    document.getElementById("titres").innerHTML = listeTitres;
+    document.getElementById("awards").innerHTML = listeTitres;
   }
