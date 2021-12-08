@@ -249,7 +249,7 @@ limit 1 `;
       link += r.cover.value;
     });
     link+= "?width=300"
-    cover = "</img source='";
+    cover = "<img src='";
     cover += link + "'>";
     console.log("COVER");
 
@@ -542,7 +542,7 @@ SELECT ?Songtitle WHERE {
     });
       
     listeTitres += "</ul>"
-    document.getElementById("titres").innerHTML = listeTitres;
+    //document.getElementById("titres").innerHTML = listeTitres;
   }
 
 //
@@ -591,5 +591,5 @@ SELECT ?Songtitle WHERE {
     });
       
     listePrix += "</ul>"
-    document.getElementById("titres").innerHTML = listeTitres;
+    //document.getElementById("titres").innerHTML = listeTitres;
   }
