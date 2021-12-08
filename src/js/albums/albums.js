@@ -485,5 +485,5 @@ function rechercherPrix() {
     });
       
     listePrix += "</ul>"
-    document.getElementById("titres").innerHTML = listeTitres;
+    document.getElementById("awards").innerHTML = listeTitres;
   }
