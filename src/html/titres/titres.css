@@ -3,6 +3,8 @@ table, th, td {
     border: 1px solid black;
 }
 #mainContainer{
+    background-image: url("https://besthqwallpapers.com/Temp/8-12-2021/night-summer-party-4k-beach-abstract-nightscapes-concert-besthqwallpapers.com-2560x1440.jpg");
+    background-size: cover;
     width: 80%;
     margin-left: auto;
     margin-right: auto;
