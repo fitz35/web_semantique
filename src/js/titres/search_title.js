@@ -67,8 +67,8 @@ function afficherResultats(data)
       var path = 'http://en.wikipedia.org/wiki/Special:FilePath/'+ rightCover; 
       var defaultPath = 'https://ae01.alicdn.com/kf/HTB1BuhPdL1H3KVjSZFHq6zKppXar/Record-Decal-Music-Note-Vinyl-Wall-Decals-Album-Stickers-Bedroom-Home-Decoration-Retro-Art-Murals-Living.jpg_Q90.jpg_.webp'; 
       contenuTableau += '<div id='+idImg+'> <img  src="'+path + '" width="200" alt=" " ></div>';
-      contenuTableau += "<div><a href="+ urlRessource +">" + r.title.value + "</a></div>";
-      contenuTableau += "<div><a href="+ urlRessource +">" + r.feat.value + "</a></div>";
+      contenuTableau += "<div><a href=# onclick=infosTitle(\""+ urlRessource +"\")>" + r.title.value + "</a></div>";
+      contenuTableau += "<div><a href=# onclick=infosTitle(\""+ urlRessource +"\")>" + r.feat.value + "</a></div>";
       idImg=idImg+1;
     contenuTableau += "</div>";
   });
