@@ -3,7 +3,7 @@ table, th, td {
     border: 1px solid black;
 }
 #mainContainer{
-    background-image: url("https://static.vecteezy.com/ti/vecteur-libre/p1/115493-fond-colore-degrade-couleur-libre-gratuit-vectoriel.jpg");
+    /*background-image: url("https://static.vecteezy.com/ti/vecteur-libre/p1/115493-fond-colore-degrade-couleur-libre-gratuit-vectoriel.jpg");*/
     background-size: cover;
     width: 80%;
     margin-left: auto;
@@ -48,4 +48,20 @@ table, th, td {
 }
 #abstract{
     text-align: justify;
+}
+
+
+#prev,#next{
+    background-color: black;
+}
+.carousel-inner{
+    width: 70%;
+    margin-right: auto;
+    margin-left: auto;
+}
+#carouselSimilarTitle{
+    margin-bottom: 100px;
+}
+#indicatorsCarousel button{
+    background-color: black;
 }
