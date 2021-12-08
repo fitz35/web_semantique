@@ -473,9 +473,9 @@ function rechercherTitres(idParam) {
 //
 function rechercherPrix(idParam) {
     var contenu_requete = queryHeader + 
-    `SELECT ?Songtitle WHERE {
-    ?album a dbo:Album; dbp:name ?name; dbo:wikiPageID ?id; dbp:title ?Songtitle.
-    FILTER(?id = idParam)
+    `SELECT ?awards WHERE {
+    ?album a dbo:Album; dbp:award ?awards; dbo:wikiPageID ?id.
+    FILTER(?id = idParam &&  langMatches (lang(?awards) , "EN"))
     }`;
     contenu_requete = contenu_requete.replace("idParam", idParam);
     // Encodage de l'URL à transmettre à DBPedia
@@ -500,7 +500,7 @@ function rechercherPrix(idParam) {
     var listePrix;
     listePrix = "<ul>"
     data.results.bindings.forEach(r => {
-      listePrix += "<li>" + r.Songtitle.value + "</li>";
+      listePrix += "<li>" + r.awards.value + "</li>";
     });
       
     listePrix += "</ul>"
