@@ -60,6 +60,7 @@ function afficherResultatsAlbum(data)
     var rightCover = r.name.value.replace(/ /g,"_"); // turn " " to "_"
     var newRightCover = r.name.value;
 
+
     contenuTableau += "<div class='element'>";
       urlRessource =  r.name.value;
 
