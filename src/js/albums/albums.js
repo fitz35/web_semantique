@@ -28,6 +28,7 @@ function appel() {
   rechercherDuree(id);
   rechercherTitres(id);
   rechercherPrix(id);
+  rechercherLienArtiste(id);
 }
 
 function clean(str){
@@ -154,6 +155,49 @@ function rechercherArtisteAlbum(idParam) {
 
     document.getElementById("artist").innerHTML = artist;
   }
+
+//
+//
+//Recuperer le lien de l artiste de l album
+//
+function rechercherLienArtiste(idParam) {
+    var contenu_requete = queryHeader + 
+    `SELECT ?artist WHERE {
+    ?album dbp:artist ?artist; dbo:wikiPageID ?id.
+    filter(?id = idParam)
+    }
+    limit 1`;
+    contenu_requete = contenu_requete.replace("idParam", idParam);
+    // Encodage de l'URL à transmettre à DBPedia
+    var url_base = "http://dbpedia.org/sparql";
+    var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
+
+    // Requête HTTP et affichage des résultats
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var results = JSON.parse(this.responseText);
+            creerLien(results);
+        }
+    };
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+  }
+
+  // Affichage des résultats dans un tableau
+  function creerLien(data)
+  {
+    var lienArtist;
+    data.results.bindings.forEach(r => {
+      lienArtist = r.artist.value;
+    });
+      
+    var path = window.location.pathname;
+    var path = path.replace("albums/albums.html","");
+    lienArtist = lienArtist.replace("http://dbpedia.org/resource/","");
+    lienArtist = path + "artistes/artistes.html?name=" + lienArtist;
+    document.getElementById("artist").setAttribute("href",lienArtist);
+  }
 //
 //
 //Recuperer la de sortie de l album
@@ -189,7 +233,6 @@ function rechercherDateSortie(idParam) {
     data.results.bindings.forEach(r => {
       released = r.released.value;
     });
-    console.log("RELEASED");
 
     document.getElementById("released").innerHTML = released;
   }
@@ -233,7 +276,6 @@ function rechercherImage(idParam) {
     link+= "?width=300"
     cover = "<img src='";
     cover += link + "'>";
-    console.log("COVER");
 
     document.getElementById("cover").innerHTML = cover;
   }
