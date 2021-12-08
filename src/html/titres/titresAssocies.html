@@ -12,7 +12,7 @@
 
 <h1 >Single page</h1>
 
-<a href="#" onclick=infosTitle('http://dbpedia.org/resource/Snow_Halation')>http://dbpedia.org/resource/Snow_Halation</a>
+<a href="#" onclick=infosTitle('http://dbpedia.org/resource/Billie_Jean')>http://dbpedia.org/resource/Billie_Jean</a>
 </br>
 </br>
 
@@ -36,7 +36,7 @@
 
 </br>
 </br>
-<a href="#" onclick=moreSingles("ABBA")>More singles from the artist :</a>
+<a id="linkMoreInfos" href="#" onclick=moreSingles(document.getElementById("artistName").childNodes[1].data) style="visibility: hidden">More singles from the artist :</a>
 <p id="moreInfos"></p>
 
 <script>
@@ -90,6 +90,7 @@
     }
 
     function infosTitle(ressource) {
+        document.getElementById("linkMoreInfos").style.visibility="visible";
         indexSlash=ressource.lastIndexOf("/");
         ressource=ressource.substring(indexSlash+1);
 
@@ -158,8 +159,8 @@
 
     function moreSingles (artistName)
     {
-        //document.getElementById("artistName").childNodes[1].data
         console.log(artistName);
+        //console.log(artistName);
         //console.log(document.getElementById("artistName").lastChild.data);
         var query = `
         PREFIX owl: <http://www.w3.org/2002/07/owl#>
@@ -180,7 +181,7 @@
             ?artistName ^dbo:artist ?song.
             ?song dbp:name ?songName.
             FILTER(langMatches(lang(?artist),"EN") && regex(?artist, "`+artistName+`") )
-        }`
+        }LIMIT 20`
         var url = "https://dbpedia.org/sparql/?query="+encodeURIComponent(query)+"&format=json";
         // Requête HTTP et affichage des résultats
         var xmlhttp = new XMLHttpRequest();
