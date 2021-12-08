@@ -94,19 +94,29 @@ function search_music(){
     return document.getElementById("searchbar").value;
 }
 
-function checkBox(){
-    /*
-    if(document.getElementById("artist").checked==true){
-        document.getElementById("album").checked=false;
-        document.getElementById("title").checked=false;
+function checkBox(obj) {
+    var tvNodes = document.getElementById("trvMenu");
+    var chBoxes = tvNodes.getElementsByTagName("input");
+    for (var i = 0; i < chBoxes.length; i++) {
+        chBoxes[i].checked = false;
     }
-    if(document.getElementById("album").checked==true){
-        document.getElementById("artist").checked=false;
-        document.getElementById("title").checked=false;
+    obj.checked = true;
+}
+
+function handle(e){
+    var boxArtist = document.getElementById("artist").checked;
+    var boxAlbum = document.getElementById("album").checked;
+    var boxTitle = document.getElementById("title").checked;
+
+    if(e.key === "Enter"){
+        if(document.getElementById("searchbar").value!="" &&
+            (boxArtist!=false || boxAlbum!=false || boxTitle!=false)){
+            validateResearch();
+        }
+        if(boxArtist==false && boxAlbum==false && boxTitle==false){
+            console.log("Faut faire qlqch")
+        }
     }
-    if(document.getElementById("title").checked==true){
-        document.getElementById("album").checked=false;
-        document.getElementById("artist").checked=false;
-    }
-     */
+
+    return false;
 }
