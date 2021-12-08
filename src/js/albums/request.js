@@ -89,8 +89,8 @@ SELECT ?Songtitle WHERE {
     
     
 //Requete pour retrouver les prix de l'album
-SELECT ?name ?album ?awards WHERE {
-    ?album a dbo:Album; dbp:name ?name; dbp:award ?awards; dbo:wikiPageID ?id.
+SELECT ?awards WHERE {
+    ?album a dbo:Album; dbp:award ?awards; dbo:wikiPageID ?id.
     FILTER(?id = 7615743 &&  langMatches (lang(?awards) , "EN"))
 }
 

@@ -28,6 +28,14 @@ function appel() {
   rechercherTitres(albumId);
   rechercherPrix(albumId);
 }
+
+function clean(str){
+    str = str.replaceAll("*","<br>");
+    str = str.replace("http://dbpedia.org/resource/","");
+    str = str.replaceAll("_"," ");
+    str = str.replaceAll("%22",'"');
+    return str;
+}
 //
 //
 //Recuperer le nom de l album
@@ -226,15 +234,7 @@ function rechercherImage(idParam) {
 
     document.getElementById("cover").innerHTML = cover;
   }
-  //function afficherResultatsImage(data)
-  //{
-  //  var cover;
-  //  data.results.bindings.forEach(r => {
-  //    cover = r.cover.value;
-  //  });
-  //
-  //  document.getElementById("cover").innerHTML = cover;
-  //}
+
 //
 //
 //Recuperer le producteur de l album
@@ -270,7 +270,7 @@ function rechercherProducteur(idParam) {
       producer = r.producer.value;
     });
     
-    producer = producer.replaceAll("*","<br>");
+    producer = clean(producer);
     document.getElementById("producer").innerHTML = producer;
   }
 //
@@ -346,8 +346,7 @@ function rechercherLabel(idParam) {
       label = r.label.value;
     });
 
-    label = label.replace("http://dbpedia.org/resource/","");
-    label = label.replaceAll("_"," ");
+    label = clean(label);
     document.getElementById("label").innerHTML = label;
   }
 //
@@ -385,7 +384,7 @@ function rechercherGenre(idParam) {
       genre = r.genre.value;
     });
 
-    genre = genre.replaceAll("*","<br>");
+    genre = clean(genre);
     document.getElementById("genre").innerHTML = genre;
   }
 //
@@ -460,8 +459,7 @@ function rechercherTitres(idParam) {
     listeTitres = "<ul>"
     data.results.bindings.forEach(r => {
         var title = r.Songtitle.value;
-        title = title.replace("http://dbpedia.org/resource/","");
-        title = title.replaceAll("_"," ");
+        title = clean(title);
         listeTitres += "<li>" + title + "</li>";
     });
       
@@ -475,9 +473,9 @@ function rechercherTitres(idParam) {
 //
 function rechercherPrix(idParam) {
     var contenu_requete = queryHeader + 
-    `SELECT ?Songtitle WHERE {
-    ?album a dbo:Album; dbp:name ?name; dbo:wikiPageID ?id; dbp:title ?Songtitle.
-    FILTER(?id = idParam)
+    `SELECT ?awards WHERE {
+    ?album a dbo:Album; dbp:award ?awards; dbo:wikiPageID ?id.
+    FILTER(?id = idParam &&  langMatches (lang(?awards) , "EN"))
     }`;
     contenu_requete = contenu_requete.replace("idParam", idParam);
     // Encodage de l'URL à transmettre à DBPedia
@@ -502,9 +500,9 @@ function rechercherPrix(idParam) {
     var listePrix;
     listePrix = "<ul>"
     data.results.bindings.forEach(r => {
-      listePrix += "<li>" + r.Songtitle.value + "</li>";
+      listePrix += "<li>" + r.awards.value + "</li>";
     });
       
     listePrix += "</ul>"
-    document.getElementById("awards").innerHTML = listeTitres;
+    document.getElementById("awards").innerHTML = listePrix;
   }
