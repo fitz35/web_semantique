@@ -500,11 +500,11 @@ function rechercherPrix(idParam) {
   function afficherResultatsPrix(data)
   {
     var listePrix;
-    listePrix = "<ul>"
+    listePrix = ""
     data.results.bindings.forEach(r => {
-      listePrix += "<li>" + r.awards.value + "</li>";
+      listePrix += "" + r.awards.value + "<br>";
     });
       
-    listePrix += "</ul>"
+    listePrix += ""
     document.getElementById("awards").innerHTML = listePrix;
   }
