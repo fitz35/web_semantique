@@ -4,6 +4,7 @@ function appel() {
     rechercherDescription();
     rechercherArtiste();
     rechercherDateSortie();
+    rechercherGenre();
     rechercherImage();
     rechercherProducteur();
     rechercherVentes();
@@ -542,7 +543,7 @@ SELECT ?Songtitle WHERE {
     });
       
     listeTitres += "</ul>"
-    //document.getElementById("titres").innerHTML = listeTitres;
+    document.getElementById("titres").innerHTML = listeTitres;
   }
 
 //
@@ -591,5 +592,5 @@ SELECT ?Songtitle WHERE {
     });
       
     listePrix += "</ul>"
-    //document.getElementById("titres").innerHTML = listeTitres;
+    document.getElementById("titres").innerHTML = listeTitres;
   }
