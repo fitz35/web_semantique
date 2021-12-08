@@ -229,8 +229,9 @@ function rechercherImage(idParam) {
         link += nameCover;
     });
     link+= "?width=300"
-    cover = "<img src='";
-    cover += link + "'>";
+    cover = "<object data='";
+    cover += link + "' type='image/png' width='300'><img src='../../../img/defaultAlbum.jpg' width='300'></object>";
+    
     console.log("COVER");
 
     document.getElementById("cover").innerHTML = cover;
