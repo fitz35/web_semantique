@@ -7,6 +7,24 @@ table, th, td {
     margin-left: auto;
     margin-right: auto;
 }
+#containerTitle{
+    
+    margin-left: auto;
+    margin-right: auto;
+    overflow: scroll;
+    flex-wrap: wrap;
+    display: inline-block;
+    white-space: initial;
+    display: flex;
+    flex-direction: row;
+}
+.element{
+    overflow: hidden;
+    width: 250px;
+    height: 300px;
+    display: inline-block;
+    font-family: 'Arial Narrow Bold', sans-serif;
+}
 #infosTitle{
     border: 2px solid black;
     padding: 2%;
