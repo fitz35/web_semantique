@@ -379,7 +379,6 @@ function afficherMoreSingles(data){
             songName+=r.songName.value +" | ";
         }
     });
-
     if(songName!=""){
         document.getElementById("moreInfos").innerHTML=songName;
     }else{
