@@ -17,6 +17,7 @@ function appel() {
     rechercherDescription();
     rechercherArtiste();
     rechercherDateSortie();
+    rechercherGenre();
     rechercherImage();
     rechercherProducteur();
     rechercherVentes();
@@ -212,7 +213,7 @@ function rechercherImage() {
       link += r.cover.value;
     });
     link+= "?width=300"
-    cover = "</img source='";
+    cover = "<img src='";
     cover += link + "'>";
     console.log("COVER");
 
