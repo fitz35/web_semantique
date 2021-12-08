@@ -213,13 +213,15 @@ function afficherResultats(data){
             var resutTable=document.getElementsByClassName("image");
             for(let parcours of resutTable)
             {
-                if(v.image!=undefined)
+                if(v.image!=undefined && v.description!=null)
                 {
                     parcours.innerHTML="<img src=\""+ v.image.value+ "\" alt=\""+ v.description.value +"\">";
                 }
-                if(v.image==undefined && v.description!=null)
+                else if(v.description!=null)
                 {
-                    parcours.innerHTML="<alt=\""+ v.description.value +"\">";
+                    parcours.innerHTML="<img src=\"../../../img/inconue.jpg\" alt=\""+ v.description.value +"\">";
+                }else{
+                    parcours.innerHTML="<img src=\"../../../img/inconue.jpg\" alt=\"photo de l'artiste\">";
                 }
                
             }
