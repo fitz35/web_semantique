@@ -11,6 +11,8 @@ function repaintResearch() {
 
     document.getElementById("resultats").style.visibility="hidden"; // cache
     document.getElementById("infosTitle").style.visibility="hidden"; // cache
+    document.getElementById("resultatsArtist").style.visibility="hidden"; // cache
+
 
     document.getElementById("linkMoreInfos").style.visibility="hidden"; // cache
     document.getElementById("moreInfos").style.visibility="hidden"; // cache
@@ -39,6 +41,9 @@ function hideSearchPage(){
     document.getElementById("resultats").style.visibility="visible"; // cache
     document.getElementById("infosTitle").style.visibility="visible"; // cache
 
+    document.getElementById("resultatsArtist").style.visibility="visible"; // cache
+
+
     document.getElementById("linkMoreInfos").style.visibility="hidden"; // cache
     document.getElementById("moreInfos").style.visibility="hidden"; // cache
 }
@@ -49,6 +54,7 @@ function validateResearch(){
     var value = search_music(); //The value in the search bar
     if(document.getElementById("artist").checked==true){
         console.log("Rechercher l'artiste : "+value);
+        rechercherArtist(value);
 
     }
     if(document.getElementById("album").checked==true){

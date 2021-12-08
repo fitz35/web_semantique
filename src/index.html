@@ -12,7 +12,13 @@
 
     <link rel="stylesheet" href="titres.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <!-- ----- -->
+<!-- ----- -->
+
+<!-- Artistes -->
+    <script type="text/javascript" src="./js/artistes/artistes.js"></script>
+    <script type="text/javascript" src="./js/artistes/search_artist.js"></script>
+
+<!-- ----- -->
     <script src="index.js"></script>
 
 </head>
@@ -61,6 +67,14 @@
 </br>
 <a id="linkMoreInfos" href="#" onclick=moreSingles(document.getElementById("artistName").innerText.substring(document.getElementById("artistName").innerText.lastIndexOf(":")+1)) style="visibility: hidden">More singles from the artist :</a>
 <p id="moreInfos"></p>
+<!-- ----- -->
+
+<!-- Artistes -->
+<table id="resultatsArtist">
+
+</table>
+<div id="infosArtist">
+</div>
 <!-- ----- -->
 
 
