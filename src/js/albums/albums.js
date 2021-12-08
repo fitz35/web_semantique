@@ -225,7 +225,8 @@ function rechercherImage(idParam) {
     var link;
     link = "http://commons.wikimedia.org/wiki/Special:FilePath/";
     data.results.bindings.forEach(r => {
-      link += r.cover.value;
+        var nameCover = r.cover.value; 
+        link += nameCover;
     });
     link+= "?width=300"
     cover = "<img src='";
