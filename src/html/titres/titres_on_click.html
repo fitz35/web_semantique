@@ -1,256 +1,50 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <meta content="utf-8" http-equiv="encoding">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type="text/javascript" src="../../js/titres/title_on_click.js"></script>
+        <link rel="stylesheet" href="titres.css">
+    </head>
 
-<head>
-  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-  <meta content="utf-8" http-equiv="encoding">
-
-  <style>
-    table, th, td {
-      border: 1px solid black;
-    }
-  </style>
-</head>
-
-<body>
-
-<h1 >Single page</h1>
-<a href="#" onclick=infosTitle('https://dbpedia.org/page/Snow_Magic_Fantasy')>Ressource</a>
-<br>
-<a href="#" onclick=infosTitle('https://dbpedia.org/page/15_Feet_of_Snow')>Ressource 1 multiple genre musical</a>
-<br>
-<a href="#" onclick=infosTitle("https://dbpedia.org/page/Anything_for_You_(Snow_song)")>Ressource 2 illegal character</a>
-
-
-
-</br>
-</br>
-<style type="text/css">
-    body{
-        width: 80%;
-        margin: auto;
-    }
-    #infosTitle{
-        border: 2px solid black;
-        padding: 2%;
-    }
-    #generalInfos{
-        display: flex;
-        flex-direction: row;
-    }
-    #pochetteAlbum{
-        margin-left: 2%;
-        margin-right: 2%;
-    }
-    #abstract{
-        text-align: justify;
-    }
-</style>
-
-<div id="infosTitle">
-    <div id="generalInfos">
-        <div id="pochetteAlbum">
-            <p id="pochette"></p>
-            <img src="https://images.ladepeche.fr/api/v1/images/view/6130fc52d286c25f4a342194/full/image.jpg?v=1" width="200" />  
+    <body id="mainContainer">
+        <a href="#" onclick=infosTitle('https://dbpedia.org/page/Snow_Halation')>
+            Ressource
+        </a>
+        <br>
+        <a href="#" onclick=infosTitle('https://dbpedia.org/page/Rolling_in_the_Deep')>
+            Ressource 1 multiple genre musical
+        </a>
+        <br>
+        <a href="#" onclick=infosTitle("https://dbpedia.org/page/Come_Around_(Mental_As_Anything_song)")>
+            Ressource 2 illegal character
+        </a>
+        </br>
+        </br>
+        <table id="resultats"></table>
+        <p id="pochette"></p>
+        <div id="infosTitle">
+            <div id="generalInfos">
+                <div id="pochetteAlbum">
+                    <img src="https://images.ladepeche.fr/api/v1/images/view/6130fc52d286c25f4a342194/full/image.jpg?v=1" width="200" /> 
+                </div>
+                <div id="">
+                    <h1 id="musicTitle"></h1>
+                    <h2 id="artistName"></h2>
+                    <h2 id="albumTitle"></h2>
+                    <p id="releaseDate"></p>
+                    <p id="genreMusical"></p>
+                </div>
+            </div>
+            <div>
+                <h4>Abstract :</h4>
+                <p id="abstract"></p>
+            </div>
         </div>
-        <div id="">
-            <h1 id="title"></h1>
-            <h2 id="artistName"></h2>
-            <h2 id="albumTitle"></h2>
-            <p id="genreMusical"></p>
-        </div>
-    </div>
-    <div>
-        <h4>Abstract :</h4>
-        <p id="abstract"></p>
-    </div>
-</div>
-<script>
-  // Affichage des résultats dans un tableau
-  function afficherInfosTitle(data)
-  {
-    // Tableau pour mémoriser l'ordre des variables ; sans doute pas nécessaire
-    // pour vos applications, c'est juste pour la démo sous forme de tableau
-    var index = [];
-
-    var contenuTableau = "<tr>";
-
-    data.head.vars.forEach((v, i) => {
-      contenuTableau += "<th>" + v + "</th>";
-      index.push(v);
-    });
-
-    var title="";
-    var albumTitle="";
-    var artistName="";
-    var pochette="";
-    var genreMusical="";
-    var abstract="";
-    data.results.bindings.forEach(r => {
-      /*if(r.title){
-        title=r.title.value;
-        document.getElementById("title").append(title);
-      }
-      if(r.albumTitle){
-        albumTitle=r.albumTitle.value;
-        document.getElementById("albumTitle").append(albumTitle);
-      }else{
-        document.getElementById("albumTitle").append("Unknown");
-      }
-      if(r.artistName){
-        artistName=r.artistName.value;
-        document.getElementById("artistName").append(artistName);
-      }else{
-        document.getElementById("artistName").append("Unknown");
-      }*/
-      if(r.pochette && r.pochette.value!=""){
-        document.getElementById("pochette").append(pochette);
-      }else{
-        document.getElementById("pochetteAlbum").innerHTML="<img "+ 
-                                                            "src=\"https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg\"' "+
-                                                            "width='200' alt='No album photo'/>" ;
-      }
-      /*if(r.genreMusical){
-       genreMusical=r.genreMusical.value;
-        document.getElementById("genreMusical").append(genreMusical);
-      }else{
-        document.getElementById("genreMusical").append("Unknown");
-      }
-      if(r.abs){
-        abstract=r.abs.value;
-        document.getElementById("abstract").append(abstract);
-      }else{
-        document.getElementById("abstract").append("Nothing to say about this title.");
-      }*/
-
-      if(r.title && !title.includes(r.title.value)){
-        console.log("title",title!= r.title.value);
-        title+=r.title.value;
-        console.log(title);
-      }
-
-      if(r.albumTitle && !albumTitle.includes(r.albumTitle.value)){
-        albumTitle+=r.albumTitle.value;
-      }
-
-      if(r.artistName && !artistName.includes(r.artistName.value)){
-        artistName+=r.artistName.value;
-      }
-
-      
-      if(r.genreMusical && !genreMusical.includes(r.genreMusical.value)){
-       genreMusical+=r.genreMusical.value;
-      }
-      if(r.abs && !abstract.includes(r.abs.value)){
-        abstract+=r.abs.value;
-      }
-        console.log(title);
-
-      
-
-    });
-    document.getElementById("title").innerHTML="Title : "+title;
-    if(albumTitle!=""){
-        document.getElementById("albumTitle").innerHTML="Album : "+albumTitle;
-    }else{
-        document.getElementById("albumTitle").innerHTML="Album : Unknown";
-    }
-
-    if(artistName!=""){
-        document.getElementById("artistName").innerHTML="Artist : "+artistName;
-    }else{
-        document.getElementById("artistName").innerHTML="Artist : Unknown";
-    }
-
-    if(genreMusical!=""){
-        document.getElementById("genreMusical").innerHTML="Musical style : "+genreMusical;
-    }else{
-        document.getElementById("genreMusical").innerHTML="Musical style : Unknown";
-    }
-
-    if(abstract!=""){
-        document.getElementById("abstract").innerHTML=abstract;
-    }else{
-        document.getElementById("abstract").innerHTML="Nothing to say about this title.";
-    }
-
-  }
-
-
-
-
-   function infosTitle(ressource) {
-    indexSlash=ressource.lastIndexOf("/");
-    ressource=ressource.substring(indexSlash+1);
-    var ressource2=unescape( encodeURIComponent( ressource+"&" ) );
-    console.log("ressource",ressource2);
-    var contenu_requete = `
-        PREFIX owl: <http://www.w3.org/2002/07/owl#>
-        PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-        PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-        PREFIX dc: <http://purl.org/dc/elements/1.1/>
-        PREFIX dbr: <http://dbpedia.org/resource/>
-        PREFIX dbpedia2: <http://dbpedia.org/property/>
-        PREFIX dbpedia: <http://dbpedia.org/>
-        PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-
-        SELECT DISTINCT ?title,?albumTitle,?artistName,?pochette,?genreMusical,?abs WHERE {
-        ?s a dbo:Song.
-        OPTIONAL
-        {
-        ?s dbo:abstract ?abs.
-        }
-        OPTIONAL
-        {
-        ?s dbo:album ?album.
-        ?album rdfs:label ?albumTitle;
-        dbp:cover ?pochette.
-        }
-        OPTIONAL
-        {?s rdfs:label ?title.}
-        OPTIONAL
-        {
-        ?s dbo:artist ?artist.
-        ?artist rdfs:label ?artistName.
-        }
-        OPTIONAL
-        {
-        ?s dbo:genre ?genre.
-        ?genre rdfs:label ?genreMusical.
-        }
-
-        FILTER(
-        ?s = dbr:`+ressource+` &&
-        langMatches(lang(?title),"EN") && 
-        langMatches(lang(?albumTitle),"EN") && 
-        langMatches(lang(?artistName),"EN") && 
-        langMatches(lang(?genreMusical),"EN") && 
-        langMatches(lang(?abs),"EN")
-        )
-        }
-        GROUP BY ?s`
-
-    // Encodage de l'URL à transmettre à DBPedia
-    var url_base = "http://dbpedia.org/sparql";
-    var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
-
-    // Requête HTTP et affichage des résultats
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            var results = JSON.parse(this.responseText);
-            afficherInfosTitle(results);
-        }
-    };
-    xmlhttp.open("GET", url, true);
-    xmlhttp.send();
-  }
-
-</script>
-
-
-
-</body>
+        </br>
+        </br>
+        <a id="linkMoreInfos" href="#" onclick=moreSingles(document.getElementById("artistName").innerText.substring(document.getElementById("artistName").innerText.lastIndexOf(":")+1)) style="visibility: hidden">More singles from the artist :</a>
+        <p id="moreInfos"></p>
+    </body>
 </html>
