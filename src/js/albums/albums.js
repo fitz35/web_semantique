@@ -1,3 +1,16 @@
+//Global variables
+var queryHeader = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX : <http://dbpedia.org/resource/>
+PREFIX dbpedia2: <http://dbpedia.org/property/>
+PREFIX dbpedia: <http://dbpedia.org/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+`
 //Appel de toutes les fonctions de recherche
 function appel() {
     rechercherNom();
@@ -18,22 +31,12 @@ function appel() {
 //Recuperer le nom de l album
 //
 function rechercherNom() {
-    var contenu_requete = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX dc: <http://purl.org/dc/elements/1.1/>
-PREFIX : <http://dbpedia.org/resource/>
-PREFIX dbpedia2: <http://dbpedia.org/property/>
-PREFIX dbpedia: <http://dbpedia.org/>
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-
-SELECT ?name WHERE {
-?album dbp:name ?name; dbo:wikiPageID ?id.
-filter(?id = 7615743)
-}
-limit 1`;
+    var contenu_requete = queryHeader + 
+    `SELECT ?name WHERE {
+    ?album dbp:name ?name; dbo:wikiPageID ?id.
+    filter(?id = 7615743)
+    }
+    limit 1`;
     // Encodage de l'URL à transmettre à DBPedia
     var url_base = "http://dbpedia.org/sparql";
     var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
@@ -66,22 +69,12 @@ limit 1`;
 //Recuperer la description de l album
 //
 function rechercherDescription() {
-    var contenu_requete = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX dc: <http://purl.org/dc/elements/1.1/>
-PREFIX : <http://dbpedia.org/resource/>
-PREFIX dbpedia2: <http://dbpedia.org/property/>
-PREFIX dbpedia: <http://dbpedia.org/>
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-
-SELECT ?desc WHERE {
-?album dbo:abstract ?desc; dbo:wikiPageID ?id.
-filter(?id = 7615743 && langMatches(lang(?desc),"EN"))
-}
-limit 1`;
+    var contenu_requete = queryHeader + 
+    `SELECT ?desc WHERE {
+    ?album dbo:abstract ?desc; dbo:wikiPageID ?id.
+    filter(?id = 7615743 && langMatches(lang(?desc),"EN"))
+    }
+    limit 1`;
     // Encodage de l'URL à transmettre à DBPedia
     var url_base = "http://dbpedia.org/sparql";
     var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
@@ -113,22 +106,12 @@ limit 1`;
 //Recuperer le nom de l artiste de l album
 //
 function rechercherArtiste() {
-    var contenu_requete = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX dc: <http://purl.org/dc/elements/1.1/>
-PREFIX : <http://dbpedia.org/resource/>
-PREFIX dbpedia2: <http://dbpedia.org/property/>
-PREFIX dbpedia: <http://dbpedia.org/>
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-
-SELECT ?artist WHERE {
-?album dbp:artist ?artist; dbo:wikiPageID ?id.
-filter(?id = 7615743 && langMatches(lang(?artist),"EN"))
-}
-limit 1`;
+    var contenu_requete = queryHeader + 
+    `SELECT ?artist WHERE {
+    ?album dbp:artist ?artist; dbo:wikiPageID ?id.
+    filter(?id = 7615743 && langMatches(lang(?artist),"EN"))
+    }
+    limit 1`;
     // Encodage de l'URL à transmettre à DBPedia
     var url_base = "http://dbpedia.org/sparql";
     var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
@@ -160,22 +143,12 @@ limit 1`;
 //Recuperer la de sortie de l album
 //
 function rechercherDateSortie() {
-    var contenu_requete = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX dc: <http://purl.org/dc/elements/1.1/>
-PREFIX : <http://dbpedia.org/resource/>
-PREFIX dbpedia2: <http://dbpedia.org/property/>
-PREFIX dbpedia: <http://dbpedia.org/>
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-
-SELECT ?released WHERE {
-?album dbp:released ?released; dbo:wikiPageID ?id.
-filter(?id = 7615743)
-}
-limit 1`;
+    var contenu_requete = queryHeader + 
+    `SELECT ?released WHERE {
+    ?album dbp:released ?released; dbo:wikiPageID ?id.
+    filter(?id = 7615743)
+    }
+    limit 1`;
     // Encodage de l'URL à transmettre à DBPedia
     var url_base = "http://dbpedia.org/sparql";
     var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
@@ -208,22 +181,12 @@ limit 1`;
 //Recuperer l image de l album
 //
 function rechercherImage() {
-    var contenu_requete = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX dc: <http://purl.org/dc/elements/1.1/>
-PREFIX : <http://dbpedia.org/resource/>
-PREFIX dbpedia2: <http://dbpedia.org/property/>
-PREFIX dbpedia: <http://dbpedia.org/>
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-
-SELECT ?cover WHERE {
-?album dbp:cover ?cover; dbo:wikiPageID ?id.
-filter(?id = 196945)
-}
-limit 1 `;
+    var contenu_requete = queryHeader + 
+    `SELECT ?cover WHERE {
+    ?album dbp:cover ?cover; dbo:wikiPageID ?id.
+    filter(?id = 196945)
+    }
+    limit 1 `;
     // Encodage de l'URL à transmettre à DBPedia
     var url_base = "http://dbpedia.org/sparql";
     var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
@@ -270,21 +233,11 @@ limit 1 `;
 //Recuperer le producteur de l album
 //
 function rechercherProducteur() {
-    var contenu_requete = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX dc: <http://purl.org/dc/elements/1.1/>
-PREFIX : <http://dbpedia.org/resource/>
-PREFIX dbpedia2: <http://dbpedia.org/property/>
-PREFIX dbpedia: <http://dbpedia.org/>
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-
-SELECT ?producer WHERE {
-    ?album a dbo:Album; dbo:wikiPageID ?id; dbp:producer ?producer.
-    FILTER(?id = 7615743)
-    }`;
+      var contenu_requete = queryHeader + 
+      `SELECT ?producer WHERE {
+      ?album a dbo:Album; dbo:wikiPageID ?id; dbp:producer ?producer.
+      FILTER(?id = 7615743)
+      }`;
     // Encodage de l'URL à transmettre à DBPedia
     var url_base = "http://dbpedia.org/sparql";
     var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
@@ -316,18 +269,8 @@ SELECT ?producer WHERE {
 //Recuperer les ventes de l album
 //
 function rechercherVentes() {
-    var contenu_requete = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX dc: <http://purl.org/dc/elements/1.1/>
-PREFIX : <http://dbpedia.org/resource/>
-PREFIX dbpedia2: <http://dbpedia.org/property/>
-PREFIX dbpedia: <http://dbpedia.org/>
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-
-SELECT (max(?salesamount) as ?sales) WHERE {
+    var contenu_requete = queryHeader + 
+    `SELECT (max(?salesamount) as ?sales) WHERE {
     ?album a dbo:Album; dbp:name ?name; dbo:wikiPageID ?id; dbp:salesamount ?salesamount.
     FILTER(?id = 7615743)
     }
@@ -363,18 +306,8 @@ SELECT (max(?salesamount) as ?sales) WHERE {
 //Recuperer le label de l album
 //
 function rechercherLabel() {
-    var contenu_requete = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX dc: <http://purl.org/dc/elements/1.1/>
-PREFIX : <http://dbpedia.org/resource/>
-PREFIX dbpedia2: <http://dbpedia.org/property/>
-PREFIX dbpedia: <http://dbpedia.org/>
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-
-SELECT ?label WHERE {
+    var contenu_requete = queryHeader + 
+    `SELECT ?label WHERE {
     ?album a dbo:Album; dbp:name ?name; dbo:wikiPageID ?id; dbp:label ?label.
     FILTER(?id = 7615743)
     }`;
@@ -409,18 +342,8 @@ SELECT ?label WHERE {
 //Recuperer le genre de l album
 //
 function rechercherGenre() {
-    var contenu_requete = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX dc: <http://purl.org/dc/elements/1.1/>
-PREFIX : <http://dbpedia.org/resource/>
-PREFIX dbpedia2: <http://dbpedia.org/property/>
-PREFIX dbpedia: <http://dbpedia.org/>
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-
-SELECT ?genre WHERE {
+    var contenu_requete = queryHeader + 
+    `SELECT ?genre WHERE {
     ?album a dbo:Album; dbp:name ?name; dbo:wikiPageID ?id; dbp:genre ?genre.
     FILTER(?id = 7615743 &&  langMatches (lang(?genre) , "EN"))
     }`;
@@ -455,18 +378,8 @@ SELECT ?genre WHERE {
 //Recuperer la duree de l album
 //
 function rechercherDuree() {
-    var contenu_requete = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX dc: <http://purl.org/dc/elements/1.1/>
-PREFIX : <http://dbpedia.org/resource/>
-PREFIX dbpedia2: <http://dbpedia.org/property/>
-PREFIX dbpedia: <http://dbpedia.org/>
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-
-SELECT (max(?length) as ?totallength) WHERE {
+    var contenu_requete = queryHeader + 
+    `SELECT (max(?length) as ?totallength) WHERE {
     ?album a dbo:Album; dbp:name ?name; dbo:wikiPageID ?id; dbp:totalLength ?length.
     FILTER(?id = 7615743)
     }
@@ -502,18 +415,8 @@ SELECT (max(?length) as ?totallength) WHERE {
 //Recuperer les titres de l album 
 //
 function rechercherTitres() {
-    var contenu_requete = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX dc: <http://purl.org/dc/elements/1.1/>
-PREFIX : <http://dbpedia.org/resource/>
-PREFIX dbpedia2: <http://dbpedia.org/property/>
-PREFIX dbpedia: <http://dbpedia.org/>
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-
-SELECT ?Songtitle WHERE {
+    var contenu_requete = queryHeader + 
+    `SELECT ?Songtitle WHERE {
     ?album a dbo:Album; dbp:name ?name; dbo:wikiPageID ?id; dbp:title ?Songtitle.
     FILTER(?id = 7615743)
     }`;
@@ -551,18 +454,8 @@ SELECT ?Songtitle WHERE {
 //Recuperer les prix de l album 
 //
 function rechercherPrix() {
-    var contenu_requete = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX dc: <http://purl.org/dc/elements/1.1/>
-PREFIX : <http://dbpedia.org/resource/>
-PREFIX dbpedia2: <http://dbpedia.org/property/>
-PREFIX dbpedia: <http://dbpedia.org/>
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-
-SELECT ?Songtitle WHERE {
+    var contenu_requete = queryHeader + 
+    `SELECT ?Songtitle WHERE {
     ?album a dbo:Album; dbp:name ?name; dbo:wikiPageID ?id; dbp:title ?Songtitle.
     FILTER(?id = 7615743)
     }`;
