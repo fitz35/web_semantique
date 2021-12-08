@@ -130,6 +130,8 @@ function afficherAlbum(data){
 }
 
 function getInfosGeneralTitle(ressource){
+    document.getElementById("linkMoreInfos").style.visibility="visible";
+
     var contenu_requete = `
     PREFIX owl: <http://www.w3.org/2002/07/owl#>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
@@ -329,4 +331,58 @@ function getArtistAndGenre(ressource) {
     };
     xmlhttp.open("GET", url, true);
     xmlhttp.send();
+}
+
+function moreSingles (artistName)
+{
+    console.log(artistName);
+    //console.log(document.getElementById("artistName").innerText.substring(document.getElementById("artistName").innerText.lastIndexOf(":")+1));
+    var query = `
+        PREFIX owl: <http://www.w3.org/2002/07/owl#>
+        PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+        PREFIX dc: <http://purl.org/dc/elements/1.1/>
+        PREFIX dbr: <http://dbpedia.org/resource/>
+        PREFIX dbpedia2: <http://dbpedia.org/property/>
+        PREFIX dbpedia: <http://dbpedia.org/>
+        PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+        SELECT DISTINCT ?songName
+        WHERE {
+            ?artistName a dbo:Band.
+            ?artistName rdfs:label ?artist.
+            ?artistName ^dbo:artist ?song.
+            ?song dbp:name ?songName.
+            FILTER(langMatches(lang(?artist),"EN") && regex(?artist, "`+artistName+`") )
+        }LIMIT 20`;
+    var url = "https://dbpedia.org/sparql/?query="+encodeURIComponent(query)+"&format=json";
+    // Requête HTTP et affichage des résultats
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var results = JSON.parse(this.responseText);
+            afficherMoreSingles(results);
+        }
+    };
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+
+}
+
+function afficherMoreSingles(data){
+    var songName="";
+    console.log(data);
+    data.results.bindings.forEach(r => {
+        if(r.songName && !songName.includes(r.songName.value)){
+            songName+=r.songName.value +" | ";
+        }
+    });
+
+    if(songName!=""){
+        document.getElementById("moreInfos").innerHTML=songName;
+    }else{
+        document.getElementById("moreInfos").innerHTML="Not found";
+    }
 }

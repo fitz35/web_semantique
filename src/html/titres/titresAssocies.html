@@ -12,7 +12,7 @@
 
 <h1 >Single page</h1>
 
-<a href="#" onclick=infosTitle('http://dbpedia.org/resource/Billie_Jean')>http://dbpedia.org/resource/Billie_Jean</a>
+<a href="#" onclick=infosTitle('http://dbpedia.org/resource/Rolling_in_the_Deep')>http://dbpedia.org/resource/Rolling_in_the_Deep</a>
 </br>
 </br>
 
@@ -189,6 +189,7 @@
             if (this.readyState == 4 && this.status == 200) {
 
                 var results = JSON.parse(this.responseText);
+                console.log(results.results);
                 //afficherInfosTitle(results);
                 results.results.bindings.forEach(r => {
                     //console.log(r.songName.value);
