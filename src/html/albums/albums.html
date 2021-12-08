@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <script type="text/javascript" src="../../js/albums/albums.js"></script>
+  <style>
+    table, th, td {
+      border: 1px solid black;
+      border-spacing: 20px;
+      background-size: cover;
+    }
+
+    * {
+	    margin: 0;
+	    padding: 0;
+    }
+
+    html, body {
+	    height: 100%;
+    }
+    h2 { 
+    color: #1d5e33; 
+    font-family: Helvetica, sans-serif; 
+    }
+
+    table {
+  border-collapse: collapse;
+}
+
+td, th {
+  text-align:center;
+  border: solid 0px #000000;
+  margin: 0px 0px 0px 0px;
+}
+p {
+  width: 90%;
+  height: 20%;
+  border: none;
+}
+
+    #gauche {
+	    width: 30%;
+	    height: 100%;
+	    float: left;
+	    background-color: rgba(0, 128, 111, 0.185);
+      
+    }
+
+    #droite {
+	    width: 70%;
+	    float: right;
+	    background-color: rgba(0, 128, 111, 0.185);
+      height: 100vh;
+
+    }
+
+    .sansbord {
+        border:none;
+        text-align:right;
+        border-spacing: 15px;
+    }
+
+    .auto {
+        overflow: auto;
+    }
+  </style>
+</head>
+
+<body onload ="appel()">
+    <div id="gauche">
+      <br><br> <center><h2 id="name"></h2></center><br><br>
+        <center><div id="cover"><img src="../../../img/defaultAlbum.jpg" width="300"></div></center>
+        
+        <!--ul sizes="(min-width: 600px) 200px, 50vw">
+            
+        </ul-->
+    </div>
+    <div id="droite">
+      <br><br><h4>Artist: </h4><a id="artist" href="./artistes.html" target=_blank>artist</a><br><br>
+        <h4 >General description</h4><br>
+        <p class="auto" id="description"></p>
+        <br><br>
+        <table class="sansbord" style="width:100%">
+            <tbody>
+            <tr class="table-primary" scope="col"  style="font-size: small;font-weight: bold;">
+                
+                <th>producer</th>
+                <th>Genre</th>
+                <th>Release date</th>
+                <th>Label</th>
+                <th>Duration</th>
+                <th>Sales</th>
+                <th>Award</th>
+                <!--th scope="col">Award</th-->
+            </tr>
+            <tr>
+                <td id="producer"></td>
+                <td id="genre"></td>
+                <td id=released></td>
+                <td id="label"></td>
+                <td id="totallength"></td>
+                <td id="sales"></td>
+                <td id="awards"></td>
+                <td ></td>
+              </tr></tbody>
+        </table><br>
+        <table class="sansbord" style="width:50%">
+            <tbody>
+            <tr class="table-primary" scope="col"  style="font-size: small;font-weight: bold;">
+                <th>List of sounds</th>
+                <th>Other albums to consult</th>
+                
+            </tr>
+            </tbody>
+            <tr>
+                <td id="titres"></td>
+                <td></td>
+              </tr>
+        </table>
+        <!--ul>
+            
+        </ul-->
+        <!--button onclick="appel()">Rechercher</button-->
+    </div>
+
+<!--button onclick="rechercher()">Rechercher</button-->
+</body>
+</html>
