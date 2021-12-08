@@ -117,6 +117,5 @@ function handle(e){
             console.log("Faut faire qlqch")
         }
     }
-
     return false;
 }
