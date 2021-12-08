@@ -261,7 +261,8 @@ function rechercherProducteur() {
     data.results.bindings.forEach(r => {
       producer = r.producer.value;
     });
-
+    
+    producer = producer.replaceAll("*","<br>");
     document.getElementById("producer").innerHTML = producer;
   }
 //
@@ -335,6 +336,8 @@ function rechercherLabel() {
       label = r.label.value;
     });
 
+    label = label.replace("http://dbpedia.org/resource/","");
+    label = label.replaceAll("_"," ");
     document.getElementById("label").innerHTML = label;
   }
 //
@@ -371,6 +374,7 @@ function rechercherGenre() {
       genre = r.genre.value;
     });
 
+    genre = genre.replaceAll("*","<br>");
     document.getElementById("genre").innerHTML = genre;
   }
 //
@@ -442,7 +446,10 @@ function rechercherTitres() {
     var listeTitres;
     listeTitres = "<ul>"
     data.results.bindings.forEach(r => {
-      listeTitres += "<li>" + r.Songtitle.value + "</li>";
+        var title = r.Songtitle.value;
+        title = title.replace("http://dbpedia.org/resource/","");
+        title = title.replaceAll("_"," ");
+        listeTitres += "<li>" + title + "</li>";
     });
       
     listeTitres += "</ul>"
