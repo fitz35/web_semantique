@@ -198,6 +198,7 @@ limit 1`;
     data.results.bindings.forEach(r => {
       released = r.released.value;
     });
+    console.log("RELEASED");
 
     document.getElementById("released").innerHTML = released;
   }
@@ -219,7 +220,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 SELECT ?cover WHERE {
 ?album dbp:cover ?cover; dbo:wikiPageID ?id.
-filter(?id = 7615743)
+filter(?id = 196945)
 }
 limit 1 `;
     // Encodage de l'URL à transmettre à DBPedia
@@ -242,11 +243,15 @@ limit 1 `;
   function afficherResultatsImage(data)
   {
     var cover;
-    cover = "http://commons.wikimedia.org/wiki/Special:FilePath/";
+    var link;
+    link = "http://commons.wikimedia.org/wiki/Special:FilePath/";
     data.results.bindings.forEach(r => {
-      cover += r.cover.value;
+      link += r.cover.value;
     });
-    cover+= "?width=300"
+    link+= "?width=300"
+    cover = "</img source='";
+    cover += link + "'>";
+    console.log("COVER");
 
     document.getElementById("cover").innerHTML = cover;
   }
