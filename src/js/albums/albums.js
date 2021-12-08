@@ -11,22 +11,23 @@ PREFIX dbpedia: <http://dbpedia.org/>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 `
+var id = -1;
 //Appel de toutes les fonctions de recherche
 function appel() {
-  var albumId = window.location.search.substring(1);
-  console.log(albumId)
-  rechercherNom(albumId);
-  rechercherDescription(albumId);
-  rechercherArtiste(albumId);
-  rechercherDateSortie(albumId);
-  rechercherGenre(albumId);
-  rechercherImage(albumId);
-  rechercherProducteur(albumId);
-  rechercherVentes(albumId);
-  rechercherLabel(albumId);
-  rechercherDuree(albumId);
-  rechercherTitres(albumId);
-  rechercherPrix(albumId);
+  var ressourceName = window.location.search.split("=")[1];
+  console.log(ressourceName)
+  rechercherNom(ressourceName);
+  rechercherDescription(id);
+  rechercherArtiste(id);
+  rechercherDateSortie(id);
+  rechercherGenre(id);
+  rechercherImage(id);
+  rechercherProducteur(id);
+  rechercherVentes(id);
+  rechercherLabel(id);
+  rechercherDuree(id);
+  rechercherTitres(id);
+  rechercherPrix(id);
 }
 
 function clean(str){
@@ -40,14 +41,13 @@ function clean(str){
 //
 //Recuperer le nom de l album
 //
-function rechercherNom(idParam) {
+function rechercherNom(ressourceNameParam) {
     var contenu_requete = queryHeader + 
-    `SELECT ?name WHERE {
-    ?album dbp:name ?name; dbo:wikiPageID ?id.
-    filter(?id = idParam)
+    `SELECT ?name ?id WHERE {
+    dbr:ressourceNameParam dbp:name ?name; dbo:wikiPageID ?id.
     }
     limit 1`;
-    contenu_requete = contenu_requete.replace("idParam", idParam);
+    contenu_requete = contenu_requete.replace("ressourceNameParam", ressourceNameParam);
     // Encodage de l'URL à transmettre à DBPedia
     var url_base = "http://dbpedia.org/sparql";
     var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
@@ -58,10 +58,13 @@ function rechercherNom(idParam) {
         if (this.readyState == 4 && this.status == 200) {
             var results = JSON.parse(this.responseText);
             afficherResultatsName(results);
+            id = results.results.bindings[0].id.value
         }
+        return id
     };
-    xmlhttp.open("GET", url, true);
+    xmlhttp.open("GET", url, false);
     xmlhttp.send();
+    return ;
   }
 
   // Affichage des résultats dans un tableau
