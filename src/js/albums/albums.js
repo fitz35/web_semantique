@@ -28,6 +28,14 @@ function appel() {
   rechercherTitres(albumId);
   rechercherPrix(albumId);
 }
+
+function clean(str){
+    str = str.replaceAll("*","<br>");
+    str = str.replace("http://dbpedia.org/resource/","");
+    str = str.replaceAll("_"," ");
+    str = str.replaceAll("%22",'"');
+    return str;
+}
 //
 //
 //Recuperer le nom de l album
@@ -226,15 +234,7 @@ function rechercherImage(idParam) {
 
     document.getElementById("cover").innerHTML = cover;
   }
-  //function afficherResultatsImage(data)
-  //{
-  //  var cover;
-  //  data.results.bindings.forEach(r => {
-  //    cover = r.cover.value;
-  //  });
-  //
-  //  document.getElementById("cover").innerHTML = cover;
-  //}
+
 //
 //
 //Recuperer le producteur de l album
@@ -269,7 +269,8 @@ function rechercherProducteur(idParam) {
     data.results.bindings.forEach(r => {
       producer = r.producer.value;
     });
-
+    
+    producer = clean(producer);
     document.getElementById("producer").innerHTML = producer;
   }
 //
@@ -345,6 +346,7 @@ function rechercherLabel(idParam) {
       label = r.label.value;
     });
 
+    label = clean(label);
     document.getElementById("label").innerHTML = label;
   }
 //
@@ -382,6 +384,7 @@ function rechercherGenre(idParam) {
       genre = r.genre.value;
     });
 
+    genre = clean(genre);
     document.getElementById("genre").innerHTML = genre;
   }
 //
@@ -455,7 +458,9 @@ function rechercherTitres(idParam) {
     var listeTitres;
     listeTitres = "<ul>"
     data.results.bindings.forEach(r => {
-      listeTitres += "<li>" + r.Songtitle.value + "</li>";
+        var title = r.Songtitle.value;
+        title = clean(title);
+        listeTitres += "<li>" + title + "</li>";
     });
       
     listeTitres += "</ul>"
