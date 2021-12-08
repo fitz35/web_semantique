@@ -1,7 +1,9 @@
 function rechercherTitre(entredTitle) {
-    //$("#infosTitle").hide();
-    //$("#spinner").show();
-    //var entredTitle = document.getElementById("title").value;
+    $("#infosTitle").hide();
+    $("#spinner").show();
+    $("#resultats").hide();
+
+  var entredTitle = document.getElementById("title").value;
 
   var searchedTitle = entredTitle.replace(/ /g,"_"); // turn " " to "_"
 
@@ -43,6 +45,8 @@ function rechercherTitre(entredTitle) {
   xmlhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
           var results = JSON.parse(this.responseText);
+          $("#resultats").show();
+          $("#spinner").hide();
           afficherResultats(results);
       }
   };
@@ -63,14 +67,16 @@ function afficherResultats(data)
 
   data.results.bindings.forEach(r => {
     contenuTableau += "<div class='element'>";
-      urlRessource =  r.s.value;
+      var urlRessource =  r.s.value;
 
       var rightCover = r.covers.value.replace(/ /g,"_"); // turn " " to "_"
-      var path = 'http://en.wikipedia.org/wiki/Special:FilePath/'+ rightCover;
-      var defaultPath = 'https://ae01.alicdn.com/kf/HTB1BuhPdL1H3KVjSZFHq6zKppXar/Record-Decal-Music-Note-Vinyl-Wall-Decals-Album-Stickers-Bedroom-Home-Decoration-Retro-Art-Murals-Living.jpg_Q90.jpg_.webp';
-      contenuTableau += '<div id='+idImg+'> <img  src="'+path + '" width="200" alt=" " ></div>';
-      contenuTableau += "<div><a href=# onclick=infosTitle(\""+ urlRessource +"\")>" + r.title.value + "</a></div>";
-      contenuTableau += "<div><a href=# onclick=infosTitle(\""+ urlRessource +"\")>" + r.feat.value + "</a></div>";
+      var path = 'http://en.wikipedia.org/wiki/Special:FilePath/'+ rightCover; 
+
+      var defaultPath = 'https://ae01.alicdn.com/kf/HTB1BuhPdL1H3KVjSZFHq6zKppXar/Record-Decal-Music-Note-Vinyl-Wall-Decals-Album-Stickers-Bedroom-Home-Decoration-Retro-Art-Murals-Living.jpg_Q90.jpg_.webp'; 
+      contenuTableau += "<div id='"+idImg+"'> <img  src=\""+path + "\" width='200' alt='' ></div>";
+
+      contenuTableau += "<div><a href=# onclick=infosTitle(\""+ urlRessource +"\",\""+path+"\")>" + r.title.value + "</a></div>";
+      contenuTableau += "<div><a href=# onclick=infosTitle(\""+ urlRessource +"\",\""+path+"\")>" + r.feat.value + "</a></div>";
       idImg=idImg+1;
     contenuTableau += "</div>";
   });

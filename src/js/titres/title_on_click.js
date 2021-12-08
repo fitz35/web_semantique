@@ -4,31 +4,41 @@ function getRessource(uri){
     ressource=ressource.replace('(','\\(');
     ressource=ressource.replace(')','\\)');
     ressource=ressource.replace('?','\\?');
-    ressource=ressource.replace('!','\\!');
-    ressource=ressource.replace(':','\\:');
+    ressource=ressource.replace(/!/g,'\\!');
+    ressource=ressource.replace(/:/g,'\\:');
     ressource=ressource.replace('$','\\$');
+    ressource=ressource.replace(/,/g,'\\,');
+    ressource=ressource.replace(/'/g,'\\\'');
+
     return ressource;
 }
 
-function infosTitle(uri) {
+function infosTitle(uri,urlImage) {
     $("#resultats").hide();
     $("#infosTitle").show();
-    document.getElementById("infosTitle").innerHTML="<div id='generalInfos'>"+
-                                                        "<div id='pochetteAlbum'>"+
-                                                            "<img src='https://images.ladepeche.fr/api/v1/images/view/6130fc52d286c25f4a342194/full/image.jpg?v=1' width='200' />"+  
-                                                        "</div>"+
-                                                        "<div>"+
-                                                            "<h1 id='musicTitle'></h1>"+
-                                                            "<h2 id='artistName'></h2>"+
-                                                            "<h2 id='albumTitle'></h2>"+
-                                                            "<p id='releaseDate'></p>"+
-                                                            "<p id='genreMusical'></p>"+
-                                                        "</div>"+
-                                                    "</div>"+
-                                                    "<div>"+
-                                                        "<h4>Abstract :</h4>"+
-                                                        "<p id='abstract'></p>"+
-                                                    "</div>";
+    document.getElementById("infosTitle").innerHTML=
+        "<div id='generalInfos'>"+
+            "<div id='pochetteAlbum'>"+
+                "<img src=\""+urlImage+"\" width='200' />"+  
+            "</div>"+
+            "<div>"+
+                "<h1 id='musicTitle'></h1>"+
+                "<h2 id='artistName'></h2>"+
+                "<h2 id='albumTitle'></h2>"+
+                "<p id='releaseDate'></p>"+
+                "<p id='genreMusical'></p>"+
+            "</div>"+
+        "</div>"+
+        "<div>"+
+            "<h4>Abstract :</h4>"+
+            "<p id='abstract'></p>"+
+        "</div>"+
+        "</br>"+
+        "</br>"+
+        "<a id='linkMoreInfos' href='#' onclick='moreSingles()'"+
+         "style='visibility: hidden'>More singles from the artist :</a>"+
+        "<p id='moreInfos'></p>";
+
     ressource=getRessource(uri);
     getInfosGeneralTitle(ressource);
     getAlbum(ressource);
@@ -41,17 +51,6 @@ function afficherInfosTitle(data){
     var pochette="";
     var releaseDate="";
     data.results.bindings.forEach(r => {
-        if(r.pochette && r.pochette.value!=""){
-            // document.getElementById("pochette").innerHTML=r.pochette.value;
-            document.getElementById("pochetteAlbum").innerHTML="<img "+ 
-                                                            "src=\"https://images.ladepeche.fr/api/v1/images/view/6130fc52d286c25f4a342194/full/image.jpg?v=1\"' "+
-                                                            "width='200' alt='No album photo'/>" ;
-        }else{
-            document.getElementById("pochetteAlbum").innerHTML="<img "+ 
-                                                            "src=\"https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg\"' "+
-                                                            "width='200' alt='No album photo'/>" ;
-        }
-
         if(r.title && !title.includes(r.title.value)){
             title+=r.title.value;
         }
@@ -60,7 +59,7 @@ function afficherInfosTitle(data){
         }
     });
 
-    if(releaseDate!=""){
+    if(title!=""){
         document.getElementById("musicTitle").innerHTML="Title : "+title;
     }else{
         document.getElementById("musicTitle").innerHTML="Title : ";
@@ -306,6 +305,8 @@ function getArtistAndGenre(ressource) {
             ?s dbp:artist ?artist.
             ?artist rdfs:label ?artistN.
         } OPTIONAL {
+            ?s dbp:artist ?artistN.
+        }OPTIONAL {
             ?s dbo:artist ?artist.
             ?artist rdfs:label ?artistN.
         }
@@ -333,10 +334,14 @@ function getArtistAndGenre(ressource) {
     xmlhttp.send();
 }
 
-function moreSingles (artistName)
+function moreSingles ()
 {
-    console.log(artistName);
-    //console.log(document.getElementById("artistName").innerText.substring(document.getElementById("artistName").innerText.lastIndexOf(":")+1));
+    artist=document.getElementById("artistName").innerText;
+    artist=artist.substring(9);
+    if(artist.includes(',')){
+        indexVirg=artist.indexOf(',');
+        artist=artist.substring(0,indexVirg);
+    }
     var query = `
         PREFIX owl: <http://www.w3.org/2002/07/owl#>
         PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
@@ -349,13 +354,13 @@ function moreSingles (artistName)
         PREFIX dbpedia: <http://dbpedia.org/>
         PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-        SELECT DISTINCT ?songName
+        SELECT DISTINCT ?songName,?artist
         WHERE {
             ?artistName a dbo:Band.
             ?artistName rdfs:label ?artist.
             ?artistName ^dbo:artist ?song.
             ?song dbp:name ?songName.
-            FILTER(langMatches(lang(?artist),"EN") && regex(?artist, "`+artistName+`") )
+            FILTER(langMatches(lang(?artist),"EN") && regex(?artist, "`+artist+`") )
         }LIMIT 20`;
     var url = "https://dbpedia.org/sparql/?query="+encodeURIComponent(query)+"&format=json";
     // Requête HTTP et affichage des résultats
@@ -373,7 +378,6 @@ function moreSingles (artistName)
 
 function afficherMoreSingles(data){
     var songName="";
-    console.log(data);
     data.results.bindings.forEach(r => {
         if(r.songName && !songName.includes(r.songName.value)){
             songName+=r.songName.value +" | ";
