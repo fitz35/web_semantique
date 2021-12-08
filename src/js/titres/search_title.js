@@ -1,7 +1,6 @@
 function rechercherTitre(entredTitle) {
     //$("#infosTitle").hide();
     //$("#spinner").show();
-    //var entredTitle = document.getElementById("title").value;
 
   var searchedTitle = entredTitle.replace(/ /g,"_"); // turn " " to "_"
 
