@@ -499,5 +499,5 @@ function rechercherPrix(idParam) {
     });
       
     listePrix += "</ul>"
-    document.getElementById("awards").innerHTML = listeTitres;
+    document.getElementById("awards").innerHTML = listePrix;
   }
