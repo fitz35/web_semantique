@@ -11,6 +11,7 @@ PREFIX dbpedia: <http://dbpedia.org/>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 `
+
 var id = -1;
 //Appel de toutes les fonctions de recherche
 function appel() {
@@ -191,12 +192,16 @@ function rechercherLienArtiste(idParam) {
     data.results.bindings.forEach(r => {
       lienArtist = r.artist.value;
     });
-      
-    var path = window.location.pathname;
-    var path = path.replace("albums/albums.html","");
-    lienArtist = lienArtist.replace("http://dbpedia.org/resource/","");
-    lienArtist = path + "artistes/artistes.html?name=" + lienArtist;
-    document.getElementById("artist").setAttribute("href",lienArtist);
+    
+    if(lienArtist.includes("http://dbpedia.org/resource/")){
+        var path = window.location.pathname;
+        var path = path.replace("albums/albums.html","");
+        lienArtist = lienArtist.replace("http://dbpedia.org/resource/","");
+        lienArtist = path + "artistes/artistes.html?name=" + lienArtist;
+        document.getElementById("artist").setAttribute("href",lienArtist);
+    }else{
+        document.getElementById("artist").removeAttribute("href");
+    }
   }
 //
 //
@@ -501,15 +506,28 @@ function rechercherTitres(idParam) {
   function afficherResultatsTitres(data)
   {
     var listeTitres;
-    listeTitres = "<ul>"
-    data.results.bindings.forEach(r => {
-        var title = r.Songtitle.value;
-        title = clean(title);
-        listeTitres += "<li>" + title + "</li>";
-    });
-      
-    listeTitres += "</ul>"
+    var lienTitre;
+    var son;
+    listeTitres = "<ul id='listeTitres'></ul>";
     document.getElementById("titres").innerHTML = listeTitres;
+    var i=1;
+    data.results.bindings.forEach(r => {
+        son = "<li><a id='son" + i.toString() + "' href='' ></a></li>";
+        document.getElementById("listeTitres").innerHTML += son;
+        var title = r.Songtitle.value;
+        if(title.includes("http://dbpedia.org/resource/")){
+            var path = window.location.pathname;
+            var path = path.replace("albums/albums.html","");
+            lienTitre = title.replace("http://dbpedia.org/resource/","");
+            lienTitre = path + "titres/titres.html?name=" + lienTitre;
+            document.getElementById("son"+i.toString()).setAttribute("href",lienTitre);
+        }else{
+            document.getElementById("son"+i.toString()).removeAttribute("href");
+        }
+        title = clean(title);
+        document.getElementById("son"+i.toString()).innerHTML = title;
+        i += 1;
+    });
   }
 
 //
@@ -543,11 +561,10 @@ function rechercherPrix(idParam) {
   function afficherResultatsPrix(data)
   {
     var listePrix;
-    listePrix = "<ul>"
+    listePrix = ""
     data.results.bindings.forEach(r => {
-      listePrix += "<li>" + r.awards.value + "</li>";
+      listePrix += r.awards.value + "<br>";
     });
       
-    listePrix += "</ul>"
     document.getElementById("awards").innerHTML = listePrix;
   }
