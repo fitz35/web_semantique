@@ -19,6 +19,7 @@ function rechercherArtist(entredTitle) {
      SELECT ?a ?name ?image WHERE {
         ?a dbo:abstract ?abstract.
         ?a  dbp:name ?name .
+        ?a  a dbo:Person .
         OPTIONAL
         {
         ?a dbo:thumbnail ?image.
@@ -35,7 +36,6 @@ function rechercherArtist(entredTitle) {
   xmlhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
           var results = JSON.parse(this.responseText);
-        console.log(results);
         afficherResultatsArtiste(results);
       }
   };
@@ -59,22 +59,19 @@ function afficherResultatsArtiste(data)
   var page = path.replace("index.html","");
 
   data.results.bindings.forEach(r => {
-    var rightCover = r.name.value.replace(/ /g,"_"); // turn " " to "_"
+    var rightCover = r.a.value.replace("http://dbpedia.org/resource/",""); // turn " " to "_"
     var newRightCover = r.name.value;
-    console.log("file://"+page + "html/artistes/artistes.html?name="+ rightCover);
 
     contenuTableau += "<div class='element'>";
       urlRessource =  r.name.value;
 
       if(r.name.value.includes("resource")){
-        console.log();
-        rightCover = (r.name.value.replace("http://dbpedia.org/resource/",""))
+        //rightCover = (r.name.value.replace("http://dbpedia.org/resource/",""))
         newRightCover = rightCover.replace("_"," ");
       }
       //var rightCover = r.name.value.replace(/ /g,"_"); // turn " " to "_"
       var path = 'http://en.wikipedia.org/wiki/Special:FilePath/'+ rightCover;
-      var defaultPath = 'https://ae01.alicdn.com/kf/HTB1BuhPdL1H3KVjSZFHq6zKppXar/Record-Decal-Music-Note-Vinyl-Wall-Decals-Album-Stickers-Bedroom-Home-Decoration-Retro-Art-Murals-Living.jpg_Q90.jpg_.webp';
-      //contenuTableau += '<div id='+idImg+'> <img  src="'+path + '" width="200" alt=" " ></div>';
+      contenuTableau += '<div id='+idImg+'> <img  src="'+path + '" width="200" alt=" " ></div>';
       contenuTableau += "<div><a href="+"file://"+page + "html/artistes/artistes.html?name="+ rightCover+">" +newRightCover+ "</a></div>";
       //contenuTableau += "<div><a href=# onclick=infosTitle(\""+ urlRessource +"\")>" + r.feat.value + "</a></div>";
       idImg=idImg+1;
