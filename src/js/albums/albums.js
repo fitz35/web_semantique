@@ -19,7 +19,7 @@ function appel() {
   console.log(ressourceName)
   rechercherNom(ressourceName);
   rechercherDescription(id);
-  rechercherArtiste(id);
+  rechercherArtisteAlbum(id);
   rechercherDateSortie(id);
   rechercherGenre(id);
   rechercherImage(id);
@@ -122,7 +122,7 @@ function rechercherDescription(idParam) {
 //
 //Recuperer le nom de l artiste de l album
 //
-function rechercherArtiste(idParam) {
+function rechercherArtisteAlbum(idParam) {
     var contenu_requete = queryHeader + 
     `SELECT ?artist WHERE {
     ?album dbp:artist ?artist; dbo:wikiPageID ?id.
@@ -139,7 +139,7 @@ function rechercherArtiste(idParam) {
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var results = JSON.parse(this.responseText);
-            afficherResultatsArtiste(results);
+            afficherResultatsArtisteAlbum(results);
         }
     };
     xmlhttp.open("GET", url, true);
@@ -147,7 +147,7 @@ function rechercherArtiste(idParam) {
   }
 
   // Affichage des résultats dans un tableau
-  function afficherResultatsArtiste(data)
+  function afficherResultatsArtisteAlbum(data)
   {
     var artist;
     data.results.bindings.forEach(r => {

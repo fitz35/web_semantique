@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     <title>MUSIK'IF</title>
@@ -36,28 +36,40 @@
 <!-- ----- -->
 <body>
 <!-- Contenu principal -->
-<h1 style="text-align: center;" id="titre">Welcome to MUSIK'IF</h1>
+ <h1 style="text-align: center; visibility: hidden; font-family: 'Text me one'" id="titre">Welcome to M U S I K ' I F</h1>
 <button id="btnSearch" onclick="repaintResearch()" style="visibility: hidden">New research</span></button>
 
+<br><br>
+<br><br>
+<br>
 
-<h2 style="text-align: center;" id="sousTitre">The best musical search engine!</h2>
+<h2 id="sousTitre" class= "sousTitre" style="text-align: center;">The best musical search engine!</h2>
 <br>
 <br>
-<br>
-<div style="text-align: center;">
-    <input type="checkbox" id="artist" name="artist" onclick="checkBox()">
-    <label for="artist" id="artistLabel">Artist</label>
+<form method="POST">
+<div id="trvMenu" style="text-align: center;">
 
-    <input type="checkbox" id="album" name="album" onclick="checkBox()">
-    <label for="album" id="albumLabel">Album</label>
+    <input type="checkbox" id="artist" name="artist" onclick="checkBox(this)">
+    <label for="artist" id="artistLabel" style="color: white">Artist</label>
 
-    <input type="checkbox" id="title" name="title" onclick="checkBox()">
-    <label for="title" id="titleLabel">Title</label>
+    <input type="checkbox" id="album" name="album" onclick="checkBox(this)">
+    <label for="album" id="albumLabel" style="color: white">Album</label>
+
+    <input type="checkbox" id="title" name="title" onclick="checkBox(this)">
+    <label for="title" id="titleLabel" style="color: white">Title</label>
 </div>
+</form>
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <input id="searchbar" class= "searchbar" onkeyup="search_music()" type="text"
-       name="search" placeholder="Search.." style="align-content: center;">
-<button id="monBtn" class="btn" onclick="validateResearch()">Validate</span></button>
+       name="search" placeholder="Search.." style="align-content: center;" onkeypress="handle(event)">
+<button button id="monBtn">
+<i class="fa fa-search" style="color: black"; onclick="validateResearch()">
+</i>
+</button>
+    </input>
 <!-- Titres -->
 <div id="spinner" class="spinner-border" role="status">
     <span class="sr-only">Loading...</span>

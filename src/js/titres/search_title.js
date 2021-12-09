@@ -55,7 +55,7 @@ function rechercherTitre(entredTitle) {
 }
 
 // Affichage des résultats dans un tableau
-function afficherResultats(data)
+export default function afficherResultats(data)
 {
   // Tableau pour mémoriser l'ordre des variables ; sans doute pas nécessaire
   // pour vos applications, c'est juste pour la démo sous forme de tableau
