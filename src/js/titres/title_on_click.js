@@ -1,4 +1,13 @@
 var titleURI="";
+
+
+$(document).ready(function(){
+    handleRequest();
+    $(".go-back").on("click",function(){
+        history.back();
+    });
+});
+
 function getRessource(uri){
     indexSlash=uri.lastIndexOf("/");
     ressource=uri.substring(indexSlash+1);
@@ -296,7 +305,8 @@ function getInfosGeneralTitle(ressource){
             ?s = dbr:`+ressource+` &&
             langMatches(lang(?title),"EN")
         )
-    }`;
+    }
+    LIMIT 1`;
 
     // Encodage de l'URL à transmettre à DBPedia
     var url_base = "http://dbpedia.org/sparql";
@@ -533,8 +543,8 @@ function afficherMoreSingles(data){
     var cptElt=0;
     data.results.bindings.forEach(function(r,index){
         var urlRessource =  r.song.value;
-        indexSlash=urlRessource.lastIndexOf("/");
-        urlRessource=urlRessource.substring(indexSlash+1);
+        indexSlash=urlRessource.lastIndexOf("resource/");
+        urlRessource=urlRessource.substring(indexSlash+9);
 
         var rightCover = r.cover.value.replace(/ /g,"_"); // turn " " to "_"
         if(rightCover.includes(',')){

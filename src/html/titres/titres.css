@@ -2,6 +2,11 @@
 table, th, td {
     border: 1px solid black;
 }
+/* Header */
+header{
+    margin-top: 2%;
+    margin-bottom: 4%;
+}
 /* Body */
 #mainContainer{
     background-color: #c9d6ee;
@@ -69,16 +74,10 @@ table, th, td {
   height: 100px;
   background-image: none;
 }
-.carousel-control-next-icon:after
-{
-  content: '>';
-  font-size: 60px;
-  color: black;
-}
-.carousel-control-prev-icon:after {
-      content: '<';
-      font-size: 60px;
-      color: black;
+.fa-chevron-left:before,
+.fa-chevron-right:before {
+    font-size: 40px;
+    color: black;
 }
 .carousel-inner{
     width: 80%;

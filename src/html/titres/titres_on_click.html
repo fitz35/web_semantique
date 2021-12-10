@@ -7,28 +7,27 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script type="text/javascript" src="../../js/titres/title_on_click.js"></script>
         <link rel="stylesheet" href="titres.css">
     </head>
     <script type="text/javascript">
-        $(document).ready(function(){
-            handleRequest();
-        });
     </script>
     <body id="mainContainer">
-        <a href="?q=Snow_Halation">
-            Ressource
-        </a>
-        <br>
-        <a href="?q=Rolling_in_the_Deep">
-            Ressource 1 multiple genre musical
-        </a>
-        <br>
-        <a href="?q=Come_Around_(Mental_As_Anything_song)")>
-            Ressource 2 illegal character
-        </a>
-        </br>
-        </br>
+        <header>
+            <div class="d-flex flex-row">
+                <div class="">
+                    <button type="button" class="btn btn-secondary go-back">
+                        <i class="fa fa-arrow-left"></i>  Back
+                    </button>
+                </div>
+                <div class="m-auto display-3">
+                    MUSIK'IF
+                </div>
+            </div>
+            <hr> 
+        </header>
+            
         <h1 id='musicTitle' class="text-center"></h1>
 
         <div id="infosTitle">
@@ -57,11 +56,13 @@
                 <div id="indicatorsCarousel" class='carousel-indicators'></div>
                 <div id="moreTitle" class="carousel-inner  text-center"></div>
                 <button id="prev" class="carousel-control-prev" type="button" data-bs-target="#carouselSimilarTitle" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <!-- <span class="carousel-control-prev-icon" aria-hidden="true"></span> -->
+                    <span class="fa fa-chevron-left" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
                 </button>
                 <button id="next" class="carousel-control-next" type="button" data-bs-target="#carouselSimilarTitle" data-bs-slide="next">
-                    <span class="carousel-control-next-icon black" aria-hidden="true"></span>
+                    <!-- <span class="carousel-control-next-icon" aria-hidden="true"></span> -->
+                    <span class="fa fa-chevron-right" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
