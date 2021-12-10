@@ -70,8 +70,9 @@ function afficherResultats(data)
     data.results.bindings.forEach(r => {
         compteur++;
     });
-    document.getElementById("nbResultats").innerHTML = "Résultats ("+compteur+") :";
-
+    document.getElementById("nbResultatsTitle").innerHTML = "Résultats ("+compteur+") :";
+    var path = window.location.pathname;
+    var page = path.replace("index.html","");
     var compteur=0;
     contenuTableau += "<tr>";
     data.results.bindings.forEach(r => {
@@ -87,16 +88,20 @@ function afficherResultats(data)
 
 
     var rightCover = r.covers.value.replace(/ /g,"_"); // turn " " to "_"
-        console.log(r.covers.value);
+    var rightTitle = r.s.value.replace(/ /g,"_"); // turn " " to "_"
+        console.log(r);
     var path = 'http://en.wikipedia.org/wiki/Special:FilePath/'+ rightCover;
     var defaultPath = 'https://ae01.alicdn.com/kf/HTB1BuhPdL1H3KVjSZFHq6zKppXar/Record-Decal-Music-Note-Vinyl-Wall-Decals-Album-Stickers-Bedroom-Home-Decoration-Retro-Art-Murals-Living.jpg_Q90.jpg_.webp';
 
     //contenuTableau += '<object class="element" data="'+path+'" type="image/png">  <img class="element" src="'+defaultPath+'" width="200" height="250" alt=" "> </object>';
         contenuTableau += '<div id='+idImg+'> <img class="element" src="'+path + '" width="200" height="250" alt=" "></div>';
+        contenuTableau += "<div><a href="+"file://"+page + "html/titres/titres_on_click.html?q="+ rightTitle+">" +r.title.value+ "</a></div>";
+        contenuTableau += "<div><a href="+"file://"+page + "html/artistes/artistes.html?name="+ r.feat.value+">" +r.feat.value+ "</a></div>";
+
         //contenuTableau += '<div id='+idImg+'> <img class="element" src="'+defaultPath + '" width="200" height="250" alt=" "></div>';
 
-        contenuTableau += "<div><a href=# onclick=infosTitle(\""+ urlRessource +"\")>" + r.title.value + "</a></div>";
-    contenuTableau += "<div><a href=# onclick=infosTitle(\""+ urlRessource +"\")>" + r.feat.value + "</a></div>";
+        //contenuTableau += "<div><a href=# onclick=infosTitle(\""+ urlRessource +"\")>" + r.title.value + "</a></div>";
+    //contenuTableau += "<div><a href=# onclick=infosTitle(\""+ urlRessource +"\")>" + r.feat.value + "</a></div>";
     contenuTableau += "</div></td>";
         idImg=idImg+1;
         if(compteur%6==0){

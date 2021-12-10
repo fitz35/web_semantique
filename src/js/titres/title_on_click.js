@@ -18,7 +18,6 @@ function handleRequest(){
     var urlParams = new URLSearchParams(queryString);
 
     var ressource=urlParams.get('q');
-    console.log(ressource);
     infosTitle(ressource,'');
 
 }
