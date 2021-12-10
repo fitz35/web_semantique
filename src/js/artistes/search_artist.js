@@ -93,7 +93,6 @@ function afficherResultatsArtiste(data)
     //var path = 'http://en.wikipedia.org/wiki/Special:FilePath/'+ rightCover;
     contenuTableau += '<div id='+idImg+'> <img  src="'+path + '" width="200" height="250" alt=" "></div>';
     contenuTableau += "<div><a href="+"file://"+page + "html/artistes/artistes.html?name="+ rightCover+">" +newRightCover+ "</a></div>";
-    //contenuTableau += "<div><a href=# onclick=infosTitle(\""+ urlRessource +"\")>" + r.feat.value + "</a></div>";
     idImg=idImg+1;
 
     contenuTableau += "</div></td>";
