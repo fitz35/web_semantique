@@ -1,4 +1,6 @@
 function getRessource(uri){
+    document.body.style.backgroundColor = "#c9d6ee";
+
     indexSlash=uri.lastIndexOf("/");
     ressource=uri.substring(indexSlash+1);
     ressource=ressource.replace('(','\\(');
