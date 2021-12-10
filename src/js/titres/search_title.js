@@ -99,10 +99,7 @@ function afficherResultats(data)
         contenuTableau += "<div><a href="+"file://"+page + "html/artistes/artistes.html?name="+ r.feat.value+">" +r.feat.value+ "</a></div>";
 
         //contenuTableau += '<div id='+idImg+'> <img class="element" src="'+defaultPath + '" width="200" height="250" alt=" "></div>';
-
-        //contenuTableau += "<div><a href=# onclick=infosTitle(\""+ urlRessource +"\")>" + r.title.value + "</a></div>";
-    //contenuTableau += "<div><a href=# onclick=infosTitle(\""+ urlRessource +"\")>" + r.feat.value + "</a></div>";
-    contenuTableau += "</div></td>";
+        contenuTableau += "</div></td>";
         idImg=idImg+1;
         if(compteur%6==0){
             contenuTableau += "</tr>";
