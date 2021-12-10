@@ -211,6 +211,7 @@ function afficherResultatsArtistDetails(data){
             afficheDansToutesClasses("birthDay", v.dateOfBirth.value);
 
             var resutTable=document.getElementsByClassName("image");
+            //console.log(v.image);
             for(let parcours of resutTable)
             {
                 if(v.image!=undefined && v.description!=null)

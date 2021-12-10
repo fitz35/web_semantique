@@ -81,22 +81,28 @@ function afficherResultatsArtiste(data)
       urlRessource =  r.name.value;
 
       if(r.name.value.includes("resource")){
-        //rightCover = (r.name.value.replace("http://dbpedia.org/resource/",""))
         newRightCover = rightCover.replace("_"," ");
       }
-      //var rightCover = r.name.value.replace(/ /g,"_"); // turn " " to "_"
-      var path = 'http://en.wikipedia.org/wiki/Special:FilePath/'+ rightCover;
-      //contenuTableau += '<div id='+idImg+'> <img  src="'+path + '" width="200" alt=" " ></div>';
+    var path;
+    if(r.image!=undefined) {
+      path = r.image.value;
+    }else{
+      //Image par défaut
+      path="../img/imageNotFoundArtist.png";
+    }
+      //var path = 'http://en.wikipedia.org/wiki/Special:FilePath/'+ rightCover;
+      contenuTableau += '<div id='+idImg+'> <img  src="'+path + '" width="200" height="250" alt=" "></div>';
       contenuTableau += "<div><a href="+"file://"+page + "html/artistes/artistes.html?name="+ rightCover+">" +newRightCover+ "</a></div>";
       //contenuTableau += "<div><a href=# onclick=infosTitle(\""+ urlRessource +"\")>" + r.feat.value + "</a></div>";
       idImg=idImg+1;
+
     contenuTableau += "</div></td>";
     if(compteur%6==0){
       contenuTableau += "</tr>";
     }
   });
   contenuTableau += "</tr>";
-  console.log(compteur);
+  //console.log(compteur);
 
   contenuTableau += "</div>";
 

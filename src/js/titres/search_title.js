@@ -63,24 +63,51 @@ function afficherResultats(data)
 
   var urlRessource = "http://google.com/";
   var contenuTableau = "<div id='containerTitle'>";
+    var idImg = 0;
 
-  data.results.bindings.forEach(r => {
-    contenuTableau += "<div class='searchCard'>";
+    var compteur=0;
+
+    data.results.bindings.forEach(r => {
+        compteur++;
+    });
+    document.getElementById("nbResultats").innerHTML = "Résultats ("+compteur+") :";
+
+    var compteur=0;
+    contenuTableau += "<tr>";
+    data.results.bindings.forEach(r => {
+        compteur++;
+        if(compteur%6==0){
+            contenuTableau += "<tr>";
+        }
+        contenuTableau += "<td>";
+        contenuTableau += "<td class='element'>";
+
+        //contenuTableau += "<div class='searchCard'>";
       urlRessource =  r.s.value;
 
-      
+
     var rightCover = r.covers.value.replace(/ /g,"_"); // turn " " to "_"
-    var path = 'http://en.wikipedia.org/wiki/Special:FilePath/'+ rightCover; 
-    var defaultPath = 'https://ae01.alicdn.com/kf/HTB1BuhPdL1H3KVjSZFHq6zKppXar/Record-Decal-Music-Note-Vinyl-Wall-Decals-Album-Stickers-Bedroom-Home-Decoration-Retro-Art-Murals-Living.jpg_Q90.jpg_.webp'; 
-           
-    contenuTableau += '<object class="element" data="'+path+'" type="image/png">  <img class="element" src="'+defaultPath+'" alt=" "> </object>';
-    contenuTableau += "<div><a href=# onclick=infosTitle(\""+ urlRessource +"\")>" + r.title.value + "</a></div>";
+        console.log(r.covers.value);
+    var path = 'http://en.wikipedia.org/wiki/Special:FilePath/'+ rightCover;
+    var defaultPath = 'https://ae01.alicdn.com/kf/HTB1BuhPdL1H3KVjSZFHq6zKppXar/Record-Decal-Music-Note-Vinyl-Wall-Decals-Album-Stickers-Bedroom-Home-Decoration-Retro-Art-Murals-Living.jpg_Q90.jpg_.webp';
+
+    //contenuTableau += '<object class="element" data="'+path+'" type="image/png">  <img class="element" src="'+defaultPath+'" width="200" height="250" alt=" "> </object>';
+        contenuTableau += '<div id='+idImg+'> <img class="element" src="'+path + '" width="200" height="250" alt=" "></div>';
+        //contenuTableau += '<div id='+idImg+'> <img class="element" src="'+defaultPath + '" width="200" height="250" alt=" "></div>';
+
+        contenuTableau += "<div><a href=# onclick=infosTitle(\""+ urlRessource +"\")>" + r.title.value + "</a></div>";
     contenuTableau += "<div><a href=# onclick=infosTitle(\""+ urlRessource +"\")>" + r.feat.value + "</a></div>";
-    contenuTableau += "</div>";
+    contenuTableau += "</div></td>";
+        idImg=idImg+1;
+        if(compteur%6==0){
+            contenuTableau += "</tr>";
+        }
   });
+    contenuTableau += "</tr>";
 
   contenuTableau += "</div>";
 
   document.getElementById("resultats").innerHTML = contenuTableau;
+  console.log(this.status);
 
 }

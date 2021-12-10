@@ -55,32 +55,51 @@ function afficherResultatsAlbum(data)
   //Get URI
   var path = window.location.pathname;
   var page = path.replace("index.html","");
+  var compteur=0;
 
   data.results.bindings.forEach(r => {
+    compteur++;
+  });
+
+  compteur=0;
+  data.results.bindings.forEach(r => {
+    compteur++;
+    if(compteur%6==0){
+      contenuTableau += "<tr>";
+    }
     var rightCover = r.name.value.replace(/ /g,"_"); // turn " " to "_"
     var newRightCover = r.name.value;
 
-
-    contenuTableau += "<div class='element'>";
+    contenuTableau += "<td>";
+    contenuTableau += "<td class='element'>";
       urlRessource =  r.name.value;
 
       if(r.name.value.includes("resource")){
-        console.log();
         rightCover = (r.name.value.replace("http://dbpedia.org/resource/",""))
         newRightCover = rightCover.replace("_"," ");
       }
       //var rightCover = r.name.value.replace(/ /g,"_"); // turn " " to "_"
-      var path = 'http://en.wikipedia.org/wiki/Special:FilePath/'+ rightCover;
+
+    var pathImage;
+    if(r.image!=undefined) {
+      pathImage = 'http://en.wikipedia.org/wiki/Special:FilePath/'+ r;
+    }else{
+      //Image par défaut
+      pathImage="../img/defaultAlbum.jpg";
+    }
       var defaultPath = 'https://ae01.alicdn.com/kf/HTB1BuhPdL1H3KVjSZFHq6zKppXar/Record-Decal-Music-Note-Vinyl-Wall-Decals-Album-Stickers-Bedroom-Home-Decoration-Retro-Art-Murals-Living.jpg_Q90.jpg_.webp';
-      //contenuTableau += '<div id='+idImg+'> <img  src="'+path + '" width="200" alt=" " ></div>';
+      contenuTableau += '<div id='+idImg+'> <img  src="'+pathImage + '" width="200" height="200" alt=" " ></div>';
       contenuTableau += "<div><a href="+"file://"+page + "html/albums/albums.html?name="+ rightCover+">" +newRightCover+ "</a></div>";
       //contenuTableau += "<div><a href=# onclick=infosTitle(\""+ urlRessource +"\")>" + r.feat.value + "</a></div>";
       idImg=idImg+1;
-    contenuTableau += "</div>";
-
+    contenuTableau += "</div></td>";
+    if(compteur%6==0){
+      contenuTableau += "</tr>";
+    }
 
   });
 
+  contenuTableau += "</tr>";
 
   contenuTableau += "</div>";
 

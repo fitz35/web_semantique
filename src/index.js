@@ -1,5 +1,5 @@
 function repaintResearch() {
-    document.body.style.backgroundImage = "url('../img/music7.png')";
+    document.body.style.backgroundImage = "url('../img/background.png')";
     document.body.style.backgroundColor = "#c9d6ee";
 
     document.getElementById("titre").style.visibility="hidden"; // cache
@@ -27,10 +27,13 @@ function repaintResearch() {
     document.getElementById("moreInfos").style.visibility="hidden"; // cache
 
     document.getElementById("btnSearch").style.visibility="hidden"; // cache
+    //window.location.reload();
+
 }
 
 function hideSearchPage(){
     //Hide element
+
     document.body.style.backgroundColor = "#c9d6ee";
     document.body.style.backgroundImage = "none";
 
