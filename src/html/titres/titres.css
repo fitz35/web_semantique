@@ -3,11 +3,12 @@ table, th, td {
     border: 1px solid black;
 }
 #mainContainer{
-    /*background-image: url("https://static.vecteezy.com/ti/vecteur-libre/p1/115493-fond-colore-degrade-couleur-libre-gratuit-vectoriel.jpg");*/
-    background-size: cover;
+    background-color: #c9d6ee;
     width: 80%;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 100px;
+    
 }
 #containerTitle{
     
@@ -37,6 +38,7 @@ table, th, td {
 #infosTitle{
     border: 2px solid black;
     padding: 2%;
+    margin-bottom: 2%;
 }
 #generalInfos{
     display: flex;
@@ -51,17 +53,59 @@ table, th, td {
 }
 
 
-#prev,#next{
-    background-color: black;
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  height: 100px;
+  background-image: none;
 }
+.carousel-control-next-icon:after
+{
+  content: '>';
+  font-size: 60px;
+  color: black;
+}
+
+.carousel-control-prev-icon:after {
+      content: '<';
+      font-size: 60px;
+      color: black;
+}
+
+
 .carousel-inner{
-    width: 70%;
+    width: 80%;
     margin-right: auto;
     margin-left: auto;
 }
 #carouselSimilarTitle{
-    margin-bottom: 100px;
+    padding-bottom: 4%;
+}
+#indicatorsCarousel{
+    bottom: -10%;
 }
 #indicatorsCarousel button{
     background-color: black;
+}
+.similarTitle{
+    width: 32%;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 0.5%;
+    padding: 5px;
+    color: black !important;
+    background-color: transparent !important;
+}
+
+
+.row{
+    width: 100%;
+    margin: auto;
+}
+.eltCarousel{
+    width: 80%;
+}
+
+#spinner{
+    display: none;
+    margin: auto;
 }
