@@ -205,6 +205,8 @@ function afficherListeAwards(data){
 
 
 function afficherResultatsArtistDetails(data){
+    document.body.style.backgroundColor = "#c9d6ee";
+
     console.log(data);
     data.results.bindings.forEach((v, i) => {
 
