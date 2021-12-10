@@ -2,12 +2,12 @@
 table, th, td {
     border: 1px solid black;
 }
+/* Body */
 #mainContainer{
     background-color: #c9d6ee;
     width: 80%;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 100px;
     
 }
 #containerTitle{
@@ -35,6 +35,7 @@ table, th, td {
     contain: strict;
     display: inline-block;
 }
+/* Informations on the title */
 #infosTitle{
     border: 2px solid black;
     padding: 2%;
@@ -48,11 +49,21 @@ table, th, td {
     margin-left: 2%;
     margin-right: 2%;
 }
-#abstract{
-    text-align: justify;
+#divAbstract{
+    padding: 2% 4% 0 4%;
 }
 
+#abstract{
+    text-align: justify;
+    max-height: 300px;
+    overflow-y: scroll;
+    padding-right: 2%;
+}
 
+/* Similar title in a carousel*/
+#suggestions{
+    margin-bottom: 5%;
+}
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
   height: 100px;
@@ -64,14 +75,11 @@ table, th, td {
   font-size: 60px;
   color: black;
 }
-
 .carousel-control-prev-icon:after {
       content: '<';
       font-size: 60px;
       color: black;
 }
-
-
 .carousel-inner{
     width: 80%;
     margin-right: auto;
@@ -95,8 +103,6 @@ table, th, td {
     color: black !important;
     background-color: transparent !important;
 }
-
-
 .row{
     width: 100%;
     margin: auto;
@@ -104,8 +110,13 @@ table, th, td {
 .eltCarousel{
     width: 80%;
 }
-
 #spinner{
     display: none;
     margin: auto;
+}
+
+/* Footer */
+footer{
+    text-align: right;
+    margin-bottom: 2%;
 }

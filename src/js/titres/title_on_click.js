@@ -49,7 +49,8 @@ function afficherInfosTitle(data){
     });
 
     if(title!=""){
-        document.getElementById("musicTitle").innerHTML="Title : "+title;
+        document.getElementById("musicTitle").innerHTML="About the title : <i>\""+title+"\"</i>";
+        // document.getElementById("musicTitle").innerHTML="Title : "+title;
         $("#pageTitle").html("Title - "+title);
     }else{
         document.getElementById("musicTitle").innerHTML="Title : ";
@@ -86,15 +87,42 @@ function afficherArtistAndGenre(data) {
     }
 
     if(artistName!=""){
-        if(artistURI.includes(',')){
-            indexVirg=artistURI.indexOf(',');
-            artistURI=artistURI.substring(0,indexVirg);
+        moreSingles(artistName);
+
+        var artistUriTab= new Array();
+        var artistUriTemp=artistURI;
+        var artistTemp=artistName;
+
+        while(artistURI.includes(', ')){
+            indexVirgURI=artistURI.indexOf(',');
+            artistUriTemp=artistURI.substring(0,indexVirgURI);
+            indexSlash=artistUriTemp.lastIndexOf("/");
+            artistUriTemp=artistUriTemp.substring(indexSlash+1);
+            artistURI=artistURI.substring(indexVirgURI+2);
+
+            indexVirg=artistName.indexOf(',');
+            artistTemp=artistName.substring(0,indexVirg);
+            artistName=artistName.substring(indexVirg+2);
+
+            var artistUriTabTemp=new Array();
+            artistUriTabTemp.push(artistTemp,artistUriTemp);
+            artistUriTab.push(artistUriTabTemp);
         }
+        artistUriTabTemp=new Array();
         indexSlash=artistURI.lastIndexOf("/");
         artistURI=artistURI.substring(indexSlash+1);
-        console.log("artistURI",artistURI);
-        document.getElementById("artistName").innerHTML="Artist : <a href=\"../artistes/artistes.html?name="+artistURI+"\">"+artistName+"</a>";
-        moreSingles(artistName);
+        artistUriTabTemp.push(artistName,artistURI);
+        artistUriTab.push(artistUriTabTemp);
+
+        var artistInnerHtml="Artist : ";
+        artistUriTab.forEach(function(value,index){
+            artistInnerHtml+="<a href=\"../artistes/artistes.html?name="+value[1]+"\">"+value[0]+"</a>";
+            if(index<artistUriTab.length-1){
+                artistInnerHtml+=", ";
+            }
+        });
+
+        document.getElementById("artistName").innerHTML=artistInnerHtml;
     }else{
         document.getElementById("artistName").innerHTML="Artist : Unknown";
     }
@@ -129,14 +157,42 @@ function afficherAlbum(data){
     });
 
     if(albumTitle!=""){
-        if(albumURI.includes(',')){
-            indexVirg=albumURI.indexOf(',');
-            albumURI=albumURI.substring(0,indexVirg);
+        var albumUriTab= new Array();
+        var albumUriTemp=albumURI;
+        var albumTemp=albumTitle;
+
+        while(albumURI.includes(', ')){
+            indexVirgURI=albumURI.indexOf(',');
+            albumUriTemp=albumURI.substring(0,indexVirgURI);
+            indexSlash=albumUriTemp.lastIndexOf("/");
+            albumUriTemp=albumUriTemp.substring(indexSlash+1);
+            albumURI=albumURI.substring(indexVirgURI+2);
+
+            indexVirg=albumTitle.indexOf(',');
+            albumTemp=albumTitle.substring(0,indexVirg);
+            albumTitle=albumTitle.substring(indexVirg+2);
+
+            var albumUriTabTemp=new Array();
+            albumUriTabTemp.push(albumTemp,albumUriTemp);
+            albumUriTab.push(albumUriTabTemp);
         }
+        albumUriTabTemp=new Array();
         indexSlash=albumURI.lastIndexOf("/");
         albumURI=albumURI.substring(indexSlash+1);
-        console.log("albumURI",albumURI);
-        document.getElementById("albumTitle").innerHTML="Album : <a href=\"../albums/albums.html?name="+albumURI+"\">"+albumTitle+"</a>";
+        albumUriTabTemp.push(albumTitle,albumURI);
+        albumUriTab.push(albumUriTabTemp);
+
+        var albumInnerHtml="Album : ";
+        albumUriTab.forEach(function(value,index){
+            albumInnerHtml+="<a href=\"../albums/albums.html?name="+value[1]+"\">"+value[0]+"</a>";
+            if(index<albumUriTab.length-1){
+                albumInnerHtml+=", ";
+            }
+        });
+
+        document.getElementById("albumTitle").innerHTML=albumInnerHtml;
+
+        // document.getElementById("albumTitle").innerHTML="Album : <a href=\"../albums/albums.html?name="+albumURI+"\">"+albumTitle+"</a>";
     }else{
         document.getElementById("albumTitle").innerHTML="Album : Unknown";
     }
