@@ -1,7 +1,7 @@
 function rechercherArtist(entredTitle) {
-    //$("#infosTitle").hide();
-    //$("#spinner").show();
-    //var entredTitle = document.getElementById("title").value;
+  //$("#infosTitle").hide();
+  //$("#spinner").show();
+  //var entredTitle = document.getElementById("title").value;
 
   var searchedArtist = entredTitle.replace(/ /g,"_"); // turn " " to "_"
 
@@ -34,10 +34,10 @@ function rechercherArtist(entredTitle) {
   // Requête HTTP et affichage des résultats
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-          var results = JSON.parse(this.responseText);
-        afficherResultatsArtiste(results);
-      }
+    if (this.readyState == 4 && this.status == 200) {
+      var results = JSON.parse(this.responseText);
+      afficherResultatsArtiste(results);
+    }
   };
   xmlhttp.open("GET", url, true);
   xmlhttp.send();
@@ -78,11 +78,11 @@ function afficherResultatsArtiste(data)
 
     contenuTableau += "<td>";
     contenuTableau += "<td class='element'>";
-      urlRessource =  r.name.value;
+    urlRessource =  r.name.value;
 
-      if(r.name.value.includes("resource")){
-        newRightCover = rightCover.replace("_"," ");
-      }
+    if(r.name.value.includes("resource")){
+      newRightCover = rightCover.replace("_"," ");
+    }
     var path;
     if(r.image!=undefined) {
       path = r.image.value;
@@ -90,11 +90,11 @@ function afficherResultatsArtiste(data)
       //Image par défaut
       path="../img/imageNotFoundArtist.png";
     }
-      //var path = 'http://en.wikipedia.org/wiki/Special:FilePath/'+ rightCover;
-      contenuTableau += '<div id='+idImg+'> <img  src="'+path + '" width="200" height="250" alt=" "></div>';
-      contenuTableau += "<div><a href="+"file://"+page + "html/artistes/artistes.html?name="+ rightCover+">" +newRightCover+ "</a></div>";
-      //contenuTableau += "<div><a href=# onclick=infosTitle(\""+ urlRessource +"\")>" + r.feat.value + "</a></div>";
-      idImg=idImg+1;
+    //var path = 'http://en.wikipedia.org/wiki/Special:FilePath/'+ rightCover;
+    contenuTableau += '<div id='+idImg+'> <img  src="'+path + '" width="200" height="250" alt=" "></div>';
+    contenuTableau += "<div><a href="+"file://"+page + "html/artistes/artistes.html?name="+ rightCover+">" +newRightCover+ "</a></div>";
+    //contenuTableau += "<div><a href=# onclick=infosTitle(\""+ urlRessource +"\")>" + r.feat.value + "</a></div>";
+    idImg=idImg+1;
 
     contenuTableau += "</div></td>";
     if(compteur%6==0){

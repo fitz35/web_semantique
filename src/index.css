@@ -49,3 +49,7 @@ body {
 .sousTitre{
     color: #a1cefc;
 }
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
