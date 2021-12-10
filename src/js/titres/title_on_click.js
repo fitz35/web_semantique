@@ -1,6 +1,5 @@
+var titleURI="";
 function getRessource(uri){
-    document.body.style.backgroundColor = "#c9d6ee";
-
     indexSlash=uri.lastIndexOf("/");
     ressource=uri.substring(indexSlash+1);
     ressource=ressource.replace('(','\\(');
@@ -41,6 +40,9 @@ function afficherInfosTitle(data){
         if(r.title && !title.includes(r.title.value)){
             title+=r.title.value;
         }
+        if(r.song && !titleURI.includes(r.song.value)){
+            titleURI+=r.song.value;
+        }
         if(r.releaseDate && !releaseDate.includes(r.releaseDate.value)){
             releaseDate+=r.releaseDate.value;
         }
@@ -48,6 +50,7 @@ function afficherInfosTitle(data){
 
     if(title!=""){
         document.getElementById("musicTitle").innerHTML="Title : "+title;
+        $("#pageTitle").html("Title - "+title);
     }else{
         document.getElementById("musicTitle").innerHTML="Title : ";
     }
@@ -213,7 +216,8 @@ function getInfosGeneralTitle(ressource){
     PREFIX dbpedia: <http://dbpedia.org/>
     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-    SELECT DISTINCT ?title,
+    SELECT DISTINCT ?s AS ?song,
+                    ?title,
                     ?releaseDate
     WHERE {
         ?s a dbo:Song.
@@ -271,15 +275,15 @@ function getAlbum(ressource) {
         ?s a dbo:Song.
 
         OPTIONAL{
-            ?s dbp:album ?album.
+            ?s dbo:album ?album.
             ?album rdfs:label ?albumName.
         } OPTIONAL {
-            ?s dbp:album ?albumName.
+            ?s dbo:album ?albumName.
         }OPTIONAL {
-            ?s dbo:album ?album.   
+            ?s dbp:album ?album.   
             ?album rdfs:label ?albumName.
         }OPTIONAL {
-            ?s dbo:album ?albumName.
+            ?s dbp:album ?albumName.
         }
         OPTIONAL{
             ?s dbo:album ?album2.
@@ -375,12 +379,10 @@ function getArtistAndGenre(ressource) {
         }
 
         OPTIONAL {
-            ?s dbp:artist ?artist.
+            ?s dbo:artist ?artist.
             ?artist rdfs:label ?artistN.
         } OPTIONAL {
-            ?s dbp:artist ?artistN.
-        }OPTIONAL {
-            ?s dbo:artist ?artist.
+            ?s dbp:artist ?artist.
             ?artist rdfs:label ?artistN.
         }
         
@@ -407,14 +409,16 @@ function getArtistAndGenre(ressource) {
     xmlhttp.send();
 }
 
-function moreSingles (artist)
-{
-    // artist=document.getElementById("artistName").innerText;
-    // artist=artist.substring(9);
+function moreSingles (artist){
+    $("#spinner").show();
+    $("#carouselSimilarTitle").hide();
     if(artist.includes(',')){
         indexVirg=artist.indexOf(',');
         artist=artist.substring(0,indexVirg);
     }
+
+    var song=getRessource(titleURI);
+
     artist=artist.replace(/'/g,'\\\'');
     var query = `
         PREFIX owl: <http://www.w3.org/2002/07/owl#>
@@ -435,68 +439,28 @@ function moreSingles (artist)
             ?artistName ^dbo:artist ?s.
             ?s dbp:name ?songName;            
             dbp:cover ?pochette.
-            FILTER(langMatches(lang(?artist),"EN") && regex(?artist, "`+artist+`"))
+            FILTER(langMatches(lang(?artist),"EN") && regex(?artist, "`+artist+`") && ?s != dbr:`+song+`)
         }
-        LIMIT 20`;
+        LIMIT 25`;
     var url = "https://dbpedia.org/sparql/?query="+encodeURIComponent(query)+"&format=json";
     // Requête HTTP et affichage des résultats
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var results = JSON.parse(this.responseText);
-            // afficherMoreSingles(results);
-            afficherResultats(results);
+            afficherMoreSingles(results);
         }
     };
     xmlhttp.open("GET", url, true);
     xmlhttp.send();
-
 }
+
 
 function afficherMoreSingles(data){
-    var songName="";
-    data.results.bindings.forEach(r => {
-        if(r.songName && !songName.includes(r.songName.value)){
-            songName+=r.songName.value +" | ";
-        }
-    });
-    if(songName!=""){
-        document.getElementById("moreInfos").innerHTML=songName;
-    }else{
-        document.getElementById("moreInfos").innerHTML="Not found";
-    }
-}
-
-function afficherResultats(data)
-{
-    // Tableau pour mémoriser l'ordre des variables ; sans doute pas nécessaire
-    // pour vos applications, c'est juste pour la démo sous forme de tableau
-    var index = [];
-
-    var urlRessource = "http://google.com/";
-  var contenuTableau = "<div id='containerTitle'>";
-
-    data.results.bindings.forEach(r => {
-        urlRessource =  r.song.value;
-
-        contenuTableau += "<div class='searchCard'>";
-      
-        var rightCover = r.cover.value.replace(/ /g,"_"); // turn " " to "_"
-        var path = 'http://en.wikipedia.org/wiki/Special:FilePath/'+ rightCover; 
-        var defaultPath = 'https://ae01.alicdn.com/kf/HTB1BuhPdL1H3KVjSZFHq6zKppXar/Record-Decal-Music-Note-Vinyl-Wall-Decals-Album-Stickers-Bedroom-Home-Decoration-Retro-Art-Murals-Living.jpg_Q90.jpg_.webp'; 
-           
-        contenuTableau += '<object class="element" data="'+path+'" type="image/png">  <img class="element" src="'+defaultPath+'" alt=" "> </object>';
-        contenuTableau += "<div><a href=\"?q="+urlRessource+"\" >"+ r.songName.value + "</a></div>";
-        contenuTableau += "</div>";
-    });
-
-    contenuTableau += "</div>";
-    // document.getElementById("resultats").innerHTML = contenuTableau;
     carousselItem="";
     carousselIndicators="";
     tabLength=data.results.bindings.length;
-    console.log("size",tabLength);
-    for(var i=0;i<tabLength;i++){
+    for(var i=0;i<tabLength/4;i++){
         if(i==0){
             carousselIndicators+="<button type='button' data-bs-target='#carouselSimilarTitle' "+
                             "data-bs-slide-to='0' class='active' aria-current='true' aria-label='Slide "+(i+1)+"'>"+
@@ -510,53 +474,48 @@ function afficherResultats(data)
         }
     }
     document.getElementById("indicatorsCarousel").innerHTML=carousselIndicators;
-
+    var cptElt=0;
     data.results.bindings.forEach(function(r,index){
         var urlRessource =  r.song.value;
         indexSlash=urlRessource.lastIndexOf("/");
         urlRessource=urlRessource.substring(indexSlash+1);
 
         var rightCover = r.cover.value.replace(/ /g,"_"); // turn " " to "_"
+        if(rightCover.includes(',')){
+            indexVirg=rightCover.indexOf(',');
+            rightCover=rightCover.substring(0,indexVirg);
+        }
         var path = 'http://en.wikipedia.org/wiki/Special:FilePath/'+ rightCover; 
         var defaultPath = 'https://ae01.alicdn.com/kf/HTB1BuhPdL1H3KVjSZFHq6zKppXar/Record-Decal-Music-Note-Vinyl-Wall-Decals-Album-Stickers-Bedroom-Home-Decoration-Retro-Art-Murals-Living.jpg_Q90.jpg_.webp'; 
-
-        if(index==0){
-            carousselItem+="<div class='carousel-item active'>";
-        }else{
-            carousselItem+="<div class='carousel-item'>";
+        
+        if(index==0 && cptElt==0){
+            carousselItem+="<div class='container carousel-item active'>";
+            carousselItem+="<div class='d-flex flex-row row-cols-3'>";
+        }else if(cptElt==0){
+            carousselItem+="<div class='container carousel-item'>";
+            carousselItem+="<div class='d-flex flex-row row-cols-3'>";
         }
-        carousselItem += "<div class='col d-block w-100'>";
-        carousselItem += '<object class="element" data="'+path+'" type="image/png">  <img class="element" src="'+defaultPath+'" alt=" "> </object>';
-        carousselItem += "<div><a href=\"?q="+urlRessource+"\" >"+ r.songName.value + "</a></div>";
-        carousselItem += "</div>";
-        carousselItem+="</div>";
 
+        if(cptElt>=0 && cptElt<3){
+            carousselItem += "<button onclick=window.location.href=\"?q="+urlRessource+"\" class='btn btn-secondary similarTitle' aria-pressed='true'>";
+            carousselItem += '<object class="eltCarousel" data="'+path+'" type="image/png">  <img class="eltCarousel" src="'+defaultPath+'" alt=" "> </object>';
+            carousselItem += "<div><p>"+ r.songName.value +"</p></div>";
+            // carousselItem += "<div><a href=\"?q="+urlRessource+"\" >"+ r.songName.value + "</a></div>";
+            carousselItem += "</button>";
+            cptElt++;
+        }else{
+            carousselItem += "</div>";
+            carousselItem+="</div>";
+            cptElt=0;
+        }
     });
+    $("#spinner").hide();
+
     if(carousselItem!=""){
         document.getElementById("moreTitle").innerHTML = carousselItem;
-
+        $("#carouselSimilarTitle").show();
     }else{
-        document.getElementById("moreTitle").innerHTML="Not found";
+        document.getElementById("notMoreTitle").innerHTML="No title was found...";
     }
 
-
-    // <div class="carousel-item active">
-    //     <div class="row">
-    //         <div class="col">
-    //             <img src="..." class="d-block w-100" alt="coucou1">
-    //         </div>
-    //         <div class="col">
-    //             <img src="..." class="d-block w-100" alt="coucou1">
-    //         </div>
-    //         <div class="col">
-    //             <img src="..." class="d-block w-100" alt="coucou1">
-    //         </div>
-    //         <div class="col">
-    //             <img src="..." class="d-block w-100" alt="coucou1">
-    //         </div>
-    //     </div>
-    // </div>
 }
-
-
-
