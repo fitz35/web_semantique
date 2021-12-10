@@ -46,7 +46,7 @@ function getArtistDetails(name){
      xmlhttp.onreadystatechange = function() {
          if (this.readyState == 4 && this.status == 200) {
              var results = JSON.parse(this.responseText);
-             afficherResultats(results);
+             afficherResultatsArtistDetails(results);
          }
     }
     xmlhttp.open("GET", url, true);
@@ -269,13 +269,16 @@ function afficherListeAlbums(data){
 
 
 
-function afficherResultats(data){
+function afficherResultatsArtistDetails(data){
+    document.body.style.backgroundColor = "#c9d6ee";
+
     console.log(data);
     data.results.bindings.forEach((v, i) => {
-        
+
             afficheDansToutesClasses("birthDay", v.dateOfBirth.value);
 
             var resutTable=document.getElementsByClassName("image");
+            //console.log(v.image);
             for(let parcours of resutTable)
             {
                 if(v.image!=undefined && v.description!=null)

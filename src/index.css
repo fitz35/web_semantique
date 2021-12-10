@@ -1,11 +1,13 @@
 .btn
 {
-    position: center;
-    width: 10%;
+    position: absolute;
+    width: 15%;
     height: 30px;
     font-size:14px;
-    margin-top: 17px;
+    margin-top: 2px;
+    background-color: pink;
 }
+
 
 
 #btnSearch {
@@ -31,9 +33,19 @@
 }
 
 .address{
+    color: white;
     margin-left: 80%;
     padding:0;
     position:absolute;
     bottom:5px;
     text-align: center;
+}
+
+body {
+    background-image:url(../img/background.png);
+    background-repeat: no-repeat;
+}
+
+.sousTitre{
+    color: #a1cefc;
 }

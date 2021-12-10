@@ -1,3 +1,4 @@
+/*
 //Requete pour chercher un album
 SELECT ?album ?name (max(?sales) as ?maxsales) ?id WHERE {
 ?album a dbo:Album; dbp:name ?name; dbp:salesamount ?sales; dbo:wikiPageID ?id.
@@ -30,6 +31,11 @@ filter(?id = PARAMID && langMatches(lang(?artist),"EN"))
 limit 1
 
 //link of artist
+SELECT ?artist WHERE {
+    ?album dbp:artist ?artist; dbo:wikiPageID ?id.
+    filter(?id = idParam)
+    }
+limit 1
 
 //Date de sortie
 SELECT ?released WHERE {
@@ -94,7 +100,7 @@ SELECT ?awards WHERE {
     FILTER(?id = 7615743 &&  langMatches (lang(?awards) , "EN"))
 }
 
-
+*/
 
 
 
