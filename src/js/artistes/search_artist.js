@@ -57,12 +57,27 @@ function afficherResultatsArtiste(data)
   //Get URI
   var path = window.location.pathname;
   var page = path.replace("index.html","");
+  var compteur=0;
 
   data.results.bindings.forEach(r => {
+    compteur++;
+  });
+  document.getElementById("nbResultats").innerHTML = "Résultats ("+compteur+") :";
+  //document.getElementById("nbResultats").innerHTML = "</br>";
+
+
+  var compteur=0;
+  contenuTableau += "<tr>";
+  data.results.bindings.forEach(r => {
+    compteur++;
+    if(compteur%6==0){
+      contenuTableau += "<tr>";
+    }
     var rightCover = r.a.value.replace("http://dbpedia.org/resource/",""); // turn " " to "_"
     var newRightCover = r.name.value;
 
-    contenuTableau += "<div class='element'>";
+    contenuTableau += "<td>";
+    contenuTableau += "<td class='element'>";
       urlRessource =  r.name.value;
 
       if(r.name.value.includes("resource")){
@@ -71,13 +86,17 @@ function afficherResultatsArtiste(data)
       }
       //var rightCover = r.name.value.replace(/ /g,"_"); // turn " " to "_"
       var path = 'http://en.wikipedia.org/wiki/Special:FilePath/'+ rightCover;
-      contenuTableau += '<div id='+idImg+'> <img  src="'+path + '" width="200" alt=" " ></div>';
+      //contenuTableau += '<div id='+idImg+'> <img  src="'+path + '" width="200" alt=" " ></div>';
       contenuTableau += "<div><a href="+"file://"+page + "html/artistes/artistes.html?name="+ rightCover+">" +newRightCover+ "</a></div>";
       //contenuTableau += "<div><a href=# onclick=infosTitle(\""+ urlRessource +"\")>" + r.feat.value + "</a></div>";
       idImg=idImg+1;
-    contenuTableau += "</div>";
+    contenuTableau += "</div></td>";
+    if(compteur%6==0){
+      contenuTableau += "</tr>";
+    }
   });
-
+  contenuTableau += "</tr>";
+  console.log(compteur);
 
   contenuTableau += "</div>";
 

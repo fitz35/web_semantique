@@ -16,6 +16,8 @@ function repaintResearch() {
 
     document.getElementById("resultats").style.visibility="hidden"; // cache
     document.getElementById("infosTitle").style.visibility="hidden"; // cache
+    document.getElementById("nbResultats").style.visibility="hidden"; // cache
+
     document.getElementById("resultatsArtist").style.visibility="hidden"; // cache
     document.getElementById("resultatsAlbum").style.visibility="hidden"; // cache
 
@@ -46,6 +48,7 @@ function hideSearchPage(){
 
     document.getElementById("address").style.visibility="hidden"; // cache
 
+    document.getElementById("nbResultats").style.visibility="visible"; // cache
 
     document.getElementById("btnSearch").style.visibility="visible"; // cache
     document.getElementById("resultats").style.visibility="hidden"; // cache
