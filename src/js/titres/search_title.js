@@ -3,7 +3,6 @@ function rechercherTitre(entredTitle) {
     $("#spinner").show();
     $("#resultats").hide();
 
-    //var entredTitle = document.getElementById("title").value;
 
     var searchedTitle = entredTitle.replace(/ /g,"_"); // turn " " to "_"
 
@@ -65,7 +64,12 @@ function afficherResultats(data)
     data.results.bindings.forEach(r => {
         compteur++;
     });
-    document.getElementById("nbResultatsTitle").innerHTML = "Results ("+compteur+") :";
+    if(compteur==0) {
+        document.getElementById("nbResultatsTitle").innerHTML = "NOT FOUND";
+
+    }else{
+        document.getElementById("nbResultatsTitle").innerHTML = "Results (" + compteur + ") :";
+    }
 
     var path = window.location.pathname;
     var page = path.replace("index.html","");
