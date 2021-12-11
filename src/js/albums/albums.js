@@ -80,6 +80,7 @@ function rechercherNom(ressourceNameParam) {
     });
 
     document.getElementById("name").innerHTML = name;
+    document.getElementById("pageAlbum").innerHTML += "- "+name;
   }
 
 //
