@@ -75,13 +75,13 @@ function afficherResultats(data)
     var path = window.location.pathname;
     var page = path.replace("index.html","");
     var compteur=0;
-    contenuTableau += "<tr>";
+    contenuTableau += "<tr><br>";
+
     data.results.bindings.forEach(r => {
-        compteur++;
-        console.log(r.covers.value);
         if(compteur%6==0){
             contenuTableau += "<tr>";
         }
+        compteur++;
         contenuTableau += "<td>";
         contenuTableau += "<td class='element'>";
 
@@ -97,15 +97,19 @@ function afficherResultats(data)
         //contenuTableau += '<object class="element" data="'+path+'" type="image/png">  <img class="element" src="'+defaultPath+'" width="200" height="250" alt=" "> </object>';
         //contenuTableau += '<div id='+idImg+'> <img class="element" src="'+path + '" width="200" height="250" alt=" "></div>';
         contenuTableau += '<object class="element" data="'+path+'" type="image/png" width="200" height="200">  <img class="element" src="'+defaultPath+'" width="200" height="200" alt=" "> </object>';
+        contenuTableau += "<br>";
         contenuTableau += "<div><a href="+"file://"+page + "html/titres/titres_on_click.html?q="+ rightTitle+">" +r.title.value+ "</a></div>";
         contenuTableau += "<div><a href="+"file://"+page + "html/artistes/artistes.html?name="+ r.feat.value+">" +r.feat.value+ "</a></div>";
 
         //contenuTableau += '<div id='+idImg+'> <img class="element" src="'+defaultPath + '" width="200" height="250" alt=" "></div>';
+        //contenuTableau += "<br><br><br>";
+
         contenuTableau += "</div></td>";
         idImg=idImg+1;
         if(compteur%6==0){
             contenuTableau += "</tr>";
         }
+
     });
     contenuTableau += "</tr>";
     contenuTableau += "</div>";
