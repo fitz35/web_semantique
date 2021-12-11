@@ -34,6 +34,21 @@ function appel() {
   rechercherLienArtiste(id);
 }
 
+function getRessource(uri){
+  indexSlash=uri.lastIndexOf("/");
+  ressource=uri.substring(indexSlash+1);
+  ressource=ressource.replace('(','\\(');
+  ressource=ressource.replace(')','\\)');
+  ressource=ressource.replace('?','\\?');
+  ressource=ressource.replace(/!/g,'\\!');
+  ressource=ressource.replace(/:/g,'\\:');
+  ressource=ressource.replace('$','\\$');
+  ressource=ressource.replace(/,/g,'\\,');
+  ressource=ressource.replace(/'/g,'\\\'');
+
+  return ressource;
+}
+
 function clean(str){
     str = str.replace("*","");
     str = str.replaceAll("*"," / ");
@@ -47,12 +62,12 @@ function clean(str){
 //Recuperer le nom de l album
 //
 function rechercherNom(ressourceNameParam) {
+  ressourceNameParam = getRessource(ressourceNameParam)
     var contenu_requete = queryHeader + 
     `SELECT ?name ?id WHERE {
-    dbr:ressourceNameParam dbp:name ?name; dbo:wikiPageID ?id.
+    dbr:${ressourceNameParam} dbp:name ?name; dbo:wikiPageID ?id.
     }
     limit 1`;
-    contenu_requete = contenu_requete.replace("ressourceNameParam", ressourceNameParam);
     // Encodage de l'URL à transmettre à DBPedia
     var url_base = "http://dbpedia.org/sparql";
     var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
