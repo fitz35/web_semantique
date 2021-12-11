@@ -50,9 +50,14 @@ header{
     display: flex;
     flex-direction: row;
 }
-#cover{
-    margin-left: 2%;
-    margin-right: 2%;
+#infos{
+    margin-left: auto;
+    margin-right: auto;
+}
+#listeTitres{
+    margin-left: auto;
+    margin-right: 15%;
+    line-height: 0.75em;
 }
 #divAbstract{
     padding: 2% 4% 0 4%;

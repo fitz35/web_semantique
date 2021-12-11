@@ -81,7 +81,7 @@ function rechercherNom(ressourceNameParam) {
     });
 
     document.getElementById("albumTitle").innerHTML = name;
-    document.getElementById("pageAlbum").innerHTML += "- "+name;
+    document.getElementById("pageAlbum").innerHTML += " - "+name;
   }
 
 //
@@ -285,7 +285,7 @@ function rechercherImage(idParam) {
     });
     link+= "?width=300"
     cover = "<object data='";
-    cover += link + "' type='image/png' width='300'><img src='../../../img/defaultAlbum.jpg' width='300'></object>";
+    cover += link + "' type='image/png' width='400'><img src='../../../img/defaultAlbum.jpg' width='400'></object>";
     
     console.log("COVER");
 
@@ -515,11 +515,11 @@ function rechercherTitres(idParam) {
     var listeTitres;
     var lienTitre;
     var son;
-    listeTitres = "<ul id='listeTitres'></ul>";
-    document.getElementById("titres").innerHTML = listeTitres;
+    //listeTitres = "<ul id='listeTitres'></ul>";
+    //document.getElementById("titres").innerHTML = listeTitres;
     var i=1;
     data.results.bindings.forEach(r => {
-        son = "<li><a id='son" + i.toString() + "' href='' ></a></li>";
+        son = "<p><a id='son" + i.toString() + "' href='' ></a></p>";
         document.getElementById("listeTitres").innerHTML += son;
         var title = r.Songtitle.value;
         if(title.includes("http://dbpedia.org/resource/")){
