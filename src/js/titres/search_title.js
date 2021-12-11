@@ -49,7 +49,6 @@ function rechercherTitre(entredTitle) {
             $("#nbResultatsTitle").show();
             $("#spinner").hide();
             afficherResultats(results);
-            //console.log('on est la')
         }
     };
     xmlhttp.open("GET", url, true);
@@ -73,6 +72,7 @@ function afficherResultats(data)
         document.getElementById("nbResultatsTitle").innerHTML = "Results (" + compteur + ") :";
     }
 
+    //Get URI
     var path = window.location.pathname;
     var page = path.replace("index.html","");
 
@@ -102,7 +102,6 @@ function afficherResultats(data)
         if(compteur%5==0){
             contenuTableau += "</tr>";
         }
-
     });
     contenuTableau += "</tr></div>";
     document.getElementById("resultats").innerHTML = contenuTableau;

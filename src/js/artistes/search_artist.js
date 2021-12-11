@@ -1,7 +1,8 @@
 function rechercherArtist(entredTitle) {
-  //$("#infosTitle").hide();
-  //$("#spinner").show();
-  //var entredTitle = document.getElementById("title").value;
+  $("#nbResultats").hide();
+  $("#resultatsArtist").hide();
+  $("#infosArtist").hide();
+  $("#spinner").show();
 
   var searchedArtist = entredTitle.replace(/ /g,"_"); // turn " " to "_"
 
@@ -18,8 +19,8 @@ function rechercherArtist(entredTitle) {
      \n
      SELECT ?a ?name ?image WHERE {
         ?a dbo:abstract ?abstract.
-        ?a  dbp:name ?name .
-        ?a  a dbo:Person .
+        ?a  dbp:name ?name.
+        ?a gold:hypernym dbr:Singer.
         OPTIONAL
         {
         ?a dbo:thumbnail ?image.
@@ -36,7 +37,11 @@ function rechercherArtist(entredTitle) {
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       var results = JSON.parse(this.responseText);
-      afficherResultatsArtiste(results);
+      $("#nbResultats").show();
+      $("#resultatsArtist").show();
+      $("#infosArtist").show();
+      $("#spinner").hide();
+      afficherResultatsArtiste(results, entredTitle);
     }
   };
   xmlhttp.open("GET", url, true);
@@ -44,42 +49,44 @@ function rechercherArtist(entredTitle) {
 }
 
 // Affichage des résultats dans un tableau
-function afficherResultatsArtiste(data)
+function afficherResultatsArtiste(data, entredTitle)
 {
-  // Tableau pour mémoriser l'ordre des variables ; sans doute pas nécessaire
-  // pour vos applications, c'est juste pour la démo sous forme de tableau
-  var index = [];
 
   var urlRessource = "http://google.com/";
   var contenuTableau = "<div id='containerTitle'>";
-  var idImg = 0;
 
-  //Get URI
-  var path = window.location.pathname;
-  var page = path.replace("index.html","");
   var compteur=0;
+  var idImg = 0;
 
   data.results.bindings.forEach(r => {
     compteur++;
   });
-  document.getElementById("nbResultats").innerHTML = "Résultats ("+compteur+") :";
-  //document.getElementById("nbResultats").innerHTML = "</br>";
+  if(compteur==0) {
+    document.getElementById("nbResultats").innerHTML = "0 result for: "+entredTitle;
+    $("#resultatsArtist").hide();
+    $("#infosArtist").hide();
 
+  }else{
+    document.getElementById("nbResultats").innerHTML = "Résultats ("+compteur+") :";
+  }
+
+  //Get URI
+  var path = window.location.pathname;
+  var page = path.replace("index.html","");
 
   var compteur=0;
-  contenuTableau += "<tr>";
+  contenuTableau += "<tr><br><br>";
   data.results.bindings.forEach(r => {
-    compteur++;
-    if(compteur%6==0){
+    if(compteur%5==0){
       contenuTableau += "<tr>";
     }
-    var rightCover = r.a.value.replace("http://dbpedia.org/resource/",""); // turn " " to "_"
-    var newRightCover = r.name.value;
-
+    compteur++;
     contenuTableau += "<td>";
     contenuTableau += "<td class='element'>";
-    urlRessource =  r.name.value;
 
+    urlRessource =  r.name.value;
+    var rightCover = r.a.value.replace("http://dbpedia.org/resource/",""); // turn " " to "_"
+    var newRightCover = r.name.value;
     if(r.name.value.includes("resource")){
       newRightCover = rightCover.replace("_"," ");
     }
@@ -90,21 +97,17 @@ function afficherResultatsArtiste(data)
       //Image par défaut
       path="../img/imageNotFoundArtist.png";
     }
-    //var path = 'http://en.wikipedia.org/wiki/Special:FilePath/'+ rightCover;
+
     contenuTableau += '<div id='+idImg+'> <img  src="'+path + '" width="200" height="250" alt=" "></div>';
     contenuTableau += "<div><a href="+"file://"+page + "html/artistes/artistes.html?name="+ rightCover+">" +newRightCover+ "</a></div>";
     idImg=idImg+1;
 
     contenuTableau += "</div></td>";
-    if(compteur%6==0){
+    if(compteur%5==0){
       contenuTableau += "</tr>";
     }
   });
-  contenuTableau += "</tr>";
-  //console.log(compteur);
-
-  contenuTableau += "</div>";
-
+  contenuTableau += "</tr></div>";
   document.getElementById("resultatsArtist").innerHTML = contenuTableau;
 
 }
