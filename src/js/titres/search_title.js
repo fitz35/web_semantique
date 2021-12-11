@@ -1,9 +1,9 @@
 function rechercherTitre(entredTitle) {
+    $("#nbResultatsTitle").hide();
     $("#infosTitle").hide();
     $("#spinner").show();
     $("#resultats").hide();
 
-    //var entredTitle = document.getElementById("title").value;
 
     var searchedTitle = entredTitle.replace(/ /g,"_"); // turn " " to "_"
 
@@ -46,9 +46,9 @@ function rechercherTitre(entredTitle) {
         if (this.readyState == 4 && this.status == 200) {
             var results = JSON.parse(this.responseText);
             $("#resultats").show();
+            $("#nbResultatsTitle").show();
             $("#spinner").hide();
-            afficherResultats(results);
-            //console.log('on est la')
+            afficherResultats(results, entredTitle);
         }
     };
     xmlhttp.open("GET", url, true);
@@ -56,7 +56,7 @@ function rechercherTitre(entredTitle) {
 }
 
 // Affichage des résultats dans un tableau
-function afficherResultats(data)
+function afficherResultats(data, entredTitle)
 {
     var urlRessource = "http://google.com/";
     var contenuTableau = "<div id='containerTitle'>";
@@ -65,8 +65,16 @@ function afficherResultats(data)
     data.results.bindings.forEach(r => {
         compteur++;
     });
-    document.getElementById("nbResultatsTitle").innerHTML = "Results ("+compteur+") :";
+    if(compteur==0) {
+        document.getElementById("nbResultatsTitle").innerHTML = "No result found for: "+entredTitle;
+        $("#resultats").hide();
+    }else{
+        document.getElementById("nbResultatsTitle").innerHTML = "Results (" + compteur + ") :";
+    }
+    $("#nbResultatsAlbum").hide();
+    $("#nbResultats").hide();
 
+    //Get URI
     var path = window.location.pathname;
     var page = path.replace("index.html","");
 
@@ -96,7 +104,6 @@ function afficherResultats(data)
         if(compteur%5==0){
             contenuTableau += "</tr>";
         }
-
     });
     contenuTableau += "</tr></div>";
     document.getElementById("resultats").innerHTML = contenuTableau;
