@@ -1,3 +1,23 @@
+$(document).ready(function(){
+    $(".go-back").on("click",function(){
+        history.back();
+    });
+});
+
+function getRessource(ressource){
+    
+    ressource=ressource.replace('(','\\(');
+    ressource=ressource.replace(')','\\)');
+    ressource=ressource.replace('?','\\?');
+    ressource=ressource.replace(/!/g,'\\!');
+    ressource=ressource.replace(/:/g,'\\:');
+    ressource=ressource.replace('$','\\$');
+    ressource=ressource.replace(/,/g,'\\,');
+    ressource=ressource.replace(/'/g,'\\\'');
+
+    return ressource;
+}
+
 function getListArtists(search){
 
 };
@@ -16,8 +36,6 @@ function getArtistDetails(name){
      \n
         SELECT ?abstract ?name ?dateOfBirth ?startDate ?birthName  ?job ?image ?description WHERE {
          dbr:${name} dbo:abstract ?abstract.
-         dbr:${name} dbo:birthDate ?dateOfBirth.
-         dbr:${name} dbo:birthName ?birthName.
          dbr:${name} dbo:activeYearsStartYear ?startDate.
          dbr:${name} dbp:name ?name.
          
@@ -30,6 +48,11 @@ function getArtistDetails(name){
          {
             dbr:${name} dbo:thumbnail ?image.
             dbr:${name} dbp:caption ?description.
+         }
+         OPTIONAL
+         {
+            dbr:${name} dbo:birthDate ?dateOfBirth.
+            dbr:${name} dbo:birthName ?birthName.
          }
        
          FILTER(langMatches( lang( ?abstract ) ,"EN") && langMatches( lang( ?job ) ,"EN") && langMatches( lang( ?description), "EN")   )
@@ -291,8 +314,12 @@ function afficherResultatsArtistDetails(data){
     console.log(data);
     data.results.bindings.forEach((v, i) => {
 
-            afficheDansToutesClasses("birthDay", v.dateOfBirth.value);
+            if (v.dateOfBirth != undefined)
+            {
+                 afficheDansToutesClasses("birthDay", v.dateOfBirth.value);
 
+            }
+           
             var resutTable=document.getElementsByClassName("image");
             //console.log(v.image);
             for(let parcours of resutTable)
@@ -311,7 +338,11 @@ function afficherResultatsArtistDetails(data){
             }
             
             afficheDansToutesClasses("details", v.abstract.value);
-            afficheDansToutesClasses("birthName", v.birthName.value);
+            if (v.birthName != undefined)
+            {
+                afficheDansToutesClasses("birthName", v.birthName.value);
+            }
+            
             afficheDansToutesClasses("name", v.name.value);
             if (v.job != undefined)
             {
