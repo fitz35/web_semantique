@@ -43,7 +43,6 @@
 <button id="btnSearch" onclick="repaintResearch()" style="visibility: hidden">New research</span></button>
 
 <br><br>
-<br><br>
 <br>
 
 <h2 id="sousTitre" class= "sousTitre" style="text-align: center;">The best musical search engine!</h2>
@@ -78,7 +77,11 @@
 <div id="spinner" class="spinner-border" role="status">
     <span class="sr-only">Loading...</span>
 </div>
-<table id="resultats"></table>
+
+<div id="nbResultatsTitle" style="visibility: hidden; " > </div>
+<br>
+<br>
+<table class="center" id="resultats" style="border:3px solid black ; width:90%";></table>
 <div id="infosTitle"></div>
 
 <a id="linkMoreInfos" href="#" onclick=moreSingles(document.getElementById("artistName").innerText.substring(document.getElementById("artistName").innerText.lastIndexOf(":")+1)) style="visibility: hidden">More singles from the artist :</a>
@@ -87,12 +90,13 @@
 
 <!-- Artistes -->
 <div id="nbResultats" style="visibility: hidden"> </div>
-<table id="resultatsArtist"></table>
+<table class="center" id="resultatsArtist" style="border:3px solid black ; width:90%";></table>
 <div id="infosArtist"></div>
 <!-- ----- -->
 
 <!-- Album -->
-<table id="resultatsAlbum"></table>
+<div id="nbResultatsAlbum" style="visibility: hidden"> </div>
+<table class="center" id="resultatsAlbum" style="border:3px solid black ; width:90%";></table>
 <div id="infosAlbum"></div>
 <!-- ----- -->
 

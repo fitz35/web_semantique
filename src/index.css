@@ -44,8 +44,42 @@
 body {
     background-image:url(../img/background.png);
     background-repeat: no-repeat;
+    background-size: cover;
+
 }
 
 .sousTitre{
     color: #a1cefc;
+}
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+#nbResultatsTitle {
+    position: absolute;
+    top: 200px;
+    left: 65px;
+    font-size: 26px;
+}
+
+#nbResultats {
+    position: absolute;
+    top: 200px;
+    left: 65px;
+    font-size: 26px;
+}
+
+#nbResultatsAlbum {
+    position: absolute;
+    top: 200px;
+    left: 65px;
+    font-size: 26px;
+}
+
+#spinner {
+    position: absolute;
+    top: 200px;
+    left: 650px;
 }

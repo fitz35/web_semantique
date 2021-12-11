@@ -50,17 +50,22 @@ header{
     display: flex;
     flex-direction: row;
 }
-#pochetteAlbum{
-    margin-left: 2%;
-    margin-right: 2%;
+#infos{
+    margin-left: auto;
+    margin-right: auto;
+}
+#listeTitres{
+    margin-left: auto;
+    margin-right: 15%;
+    line-height: 0.75em;
 }
 #divAbstract{
     padding: 2% 4% 0 4%;
 }
 
-#abstract{
+#description{
     text-align: justify;
-    max-height: 300px;
+    max-height: 200px;
     overflow-y: scroll;
     padding-right: 2%;
 }

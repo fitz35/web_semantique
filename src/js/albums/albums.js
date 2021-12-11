@@ -35,7 +35,8 @@ function appel() {
 }
 
 function clean(str){
-    str = str.replaceAll("*","<br>");
+    str = str.replace("*","");
+    str = str.replaceAll("*"," / ");
     str = str.replace("http://dbpedia.org/resource/","");
     str = str.replaceAll("_"," ");
     str = str.replaceAll("%22",'"');
@@ -79,7 +80,8 @@ function rechercherNom(ressourceNameParam) {
       name = r.name.value;
     });
 
-    document.getElementById("name").innerHTML = name;
+    document.getElementById("albumTitle").innerHTML = name;
+    document.getElementById("pageAlbum").innerHTML += " - "+name;
   }
 
 //
@@ -156,7 +158,7 @@ function rechercherArtisteAlbum(idParam) {
       artist = r.artist.value;
     });
 
-    document.getElementById("artist").innerHTML = artist;
+    document.getElementById("artist").innerHTML += artist;
   }
 
 //
@@ -241,7 +243,7 @@ function rechercherDateSortie(idParam) {
       released = r.released.value;
     });
 
-    document.getElementById("released").innerHTML = released;
+    document.getElementById("released").innerHTML += released;
   }
 //
 //
@@ -278,13 +280,14 @@ function rechercherImage(idParam) {
     var link;
     link = "http://commons.wikimedia.org/wiki/Special:FilePath/";
     data.results.bindings.forEach(r => {
-        console.log(r.cover.value);
-
-        link += r.cover.value;
+        var nameCover = r.cover.value; 
+        link += nameCover;
     });
     link+= "?width=300"
-    cover = "<img src='";
-    cover += link + "'>";
+    cover = "<object data='";
+    cover += link + "' type='image/png' width='400'><img src='../../../img/defaultAlbum.jpg' width='400'></object>";
+    
+    console.log("COVER");
 
     document.getElementById("cover").innerHTML = cover;
   }
@@ -325,7 +328,7 @@ function rechercherProducteur(idParam) {
     });
     
     producer = clean(producer);
-    document.getElementById("producer").innerHTML = producer;
+    document.getElementById("producer").innerHTML += producer;
   }
 //
 //
@@ -363,7 +366,7 @@ function rechercherVentes(idParam) {
       sales = r.sales.value;
     });
 
-    document.getElementById("sales").innerHTML = sales;
+    document.getElementById("sales").innerHTML += sales;
   }
 //
 //
@@ -401,7 +404,7 @@ function rechercherLabel(idParam) {
     });
 
     label = clean(label);
-    document.getElementById("label").innerHTML = label;
+    document.getElementById("label").innerHTML += label;
   }
 //
 //
@@ -439,7 +442,7 @@ function rechercherGenre(idParam) {
     });
 
     genre = clean(genre);
-    document.getElementById("genre").innerHTML = genre;
+    document.getElementById("genre").innerHTML += genre;
   }
 //
 //
@@ -477,7 +480,7 @@ function rechercherDuree(idParam) {
       totallength = r.totallength.value;
     });
 
-    document.getElementById("totallength").innerHTML = totallength;
+    document.getElementById("totallength").innerHTML += totallength;
   }
 //
 //
@@ -512,11 +515,11 @@ function rechercherTitres(idParam) {
     var listeTitres;
     var lienTitre;
     var son;
-    listeTitres = "<ul id='listeTitres'></ul>";
-    document.getElementById("titres").innerHTML = listeTitres;
+    //listeTitres = "<ul id='listeTitres'></ul>";
+    //document.getElementById("titres").innerHTML = listeTitres;
     var i=1;
     data.results.bindings.forEach(r => {
-        son = "<li><a id='son" + i.toString() + "' href='' ></a></li>";
+        son = "<p><a id='son" + i.toString() + "' href='' ></a></p>";
         document.getElementById("listeTitres").innerHTML += son;
         var title = r.Songtitle.value;
         if(title.includes("http://dbpedia.org/resource/")){
@@ -567,8 +570,8 @@ function rechercherPrix(idParam) {
     var listePrix;
     listePrix = ""
     data.results.bindings.forEach(r => {
-      listePrix += r.awards.value + "<br>";
+      listePrix += r.awards.value + " / ";
     });
       
-    document.getElementById("awards").innerHTML = listePrix;
+    document.getElementById("awards").innerHTML += listePrix;
   }
