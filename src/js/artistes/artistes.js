@@ -209,10 +209,12 @@ function afficherListeResultats(data){
             var resultTableList=document.getElementsByClassName("titleSing");
             for(let parcours of resultTableList)
             {
+                var ressource= v.song.value.split('/');
                 parcours.innerHTML+=
                 `<li> 
-                     <a href="${v.song.value}">${v.songName.value}
-                     <img alt="Redirection Image" src="../../../img/redirect.png"
+                     <a href=../../html/titres/titres_on_click.html?q=${ressource[ressource.length-1]}>${v.songName.value}
+                     </a>
+                     <a href= ${v.song.value}><img alt="Redirection Image" src="../../../img/redirect.png"
                      width="15" height="10">
                      </a>
                 </li>`;
@@ -252,13 +254,27 @@ function afficherListeAlbums(data){
             var resultTableList=document.getElementsByClassName("albums");
             for(let parcours of resultTableList)
             {
+               
                if(v.name.value!= "")
                {
-                parcours.innerHTML+=`<li> <a href="${v.album.value}">${v.name.value}</a></li>`;
+                var ressource= v.album.value.split('/');
+                parcours.innerHTML+=
+                `<li> 
+                     <a href=../../html/albums/albums.html?name=${ressource[ressource.length-1]}>${v.name.value}
+                     </a>
+                     <a href= ${ v.album.value}><img alt="Redirection Image" src="../../../img/redirect.png"
+                     width="15" height="10">
+                     </a>
+                </li>`;
                }
                else
                {
-                parcours.innerHTML+=`<li> <a href="${v.album.value}">${v.album.value}</a></li>`; 
+                var ressource= v.album.value.split('/');
+                parcours.innerHTML+=
+                `<li> 
+                     <a href=../../html/albums/albums.html?name=${ressource[ressource.length-1]}>${v.album.value}
+                     </a>
+                </li>`;
                }
                 
                 
