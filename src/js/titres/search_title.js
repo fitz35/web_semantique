@@ -1,4 +1,5 @@
 function rechercherTitre(entredTitle) {
+    $("#nbResultatsTitle").hide();
     $("#infosTitle").hide();
     $("#spinner").show();
     $("#resultats").hide();
@@ -45,6 +46,7 @@ function rechercherTitre(entredTitle) {
         if (this.readyState == 4 && this.status == 200) {
             var results = JSON.parse(this.responseText);
             $("#resultats").show();
+            $("#nbResultatsTitle").show();
             $("#spinner").hide();
             afficherResultats(results);
             //console.log('on est la')
