@@ -211,7 +211,7 @@ function afficherPochette(data){
     data.results.bindings.forEach(r => { 
         if(r.cover && !cover.includes(r.cover.value)){
             cover=r.cover.value;
-        }  
+        }
     });
 
     // cover=data.results.bindings[0].cover.value;
