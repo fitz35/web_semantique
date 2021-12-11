@@ -17,11 +17,11 @@ function rechercherAlbum(entredAlbum) {
      PREFIX dbpedia: <http://dbpedia.org/>
      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
      \n
-      SELECT ?album ?name (max(?sales) as ?maxsales) ?id WHERE {
-      ?album a dbo:Album; dbp:name ?name; dbp:salesamount ?sales; dbo:wikiPageID ?id.
-      filter regex(?name, "(?i)`+searchedAlbum +`")
+      SELECT ?album ?name (max(?sales) as ?maxsales) ?id ?image WHERE {
+      ?album a dbo:Album; dbp:name ?name; dbp:salesamount ?sales; dbo:wikiPageID ?id; dbp:cover ?image.
+      filter regex(?album, "(?i).*`+searchedAlbum+`.*")
       }
-      group by ?name ?album ?maxsales ?id
+      group by ?name ?album ?maxsales ?id ?image
       order by desc(?maxsales)
       limit 20`
 
@@ -95,7 +95,7 @@ function afficherResultatsAlbum(data, entredAlbum)
       }
 
     if(r.image!=undefined) {
-      pathImage = 'http://en.wikipedia.org/wiki/Special:FilePath/'+ r;
+      pathImage = 'http://en.wikipedia.org/wiki/Special:FilePath/'+ r.image.value;
     }else{
       //Image par défaut
       pathImage="../img/defaultAlbum.jpg";
