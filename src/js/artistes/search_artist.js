@@ -62,13 +62,14 @@ function afficherResultatsArtiste(data, entredTitle)
     compteur++;
   });
   if(compteur==0) {
-    document.getElementById("nbResultats").innerHTML = "0 result for: "+entredTitle;
+    document.getElementById("nbResultats").innerHTML = "No result for: "+entredTitle;
     $("#resultatsArtist").hide();
     $("#infosArtist").hide();
-
   }else{
     document.getElementById("nbResultats").innerHTML = "Résultats ("+compteur+") :";
   }
+  $("#nbResultatsTitle").hide();
+  $("#nbResultatsAlbum").hide();
 
   //Get URI
   var path = window.location.pathname;

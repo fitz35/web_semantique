@@ -1,7 +1,8 @@
 function rechercherAlbum(entredAlbum) {
-    //$("#infosTitle").hide();
-    //$("#spinner").show();
-    //var entredTitle = document.getElementById("title").value;
+  $("#nbResultatsAlbum").hide();
+  $("#infosAlbum").hide();
+  $("#spinner").show();
+  $("#resultatsAlbum").hide();
 
   var searchedAlbum = entredAlbum.replace(/ /g,"_"); // turn " " to "_"
 
@@ -33,8 +34,11 @@ function rechercherAlbum(entredAlbum) {
   xmlhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
           var results = JSON.parse(this.responseText);
-        console.log(results);
-        afficherResultatsAlbum(results);
+        $("#nbResultatsAlbum").show();
+        $("#infosAlbum").show();
+        $("#spinner").hide();
+        $("#resultatsAlbum").show();
+        afficherResultatsAlbum(results, entredAlbum);
       }
   };
   xmlhttp.open("GET", url, true);
@@ -42,67 +46,72 @@ function rechercherAlbum(entredAlbum) {
 }
 
 // Affichage des résultats dans un tableau
-function afficherResultatsAlbum(data)
+function afficherResultatsAlbum(data, entredAlbum)
 {
-  // Tableau pour mémoriser l'ordre des variables ; sans doute pas nécessaire
-  // pour vos applications, c'est juste pour la démo sous forme de tableau
-  var index = [];
 
   var urlRessource = "http://google.com/";
   var contenuTableau = "<div id='containerTitle'>";
-  var idImg = 0;
+
+  var compteur=0;
+  data.results.bindings.forEach(r => {
+    compteur++;
+  });
+  if(compteur==0) {
+    document.getElementById("nbResultatsAlbum").innerHTML = "No result found for: "+entredAlbum;
+    $("#infosAlbum").hide();
+    $("#resultatsAlbum").hide();
+  }else{
+    document.getElementById("nbResultatsAlbum").innerHTML = "Results (" + compteur + ") :";
+  }
+  $("#nbResultatsTitle").hide();
+  $("#nbResultats").hide();
 
   //Get URI
   var path = window.location.pathname;
   var page = path.replace("index.html","");
-  var compteur=0;
 
-  data.results.bindings.forEach(r => {
-    compteur++;
-  });
 
   compteur=0;
+  contenuTableau += "<tr><br><br>";
   data.results.bindings.forEach(r => {
-    compteur++;
-    if(compteur%6==0){
+    if(compteur%5==0){
       contenuTableau += "<tr>";
     }
-    var rightCover = r.name.value.replace(/ /g,"_"); // turn " " to "_"
-    var newRightCover = r.name.value;
-
+    compteur++;
     contenuTableau += "<td>";
     contenuTableau += "<td class='element'>";
-      urlRessource =  r.name.value;
+
+    urlRessource =  r.name.value;
+    var rightCover = r.name.value.replace(/ /g,"_"); // turn " " to "_"
+    var newRightCover = r.name.value;
+    var idImg = 0;
+    var pathImage;
+
+
 
       if(r.name.value.includes("resource")){
         rightCover = (r.name.value.replace("http://dbpedia.org/resource/",""))
         newRightCover = rightCover.replace("_"," ");
       }
-      //var rightCover = r.name.value.replace(/ /g,"_"); // turn " " to "_"
 
-    var pathImage;
     if(r.image!=undefined) {
       pathImage = 'http://en.wikipedia.org/wiki/Special:FilePath/'+ r;
     }else{
       //Image par défaut
       pathImage="../img/defaultAlbum.jpg";
     }
-      var defaultPath = 'https://ae01.alicdn.com/kf/HTB1BuhPdL1H3KVjSZFHq6zKppXar/Record-Decal-Music-Note-Vinyl-Wall-Decals-Album-Stickers-Bedroom-Home-Decoration-Retro-Art-Murals-Living.jpg_Q90.jpg_.webp';
-      contenuTableau += '<div id='+idImg+'> <img  src="'+pathImage + '" width="200" height="200" alt=" " ></div>';
-      contenuTableau += "<div><a href="+"file://"+page + "html/albums/albums.html?name="+ rightCover+">" +newRightCover+ "</a></div>";
-      //contenuTableau += "<div><a href=# onclick=infosTitle(\""+ urlRessource +"\")>" + r.feat.value + "</a></div>";
-      idImg=idImg+1;
+    contenuTableau += "<br>";
+    contenuTableau += '<div id='+idImg+'> <img  src="'+pathImage + '" width="200" height="200" alt=" " ></div>';
+    contenuTableau += "<br>";
+    contenuTableau += "<div><a href="+"file://"+page + "html/albums/albums.html?name="+ rightCover+">" +newRightCover+ "</a></div>";
+    idImg=idImg+1;
+
     contenuTableau += "</div></td>";
-    if(compteur%6==0){
+    if(compteur%5==0){
       contenuTableau += "</tr>";
     }
-
   });
-
-  contenuTableau += "</tr>";
-
-  contenuTableau += "</div>";
-
+  contenuTableau += "</tr></div>";
   document.getElementById("resultatsAlbum").innerHTML = contenuTableau;
 
 }

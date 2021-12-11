@@ -71,6 +71,13 @@ body {
     font-size: 26px;
 }
 
+#nbResultatsAlbum {
+    position: absolute;
+    top: 200px;
+    left: 65px;
+    font-size: 26px;
+}
+
 #spinner {
     position: absolute;
     top: 200px;

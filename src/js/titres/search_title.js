@@ -48,7 +48,7 @@ function rechercherTitre(entredTitle) {
             $("#resultats").show();
             $("#nbResultatsTitle").show();
             $("#spinner").hide();
-            afficherResultats(results);
+            afficherResultats(results, entredTitle);
         }
     };
     xmlhttp.open("GET", url, true);
@@ -56,7 +56,7 @@ function rechercherTitre(entredTitle) {
 }
 
 // Affichage des résultats dans un tableau
-function afficherResultats(data)
+function afficherResultats(data, entredTitle)
 {
     var urlRessource = "http://google.com/";
     var contenuTableau = "<div id='containerTitle'>";
@@ -66,11 +66,13 @@ function afficherResultats(data)
         compteur++;
     });
     if(compteur==0) {
-        document.getElementById("nbResultatsTitle").innerHTML = "NOT FOUND";
-
+        document.getElementById("nbResultatsTitle").innerHTML = "No result found for: "+entredTitle;
+        $("#resultats").hide();
     }else{
         document.getElementById("nbResultatsTitle").innerHTML = "Results (" + compteur + ") :";
     }
+    $("#nbResultatsAlbum").hide();
+    $("#nbResultats").hide();
 
     //Get URI
     var path = window.location.pathname;
