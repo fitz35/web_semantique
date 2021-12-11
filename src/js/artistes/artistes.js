@@ -112,6 +112,43 @@ function getArtistSongs(name){
     xmlhttp.send();
 };
 
+function getBandMembers(name){
+    var contenu_requete =     
+    `PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+     PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+     PREFIX dc: <http://purl.org/dc/elements/1.1/>
+     PREFIX : <http://dbpedia.org/resource/>
+     PREFIX dbpedia2: <http://dbpedia.org/property/>
+     PREFIX dbpedia: <http://dbpedia.org/>
+     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+     \n
+     SELECT ?members ?memberName WHERE {
+        dbr:${name}  dbo:bandMember ?members.
+        ?members dbp:name ?memberName.
+         FILTER(langMatches( lang( ?memberName ) ,"EN")).
+        }
+        `
+       // Encodage de l'URL à transmettre à DBPedia
+     var url_base = "http://dbpedia.org/sparql";
+     var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
+ 
+     // Requête HTTP et affichage des résultats
+     var xmlhttp = new XMLHttpRequest();
+     xmlhttp.onreadystatechange = function() {
+         if (this.readyState == 4 && this.status == 200) {
+             var results = JSON.parse(this.responseText);
+             afficherListeMembers(results);
+         }
+}
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+};
+
+
+
+
 function getArtistAlbums(name){
     var contenu_requete =     
     `PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
@@ -270,6 +307,36 @@ function afficherListeAwards(data){
       }
 )};
 
+
+function afficherListeMembers(data){
+    console.log(data);
+    data.results.bindings.forEach((v, i) => {
+        
+            var resultTableList=document.getElementsByClassName("member");
+            for(let parcours of resultTableList)
+            {
+                var ressource= v.members.value.split('/');
+                if(v.memberName.value!= "")
+               {
+                parcours.innerHTML+=`<li> <a href=../../html/artistes/artistes.html?name=${ressource[ressource.length-1]}>${v.memberName.value}
+                </a>
+                <a href= ${ v.members.value}><img alt="Redirection Image" src="../../../img/redirect.png"
+                     width="15" height="10">
+                </li>`;
+               }
+               else
+               {
+                parcours.innerHTML+=`<li> <a href=../../html/artistes/artistes.html?name=${ressource[ressource.length-1]}>${ressource[ressource.length-1]}</a>
+                <a href= ${ v.members.value}><img alt="Redirection Image" src="../../../img/redirect.png"
+                     width="15" height="10">
+                </li>`; 
+               }
+                            
+            }
+        
+      }
+)};
+
 function afficherListeAlbums(data){
     console.log(data);
     data.results.bindings.forEach((v, i) => {
@@ -347,6 +414,10 @@ function afficherResultatsArtistDetails(data){
             if (v.job != undefined)
             {
                 afficheDansToutesClasses("job", v.job.value);
+            }
+            if (v.startDate != undefined)
+            {
+                afficheDansToutesClasses("startDate", v.startDate.value);
             }
         
       }
