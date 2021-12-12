@@ -1,0 +1,40 @@
+table {
+    border: 1px solid black;
+    border-spacing: 15px;
+    
+}
+table, th, td {
+    padding: 15px;
+  }
+header{
+    margin-top: 2%;
+    margin-bottom: 4%;
+}
+#body{
+    background-color: #c9d6ee;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+.element{
+    overflow: hidden;
+    width: 400px;
+    height: 100px;
+    contain: content;
+    display: display-inside;
+    margin-top: 2%;
+    margin-bottom: 4%;
+    vertical-align: top;
+}
+
+.details{
+    text-align: justify;
+    max-height: 300px;
+    overflow-y: scroll;
+    padding-right: 2%;
+}
+
+.identifier{
+    vertical-align: top;
+}

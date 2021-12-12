@@ -393,7 +393,7 @@ function afficherResultatsArtistDetails(data){
             {
                 if(v.image!=undefined && v.description!=null)
                 {
-                    parcours.innerHTML="<img src=\""+ v.image.value+ "\" alt=\""+ v.description.value +"\">";
+                    parcours.innerHTML="<img src=\""+ v.image.value+ "\" alt=\""+ v.description.value +"\" width=\"100\" height=\"150\">";
                 }
                 else if(v.description!=null)
                 {

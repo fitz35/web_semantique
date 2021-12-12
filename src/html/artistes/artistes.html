@@ -10,8 +10,9 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="../../js/artistes/artistes.js"></script>
+  <link rel="stylesheet" href="artistes.css">
 </head>
-<body>
+<body id="body">
     <header>
         <div class="d-flex flex-row">
             <div class="">
@@ -30,98 +31,97 @@
         <tbody>
             <tr>
                 <!--birth day-->
-                <td>
-                    birth day :
+                <td class="identifier">
+                    Name :
                 </td>
-                <td class="birthDay">
+                <td class="name element">
                     
                 </td>
-                <!--birth name-->
+                <!--image-->
                 <td>
-                    birth name :
                 </td>
-                <td class="birthName">
+                <td class="image element" colspan="3">                    
+                </td>
+                </tr>
+                <tr>
+                <!--birth name-->
+                <td class="identifier">
+                     Job :
+                </td>
+                <td class="job element">
                     
                 </td>
             </tr>
             <tr>
                 <!--name-->
-                <td>
-                    name :
+                <td class="identifier">
+                    birth name :
                 </td>
-                <td class="name">
+                <td class="birthName element">_
                     
                 </td>
                    <!--birth name-->
-                <td>
-                    job :
+                <td class="identifier">
+                    Birth Day :
                 </td>
-                <td class="job">
+                <td class="birthDay element">_
                     
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class="identifier">
                     Start date:
                 </td>
-                <td class="startDate">
+                <td class="startDate element">
                     
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class="identifier">
                     Members of the group:
                 </td>
-                <td class="member">
+                <td class="member element">
                     
                 </td>
             </tr>
             <tr>
                 <!--title sing-->
-                <td>
+                <td class="identifier">
                     details:
                 </td>
-                <td class="details" colspan="3">
+                <td class="element details"colspan="3">
                     
                 </td>
             </tr>
-            <tr>
-                <!--image-->
-                <td>
-                    image:
-                </td>
-                <td class="image" colspan="3">                    
-                </td>
-            </tr>
+            
             <tr>
                 <!--title sing-->
-                <td>
+                <td class="identifier">
                     total number of songs sung :
                 </td>
-                <td class="total"></td>
+                <td class="total element"></td>
             </tr>
             <tr>
                 <!--title sing-->
-                <td colspan="3"> Songs sung by singer:
-                  <ol class="titleSing"></ol>
+                <td colspan="3" class="identifier"> Songs sung by singer:
+                  <ol class="titleSing element"></ol>
+                    
+                </td>
+                
+                  <!--album-->
+                <td colspan="3" class="identifier">Albums of the singer:
+                    <ol class="albums element"></ol>
+                      
+                  </td>
+            </tr>
+            <tr>
+                <!--awards-->
+                <td colspan="3" class="identifier"> Awards of the singer:
+                    <ol class="awards element"></ol>
                     
                 </td>
             </tr>
 
-            <tr>
-                <!--title sing-->
-                <td colspan="3"> Awards of the singer:
-                  <ol class="awards"></ol>
-                    
-                </td>
-            </tr>
-            <tr>
-                <!--album-->
-                <td colspan="3">Albums of the singer:
-                  <ol class="albums"></ol>
-                    
-                </td>
-            </tr>
 
         </tbody>
     </table>
