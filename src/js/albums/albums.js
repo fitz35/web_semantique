@@ -15,10 +15,8 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 var id = -1;
 //Appel de toutes les fonctions de recherche
 function appel() {
-    document.body.style.backgroundColor = "#c9d6ee";
-
-    var ressourceName = window.location.search.split("=")[1];
-  console.log(ressourceName)
+  document.body.style.backgroundColor = "#c9d6ee";
+  var ressourceName = window.location.search.split("=")[1];
   rechercherNom(ressourceName);
   rechercherDescription(id);
   rechercherArtisteAlbum(id);
@@ -41,7 +39,7 @@ function getRessource(uri){
   ressource=ressource.replace(')','\\)');
   ressource=ressource.replace('?','\\?');
   ressource=ressource.replace(/!/g,'\\!');
-  ressource=ressource.replace(/:/g,'\\:');
+  ressource=ressource.replace(/:/g,'%3A');
   ressource=ressource.replace('$','\\$');
   ressource=ressource.replace(/,/g,'\\,');
   ressource=ressource.replace(/'/g,'\\\'');
@@ -63,6 +61,7 @@ function clean(str){
 //
 function rechercherNom(ressourceNameParam) {
   ressourceNameParam = getRessource(ressourceNameParam)
+  console.log(ressourceNameParam)
     var contenu_requete = queryHeader + 
     `SELECT ?name ?id WHERE {
     dbr:${ressourceNameParam} dbp:name ?name; dbo:wikiPageID ?id.
@@ -80,7 +79,6 @@ function rechercherNom(ressourceNameParam) {
             afficherResultatsName(results);
             id = results.results.bindings[0].id.value
         }
-        return id
     };
     xmlhttp.open("GET", url, false);
     xmlhttp.send();
