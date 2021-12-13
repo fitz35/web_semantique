@@ -547,7 +547,7 @@ function rechercherTitres(idParam) {
             document.getElementById("son"+i.toString()).removeAttribute("href");
         }
         title = clean(title);
-        document.getElementById("son"+i.toString()).innerHTML = title;
+        document.getElementById("son"+i.toString()).innerHTML = '<i class="fa fa-arrow-circle-right" aria-hidden="true"></i>    ' + title;
         i += 1;
     });
   }
