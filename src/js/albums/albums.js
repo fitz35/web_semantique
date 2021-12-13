@@ -39,10 +39,8 @@ function getRessource(uri){
   ressource=ressource.replace(')','\\)');
   ressource=ressource.replace('?','\\?');
   ressource=ressource.replace(/!/g,'\\!');
-  ressource=ressource.replace(/:/g,'%3A');
   ressource=ressource.replace('$','\\$');
   ressource=ressource.replace(/,/g,'\\,');
-  ressource=ressource.replace(/'/g,'\\\'');
 
   return ressource;
 }
