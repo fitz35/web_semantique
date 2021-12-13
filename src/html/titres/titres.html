@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title id="pageTitle">Title</title>
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <meta content="utf-8" http-equiv="encoding">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script type="text/javascript" src="../../js/titres/titres.js"></script>
+        <link rel="stylesheet" href="titres.css">
+    </head>
+    <script type="text/javascript">
+    </script>
+    <body id="mainContainer">
+        <header>
+            <div class="d-flex flex-row">
+                <div class="">
+                    <button type="button" class="btn btn-secondary go-back">
+                        <i class="fa fa-arrow-left"></i>  Back
+                    </button>
+                </div>
+                <div class="m-auto display-3">
+                    MUSIK'IF
+                </div>
+            </div>
+            <hr> 
+        </header>
+            
+        <h1 id='musicTitle' class="text-center"></h1>
+
+        <div id="infosTitle">
+            <div id='generalInfos'>
+                <div id='pochetteAlbum'>
+                </div>
+                <div>
+                    <!-- <h1 id='musicTitle'></h1> -->
+                    <h2 id='artistName'></h2>
+                    <h2 id='albumTitle'></h2>
+                    <p id='releaseDate'></p>
+                    <p id='genreMusical'></p>
+                </div>
+            </div>
+            <div id="divAbstract">
+                <h4>Abstract :</h4>
+                <p id='abstract'></p>
+            </div>            
+        </div>
+        <div id="suggestions">
+            <h5 class="text-center">More singles from the artist :</h5>
+            <div id="spinner" class="spinner-border" role="status"></div>
+            <div id="notMoreTitle" class="text-left"></div>
+
+            <div id="carouselSimilarTitle" class="carousel slide" data-bs-ride="carousel">
+                <div id="indicatorsCarousel" class='carousel-indicators'></div>
+                <div id="moreTitle" class="carousel-inner  text-center"></div>
+                <button id="prev" class="carousel-control-prev" type="button" data-bs-target="#carouselSimilarTitle" data-bs-slide="prev">
+                    <!-- <span class="carousel-control-prev-icon" aria-hidden="true"></span> -->
+                    <span class="fa fa-chevron-left" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button id="next" class="carousel-control-next" type="button" data-bs-target="#carouselSimilarTitle" data-bs-slide="next">
+                    <!-- <span class="carousel-control-next-icon" aria-hidden="true"></span> -->
+                    <span class="fa fa-chevron-right" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+        <footer>
+            Fait le 1 décembre 2021,<br>
+            Par l'hexanome 4124.
+        </footer>
+    </body>
+</html>

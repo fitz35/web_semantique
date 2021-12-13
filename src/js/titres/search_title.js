@@ -97,7 +97,7 @@ function afficherResultats(data, entredTitle)
         contenuTableau += "<br>";
         contenuTableau += '<object class="element" data="'+path+'" type="image/png" width="200" height="200">  <img class="element" src="'+defaultPath+'" width="200" height="200" alt=" "> </object>';
         contenuTableau += "<br>";
-        contenuTableau += "<div><a href="+"file://"+page + "html/titres/titres_on_click.html?q="+ rightTitle+">" +r.title.value+ "</a></div>";
+        contenuTableau += "<div><a href="+"file://"+page + "html/titres/titres.html?q="+ rightTitle+">" +r.title.value+ "</a></div>";
         contenuTableau += "<div><a href="+"file://"+page + "html/artistes/artistes.html?name="+ r.feat.value+">" +r.feat.value+ "</a></div>";
 
         contenuTableau += "</div></td>";

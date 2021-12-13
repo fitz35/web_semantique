@@ -531,7 +531,7 @@ function rechercherTitres(idParam) {
             var path = window.location.pathname;
             var path = path.replace("albums/albums.html","");
             lienTitre = title.replace("http://dbpedia.org/resource/","");
-            lienTitre = path + "titres/titres_on_click.html?q=" + lienTitre;
+            lienTitre = path + "titres/titres.html?q=" + lienTitre;
             document.getElementById("son"+i.toString()).setAttribute("href",lienTitre);
         }else{
             document.getElementById("son"+i.toString()).removeAttribute("href");

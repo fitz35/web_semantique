@@ -272,7 +272,7 @@ function afficherListeResultats(data){
                 var ressource= v.song.value.split('/');
                 parcours.innerHTML+=
                 `<li> 
-                     <a href=../../html/titres/titres_on_click.html?q=${ressource[ressource.length-1]}>${v.songName.value}
+                     <a href=../../html/titres/titres.html?q=${ressource[ressource.length-1]}>${v.songName.value}
                      </a>
                      <a href= ${v.song.value}><img alt="Redirection Image" src="../../../img/redirect.png"
                      width="15" height="10">
