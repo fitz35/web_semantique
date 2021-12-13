@@ -289,13 +289,7 @@ function rechercherImage(idParam) {
   // Affichage des résultats dans un tableau
   function afficherResultatsImage(data)
   {
-    var cover;
-    var link;
-    link = "http://commons.wikimedia.org/wiki/Special:FilePath/";
-    data.results.bindings.forEach(r => {
-        var nameCover = r.cover.value; 
-        link += nameCover;
-    });
+    link = 'http://en.wikipedia.org/wiki/Special:FilePath/'+ data.results.bindings[0].cover.value;
     link+= "?width=300"
     cover = "<object data='";
     cover += link + "' type='image/png' width='400'><img src='../../../img/defaultAlbum.jpg' width='400'></object>";
