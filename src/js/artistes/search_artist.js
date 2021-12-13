@@ -20,7 +20,9 @@ function rechercherArtist(entredTitle) {
      SELECT ?a ?name ?image WHERE {
         ?a dbo:abstract ?abstract.
         ?a  dbp:name ?name.
-        ?a gold:hypernym dbr:Singer.
+        {?a gold:hypernym dbr:Singer.}
+        UNION
+        {?a gold:hypernym dbr:Band.}
         OPTIONAL
         {
         ?a dbo:thumbnail ?image.
