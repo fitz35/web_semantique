@@ -15,10 +15,8 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 var id = -1;
 //Appel de toutes les fonctions de recherche
 function appel() {
-    document.body.style.backgroundColor = "#c9d6ee";
-
-    var ressourceName = window.location.search.split("=")[1];
-  console.log(ressourceName)
+  document.body.style.backgroundColor = "#c9d6ee";
+  var ressourceName = window.location.search.split("=")[1];
   rechercherNom(ressourceName);
   rechercherDescription(id);
   rechercherArtisteAlbum(id);
@@ -41,10 +39,8 @@ function getRessource(uri){
   ressource=ressource.replace(')','\\)');
   ressource=ressource.replace('?','\\?');
   ressource=ressource.replace(/!/g,'\\!');
-  ressource=ressource.replace(/:/g,'\\:');
   ressource=ressource.replace('$','\\$');
   ressource=ressource.replace(/,/g,'\\,');
-  ressource=ressource.replace(/'/g,'\\\'');
 
   return ressource;
 }
@@ -63,6 +59,7 @@ function clean(str){
 //
 function rechercherNom(ressourceNameParam) {
   ressourceNameParam = getRessource(ressourceNameParam)
+  console.log(ressourceNameParam)
     var contenu_requete = queryHeader + 
     `SELECT ?name ?id WHERE {
     dbr:${ressourceNameParam} dbp:name ?name; dbo:wikiPageID ?id.
@@ -80,7 +77,6 @@ function rechercherNom(ressourceNameParam) {
             afficherResultatsName(results);
             id = results.results.bindings[0].id.value
         }
-        return id
     };
     xmlhttp.open("GET", url, false);
     xmlhttp.send();
@@ -291,13 +287,7 @@ function rechercherImage(idParam) {
   // Affichage des résultats dans un tableau
   function afficherResultatsImage(data)
   {
-    var cover;
-    var link;
-    link = "http://commons.wikimedia.org/wiki/Special:FilePath/";
-    data.results.bindings.forEach(r => {
-        var nameCover = r.cover.value; 
-        link += nameCover;
-    });
+    link = 'http://en.wikipedia.org/wiki/Special:FilePath/'+ data.results.bindings[0].cover.value;
     link+= "?width=300"
     cover = "<object data='";
     cover += link + "' type='image/png' width='400'><img src='../../../img/defaultAlbum.jpg' width='400'></object>";
@@ -541,13 +531,13 @@ function rechercherTitres(idParam) {
             var path = window.location.pathname;
             var path = path.replace("albums/albums.html","");
             lienTitre = title.replace("http://dbpedia.org/resource/","");
-            lienTitre = path + "titres/titres_on_click.html?q=" + lienTitre;
+            lienTitre = path + "titres/titres.html?q=" + lienTitre;
             document.getElementById("son"+i.toString()).setAttribute("href",lienTitre);
         }else{
             document.getElementById("son"+i.toString()).removeAttribute("href");
         }
         title = clean(title);
-        document.getElementById("son"+i.toString()).innerHTML = title;
+        document.getElementById("son"+i.toString()).innerHTML = '<i class="fa fa-arrow-circle-right" aria-hidden="true"></i>    ' + title;
         i += 1;
     });
   }

@@ -19,7 +19,7 @@ function rechercherAlbum(entredAlbum) {
      \n
       SELECT ?album ?name (max(?sales) as ?maxsales) ?id ?image WHERE {
       ?album a dbo:Album; dbp:name ?name; dbp:salesamount ?sales; dbo:wikiPageID ?id; dbp:cover ?image.
-      filter regex(?album, "(?i).*`+searchedAlbum+`.*")
+      filter regex(?name, "(?i).*`+searchedAlbum+`.*")
       }
       group by ?name ?album ?maxsales ?id ?image
       order by desc(?maxsales)
@@ -88,11 +88,8 @@ function afficherResultatsAlbum(data, entredAlbum)
     var pathImage;
 
 
-
-      if(r.name.value.includes("resource")){
-        rightCover = (r.name.value.replace("http://dbpedia.org/resource/",""))
-        newRightCover = rightCover.replace("_"," ");
-      }
+    rightCover = r.album.value.replace("http://dbpedia.org/resource/","")
+    newRightCover = rightCover.replaceAll("_"," ");
 
     if(r.image!=undefined) {
       pathImage = 'http://en.wikipedia.org/wiki/Special:FilePath/'+ r.image.value;
@@ -100,8 +97,12 @@ function afficherResultatsAlbum(data, entredAlbum)
       //Image par défaut
       pathImage="../img/defaultAlbum.jpg";
     }
+    console.log(newRightCover)
+
+    cover = "<object data='";
+    cover += pathImage + "' type='image/png' width='200' height='250' alt=' '><img src='../img/defaultAlbum.jpg' width='200' height='250' alt=' '></object>";
     contenuTableau += "<br>";
-    contenuTableau += '<div id='+idImg+'> <img  src="'+pathImage + '" width="200" height="200" alt=" " ></div>';
+    contenuTableau += '<div id='+idImg+'> ' + cover + '</div>';
     contenuTableau += "<br>";
     contenuTableau += "<div><a href="+"file://"+page + "html/albums/albums.html?name="+ rightCover+">" +newRightCover+ "</a></div>";
     idImg=idImg+1;
