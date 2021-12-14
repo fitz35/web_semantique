@@ -80,6 +80,7 @@ function afficherResultatsArtiste(data, entredTitle)
   var compteur=0;
   contenuTableau += "<tr><br><br>";
   data.results.bindings.forEach(r => {
+    console.log(r);
     if(compteur%6==0){
       contenuTableau += "<tr>";
     }
@@ -88,7 +89,7 @@ function afficherResultatsArtiste(data, entredTitle)
     contenuTableau += "<td class='element'>";
 
     urlRessource =  r.name.value;
-    var rightCover = r.a.value.replace("http://dbpedia.org/resource/",""); // turn " " to "_"
+    var rightCover = r.name.value.replace("http://dbpedia.org/resource/",""); // turn " " to "_"
     var newRightCover = r.name.value;
     if(r.name.value.includes("resource")){
       newRightCover = rightCover.replace("_"," ");
