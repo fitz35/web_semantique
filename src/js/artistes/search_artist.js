@@ -81,7 +81,7 @@ function afficherResultatsArtiste(data, entredTitle)
   contenuTableau += "<tr><br><br>";
   data.results.bindings.forEach(r => {
     console.log(r);
-    if(compteur%6==0){
+    if(compteur%4==0){
       contenuTableau += "<tr>";
     }
     compteur++;
@@ -110,7 +110,7 @@ function afficherResultatsArtiste(data, entredTitle)
     idImg=idImg+1;
 
     contenuTableau += "</div></td>";
-    if(compteur%6==0){
+    if(compteur%4==0){
       contenuTableau += "</tr>";
     }
   });
