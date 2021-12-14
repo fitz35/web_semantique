@@ -38,3 +38,19 @@ header{
 .identifier{
     vertical-align: top;
 }
+
+#btnSearch {
+    line-height: 32px;
+    width: 128px;
+    font-size: 12pt;
+    font-family: 'Text me one';
+    margin-top: 1px;
+    margin-right: 4px;
+    position:absolute;
+    top: 1%;
+    right:4.5%;
+    font-weight : bold;
+    border:3px solid black;
+
+
+}
