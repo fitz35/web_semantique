@@ -47,30 +47,23 @@ function getArtistDetails(name){
          OPTIONAL
          {
             dbr:${name} dbo:thumbnail ?image.
-           
-         }
-         OPTIONAL
-         {
             dbr:${name} dbp:caption ?description.
          }
          OPTIONAL
          {
             dbr:${name} dbo:birthDate ?dateOfBirth.
-         }
-         OPTIONAL
-         {
             dbr:${name} dbo:birthName ?birthName.
          }
        
          FILTER(langMatches( lang( ?abstract ) ,"EN") && langMatches( lang( ?job ) ,"EN") && langMatches( lang( ?description), "EN")   )
          }
-         LIMIT 1`
-         
- 
+         LIMIT 50`
+
+
      // Encodage de l'URL à transmettre à DBPedia
      var url_base = "http://dbpedia.org/sparql";
      var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
- 
+
      // Requête HTTP et affichage des résultats
      var xmlhttp = new XMLHttpRequest();
      xmlhttp.onreadystatechange = function() {
@@ -85,7 +78,7 @@ function getArtistDetails(name){
 
 
 function getArtistSongs(name){
-    var contenu_requete =     
+    var contenu_requete =
     `PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
      PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -106,7 +99,7 @@ function getArtistSongs(name){
        // Encodage de l'URL à transmettre à DBPedia
      var url_base = "http://dbpedia.org/sparql";
      var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
- 
+
      // Requête HTTP et affichage des résultats
      var xmlhttp = new XMLHttpRequest();
      xmlhttp.onreadystatechange = function() {
@@ -120,7 +113,7 @@ function getArtistSongs(name){
 };
 
 function getBandMembers(name){
-    var contenu_requete =     
+    var contenu_requete =
     `PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
      PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -140,7 +133,7 @@ function getBandMembers(name){
        // Encodage de l'URL à transmettre à DBPedia
      var url_base = "http://dbpedia.org/sparql";
      var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
- 
+
      // Requête HTTP et affichage des résultats
      var xmlhttp = new XMLHttpRequest();
      xmlhttp.onreadystatechange = function() {
@@ -157,7 +150,7 @@ function getBandMembers(name){
 
 
 function getArtistAlbums(name){
-    var contenu_requete =     
+    var contenu_requete =
     `PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
      PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -180,7 +173,7 @@ function getArtistAlbums(name){
        // Encodage de l'URL à transmettre à DBPedia
      var url_base = "http://dbpedia.org/sparql";
      var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
- 
+
      // Requête HTTP et affichage des résultats
      var xmlhttp = new XMLHttpRequest();
      xmlhttp.onreadystatechange = function() {
@@ -195,7 +188,7 @@ function getArtistAlbums(name){
 
 
 function getArtistAwards(name){
-    var contenu_requete =     
+    var contenu_requete =
     `PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
      PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -217,7 +210,7 @@ function getArtistAwards(name){
        // Encodage de l'URL à transmettre à DBPedia
      var url_base = "http://dbpedia.org/sparql";
      var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
- 
+
      // Requête HTTP et affichage des résultats
      var xmlhttp = new XMLHttpRequest();
      xmlhttp.onreadystatechange = function() {
@@ -233,7 +226,7 @@ function getArtistAwards(name){
 
 
 function getNumberOfSongs(name){
-    var contenu_requete =     
+    var contenu_requete =
     `PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
      PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -254,7 +247,7 @@ function getNumberOfSongs(name){
        // Encodage de l'URL à transmettre à DBPedia
      var url_base = "http://dbpedia.org/sparql";
      var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
- 
+
      // Requête HTTP et affichage des résultats
      var xmlhttp = new XMLHttpRequest();
      xmlhttp.onreadystatechange = function() {
@@ -272,6 +265,7 @@ function getNumberOfSongs(name){
 function afficherListeResultats(data){
     console.log(data);
     data.results.bindings.forEach((v, i) => {
+
             var resultTableList=document.getElementsByClassName("titleSing");
             for(let parcours of resultTableList)
             {
@@ -284,9 +278,9 @@ function afficherListeResultats(data){
                      width="15" height="10">
                      </a>
                 </li>`;
-                
+
             }
-        
+
       }
 )};
 
@@ -294,7 +288,7 @@ function afficherListeResultats(data){
 function afficherListeAwards(data){
     console.log(data);
     data.results.bindings.forEach((v, i) => {
-        
+
             var resultTableList=document.getElementsByClassName("awards");
             for(let parcours of resultTableList)
             {
@@ -304,12 +298,12 @@ function afficherListeAwards(data){
                }
                else
                {
-                parcours.innerHTML+=`<li> <a href="${v.awardList.value}">${v.awardList.value}</a></li>`; 
+                parcours.innerHTML+=`<li> <a href="${v.awardList.value}">${v.awardList.value}</a></li>`;
                }
-                
-                
+
+
             }
-        
+
       }
 )};
 
@@ -317,7 +311,7 @@ function afficherListeAwards(data){
 function afficherListeMembers(data){
     console.log(data);
     data.results.bindings.forEach((v, i) => {
-        
+
             var resultTableList=document.getElementsByClassName("member");
             for(let parcours of resultTableList)
             {
@@ -335,22 +329,22 @@ function afficherListeMembers(data){
                 parcours.innerHTML+=`<li> <a href=../../html/artistes/artistes.html?name=${ressource[ressource.length-1]}>${ressource[ressource.length-1]}</a>
                 <a href= ${ v.members.value}><img alt="Redirection Image" src="../../../img/redirect.png"
                      width="15" height="10">
-                </li>`; 
+                </li>`;
                }
-                            
+
             }
-        
+
       }
 )};
 
 function afficherListeAlbums(data){
     console.log(data);
     data.results.bindings.forEach((v, i) => {
-        
+
             var resultTableList=document.getElementsByClassName("albums");
             for(let parcours of resultTableList)
             {
-               
+
                if(v.name.value!= "")
                {
                 var ressource= v.album.value.split('/');
@@ -372,10 +366,10 @@ function afficherListeAlbums(data){
                      </a>
                 </li>`;
                }
-                
-                
+
+
             }
-        
+
       }
 )};
 
@@ -392,7 +386,7 @@ function afficherResultatsArtistDetails(data){
                  afficheDansToutesClasses("birthDay", v.dateOfBirth.value);
 
             }
-           
+
             var resutTable=document.getElementsByClassName("image");
             //console.log(v.image);
             for(let parcours of resutTable)
@@ -401,11 +395,7 @@ function afficherResultatsArtistDetails(data){
                 {
                     parcours.innerHTML="<img src=\""+ v.image.value+ "\" alt=\""+ v.description.value +"\" width=\"100\" height=\"150\">";
                 }
-                else if(v.description==null && v.image!=undefined)
-                {
-                    parcours.innerHTML="<img src=\""+v.image.value+ "\" alt=\"Description of image NOT FOUND\">";
-                }
-                else if(v.description!=null && v.image==undefined)
+                else if(v.description!=null)
                 {
                     parcours.innerHTML="<img src=\"../../../img/inconue.jpg\" alt=\""+ v.description.value +"\">";
                 }else{
