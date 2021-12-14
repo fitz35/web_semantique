@@ -4,7 +4,7 @@ function rechercherAlbum(entredAlbum) {
   $("#spinner").show();
   $("#resultatsAlbum").hide();
 
-  var searchedAlbum = entredAlbum.replace(/ /g,"_"); // turn " " to "_"
+  var searchedAlbum = entredAlbum.replace(/ /g," "); // turn " " to "_"
 
   var contenu_requete = `
      PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
