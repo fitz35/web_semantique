@@ -15,6 +15,9 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 var id = -1;
 //Appel de toutes les fonctions de recherche
 function appel() {
+  $(".go-back").on("click",function(){
+        history.back();
+  });
   document.body.style.backgroundColor = "#c9d6ee";
   var ressourceName = window.location.search.split("=")[1];
   rechercherNom(ressourceName);
