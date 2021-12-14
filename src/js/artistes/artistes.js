@@ -47,11 +47,18 @@ function getArtistDetails(name){
          OPTIONAL
          {
             dbr:${name} dbo:thumbnail ?image.
+           
+         }
+         OPTIONAL
+         {
             dbr:${name} dbp:caption ?description.
          }
          OPTIONAL
          {
             dbr:${name} dbo:birthDate ?dateOfBirth.
+         }
+         OPTIONAL
+         {
             dbr:${name} dbo:birthName ?birthName.
          }
        
@@ -395,7 +402,11 @@ function afficherResultatsArtistDetails(data){
                 {
                     parcours.innerHTML="<img src=\""+ v.image.value+ "\" alt=\""+ v.description.value +"\" width=\"100\" height=\"150\">";
                 }
-                else if(v.description!=null)
+                else if(v.description==null && v.image!=undefined)
+                {
+                    parcours.innerHTML="<img src=\""+v.image.value+ "\" alt=\"Description of image NOT FOUND\">";
+                }
+                else if(v.description!=null && v.image==undefined)
                 {
                     parcours.innerHTML="<img src=\"../../../img/inconue.jpg\" alt=\""+ v.description.value +"\">";
                 }else{
