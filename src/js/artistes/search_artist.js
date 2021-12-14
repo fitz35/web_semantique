@@ -89,11 +89,13 @@ function afficherResultatsArtiste(data, entredTitle)
     contenuTableau += "<td class='element'>";
 
     urlRessource =  r.name.value;
-    var rightCover = r.name.value.replace("http://dbpedia.org/resource/",""); // turn " " to "_"
+    var rightCover = r.a.value.replace("http://dbpedia.org/resource/",""); // turn " " to "_"
     var newRightCover = r.name.value;
     if(r.name.value.includes("resource")){
       newRightCover = rightCover.replace("_"," ");
     }
+    var name = r.name.value.replace("http://dbpedia.org/resource/","").replace("_"," ");
+
     var path;
     if(r.image!=undefined) {
       path = r.image.value;
@@ -101,8 +103,10 @@ function afficherResultatsArtiste(data, entredTitle)
       //Image par défaut
       path="../img/imageNotFoundArtist.png";
     }
+
     contenuTableau += '<div id='+idImg+'> <img  src="'+path + '" width="200" height="250" alt=" "></div>';
-    contenuTableau += "<div><a href="+"file://"+page + "html/artistes/artistes.html?name="+ rightCover+">" +newRightCover+ "</a></div>";
+    contenuTableau += "<div><a href="+"file://"+page + "html/artistes/artistes.html?name="+ rightCover+">" +name+"</a></div>";
+    console.log(rightCover);
     idImg=idImg+1;
 
     contenuTableau += "</div></td>";
