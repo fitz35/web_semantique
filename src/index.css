@@ -8,7 +8,19 @@
     background-color: pink;
 }
 
+#monBtn{
+    margin-left: 1%;
+    width: auto;
+    border-color: #8fafea;
+    background-color: #8fafea;
+}
 
+#loupe{
+    color: black;
+    position: relative;
+    top: -5px;
+}
+    
 
 #btnSearch {
     line-height: 12px;
@@ -22,7 +34,12 @@
     right:0;
 }
 
-
+#titre{
+    font-family: 'Text me one';
+}
+label{
+    color: white;
+}
 #searchbar{
     position: center;
     width: 33%;
@@ -30,9 +47,10 @@
     margin-left: 33%;
     padding:15px;
     border-radius: 10px;
+    align-content: center;
 }
 
-.address{
+.initial{
     color: white;
     margin-left: 80%;
     padding:0;
@@ -41,6 +59,12 @@
     text-align: center;
 }
 
+/* Footer */
+footer{
+    text-align: right;
+    margin-bottom: 2%;
+    margin-right: 5%;
+}
 body {
     background-image:url(../img/background.png);
     background-repeat: no-repeat;
@@ -49,6 +73,7 @@ body {
 }
 
 .sousTitre{
+    margin-top: 12%;
     color: #a1cefc;
 }
 .center {
@@ -56,25 +81,18 @@ body {
     margin-right: auto;
 }
 
-
-#nbResultatsTitle {
-    position: absolute;
-    top: 200px;
-    left: 65px;
-    font-size: 26px;
+#resultats,
+#resultatsAlbum,
+#resultatsArtist{
+    overflow: scroll;
+    border:3px solid black; 
+    width:90%;
 }
-
-#nbResultats {
-    position: absolute;
-    top: 200px;
-    left: 65px;
-    font-size: 26px;
-}
-
-#nbResultatsAlbum {
-    position: absolute;
-    top: 200px;
-    left: 65px;
+#nbResultatsTitle,
+#nbResultats,
+#nbResultatsAlbum
+ {
+    margin-left: 65px;
     font-size: 26px;
 }
 

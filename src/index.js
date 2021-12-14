@@ -1,107 +1,105 @@
 function repaintResearch() {
+    $("#address").addClass("initial");
+
     document.body.style.backgroundImage = "url('../img/background.png')";
     document.body.style.backgroundColor = "#c9d6ee";
 
-    document.getElementById("titre").style.visibility="hidden"; // cache
+    $("#titre").hide(); // cache
 
-    document.getElementById("searchbar").style.visibility="visible"; // cache
-    document.getElementById("sousTitre").style.visibility="visible"; // cache
-    document.getElementById("monBtn").style.visibility="visible"; // cache
-    document.getElementById("album").style.visibility="visible"; // cache
-    document.getElementById("albumLabel").style.visibility="visible"; // cache
-    document.getElementById("artist").style.visibility="visible"; // cache
-    document.getElementById("artistLabel").style.visibility="visible"; // cache
-    document.getElementById("title").style.visibility="visible"; // cache
-    document.getElementById("titleLabel").style.visibility="visible"; // cache
+    $("#searchbar").show(); // cache
+    $("#sousTitre").show(); // cache
+    $("#monBtn").show(); // cache
+    $("#album").show(); // cache
+    $("#albumLabel").show(); // cache
+    $("#artist").show(); // cache
+    $("#artistLabel").show(); // cache
+    $("#title").show(); // cache
+    $("#titleLabel").show(); // cache
 
-    document.getElementById("resultats").style.visibility="hidden"; // cache
-    document.getElementById("infosTitle").style.visibility="hidden"; // cache
-    document.getElementById("nbResultats").style.visibility="hidden"; // cache
-    document.getElementById("nbResultatsTitle").style.visibility="hidden"; // cache
-    document.getElementById("nbResultatsAlbum").style.visibility="hidden"; // cache
+    $("#resultats").hide(); // cache
+    $("#nbResultats").hide(); // cache
+    $("#nbResultatsTitle").hide(); // cache
+    $("#nbResultatsAlbum").hide(); // cache
 
-    document.getElementById("resultatsArtist").style.visibility="hidden"; // cache
-    document.getElementById("resultatsAlbum").style.visibility="hidden"; // cache
-
+    $("#resultatsArtist").hide(); // cache
+    $("#resultatsAlbum").hide(); // cache
 
 
-    document.getElementById("linkMoreInfos").style.visibility="hidden"; // cache
-    document.getElementById("moreInfos").style.visibility="hidden"; // cache
 
-    document.getElementById("btnSearch").style.visibility="hidden"; // cache
+    $("#linkMoreInfos").hide(); // cache
+    $("#moreInfos").hide(); // cache
+
+    $("#btnSearch").hide(); // cache
     //window.location.reload();
 
 }
 
 function hideSearchPage(){
     //Hide element
+    $("#address").removeClass("initial");
 
     document.body.style.backgroundColor = "#c9d6ee";
     document.body.style.backgroundImage = "none";
 
-    document.getElementById("searchbar").style.visibility="hidden";
-    document.getElementById("sousTitre").style.visibility="hidden"; // cache
-    document.getElementById("monBtn").style.visibility="hidden"; // cache
-    document.getElementById("album").style.visibility="hidden"; // cache
-    document.getElementById("albumLabel").style.visibility="hidden"; // cache
+    $("#searchbar").hide();
+    $("#sousTitre").hide(); // cache
+    $("#monBtn").hide(); // cache
+    $("#album").hide(); // cache
+    $("#albumLabel").hide(); // cache
 
-    document.getElementById("artist").style.visibility="hidden"; // cache
-    document.getElementById("artistLabel").style.visibility="hidden"; // cache
+    $("#artist").hide(); // cache
+    $("#artistLabel").hide(); // cache
 
-    document.getElementById("title").style.visibility="hidden"; // cache
-    document.getElementById("titleLabel").style.visibility="hidden"; // cache
+    $("#title").hide(); // cache
+    $("#titleLabel").hide(); // cache
 
-    document.getElementById("address").style.visibility="hidden"; // cache
-
-    document.getElementById("nbResultats").style.visibility="visible"; // cache
-    document.getElementById("nbResultatsTitle").style.visibility="visible"; // cache
-    document.getElementById("nbResultatsAlbum").style.visibility="visible"; // cache
+    $("#nbResultats").show(); // cache
+    $("#nbResultatsTitle").show(); // cache
+    $("#nbResultatsAlbum").show(); // cache
 
 
-    document.getElementById("btnSearch").style.visibility="visible"; // cache
-    document.getElementById("resultats").style.visibility="hidden"; // cache
-    document.getElementById("infosTitle").style.visibility="hidden"; // cache
+    $("#btnSearch").show(); // cache
+    $("#resultats").hide(); // cache
 
-    document.getElementById("resultatsArtist").style.visibility="hidden"; // cache
-    document.getElementById("resultatsAlbum").style.visibility="hidden"; // cache
+    $("#resultatsArtist").hide(); // cache
+    $("#resultatsAlbum").hide(); // cache
 
 
 
-    document.getElementById("titre").style.visibility="visible"; // cache
-
-    document.getElementById("linkMoreInfos").style.visibility="hidden"; // cache
-    document.getElementById("moreInfos").style.visibility="hidden"; // cache
+    $("#titre").show(); // cache
 }
 
 function validateResearch(){
-    hideSearchPage();
+    
 
     var value = search_music(); //The value in the search bar
-    if(document.getElementById("artist").checked==true){
-        console.log("Rechercher l'artiste : "+value);
-        document.getElementById("resultatsArtist").style.visibility="visible"; // cache
-        rechercherArtist(value);
+    if(value!=""){
+        hideSearchPage();
+        if(document.getElementById("artist").checked==true){
+            console.log("Rechercher l'artiste : "+value);
+            $("#resultatsArtist").show(); // cache
+            rechercherArtist(value);
 
+        }
+        if(document.getElementById("album").checked==true){
+            console.log("Rechercher l'album : "+value);
+            $("#resultatsAlbum").show(); // cache
+            rechercherAlbum(value);
+        }
+        if(document.getElementById("title").checked==true){
+            console.log("Rechercher le titre : "+value);
+            $("#resultats").show(); // cache
+            $("#infosTitle").show(); // cache
+            rechercherTitre(value);
+        }
     }
-    if(document.getElementById("album").checked==true){
-        console.log("Rechercher l'album : "+value);
-        document.getElementById("resultatsAlbum").style.visibility="visible"; // cache
-        rechercherAlbum(value);
-    }
-    if(document.getElementById("title").checked==true){
-        console.log("Rechercher le titre : "+value);
-        document.getElementById("resultats").style.visibility="visible"; // cache
-        document.getElementById("infosTitle").style.visibility="visible"; // cache
-        rechercherTitre(value);
-    }
-    document.getElementById("artist").checked=false;
-    document.getElementById("album").checked=false;
-    document.getElementById("title").checked=false;
+        
     return document.getElementById("searchbar").value="";
 
 }
 
 function search_music(){
+
     return document.getElementById("searchbar").value;
 }
 

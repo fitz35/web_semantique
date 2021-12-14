@@ -30,8 +30,17 @@
 <!-- Titres -->
 <script type="text/javascript">
     $(document).ready(function(){
-        $("#infosTitle").hide();
         $("#spinner").hide();
+        $("#titre").hide();
+        $("#btnSearch").hide();
+        $("#nbResultatsTitle").hide();
+        $("#nbResultats").hide();
+        $("#nbResultatsAlbum").hide();
+        $("#resultatsArtist").hide();
+        $("#resultats").hide();
+        $("#resultatsAlbum").hide();
+
+        
     });
 </script>
 <!-- ----- -->
@@ -39,37 +48,35 @@
 
 <body>
 <!-- Contenu principal -->
- <h1 style="text-align: center; visibility: hidden; font-family: 'Text me one'" id="titre">Welcome to M U S I K ' I F</h1>
-<button id="btnSearch" onclick="repaintResearch()" style="visibility: hidden">New research</span></button>
-
+<h1 class="text-center" id="titre">Welcome to M U S I K ' I F</h1>
+<button id="btnSearch" onclick="repaintResearch()">New research</span></button>
+<!-- 
 <br><br>
+<br> -->
+
+<h2 id="sousTitre" class= "sousTitre text-center">The best musical search engine!</h2>
 <br>
 
-<h2 id="sousTitre" class= "sousTitre" style="text-align: center;">The best musical search engine!</h2>
-<br>
 
+<div id="trvMenu" class="text-center">
 
-<form method="POST">
-<div id="trvMenu" style="text-align: center;">
+    <input type="radio" id="artist" name="radioSearch" checked>
+    <label for="artist" id="artistLabel">Artist</label>
 
-    <input type="checkbox" id="artist" name="artist" onclick="checkBox(this)">
-    <label for="artist" id="artistLabel" style="color: white">Artist</label>
+    <input type="radio" id="album" name="radioSearch">
+    <label for="album" id="albumLabel">Album</label>
 
-    <input type="checkbox" id="album" name="album" onclick="checkBox(this)">
-    <label for="album" id="albumLabel" style="color: white">Album</label>
-
-    <input type="checkbox" id="title" name="title" onclick="checkBox(this)">
-    <label for="title" id="titleLabel" style="color: white">Title</label>
+    <input type="radio" id="title" name="radioSearch">
+    <label for="title" id="titleLabel">Title</label>
 </div>
-</form>
 
 <!-- Add icon library -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <input id="searchbar" class= "searchbar" onkeyup="search_music()" type="text"
-       name="search" placeholder="Search.." style="align-content: center;" onkeypress="handle(event)">
-<button button id="monBtn">
-<i class="fa fa-search" style="color: black"; onclick="validateResearch()">
+       name="search" placeholder="Search.." onkeypress="handle(event)">
+<button id="monBtn" class="btn btn-primary">
+<i id="loupe" class="fa fa-search" onclick="validateResearch()">
 </i>
 </button>
     </input>
@@ -78,31 +85,30 @@
     <span class="sr-only">Loading...</span>
 </div>
 
-<div id="nbResultatsTitle" style="visibility: hidden; " > </div>
-<br>
-<br>
-<table class="center" id="resultats" style="border:3px solid black ; width:90%";></table>
-<div id="infosTitle"></div>
-
-<a id="linkMoreInfos" href="#" onclick=moreSingles(document.getElementById("artistName").innerText.substring(document.getElementById("artistName").innerText.lastIndexOf(":")+1)) style="visibility: hidden">More singles from the artist :</a>
-<p id="moreInfos"></p>
+<div id="nbResultatsTitle"> </div>
+<!-- <br>
+<br> -->
+<table class="center" id="resultats"></table>
 <!-- ----- -->
 
 <!-- Artistes -->
-<div id="nbResultats" style="visibility: hidden"> </div>
-<table class="center" id="resultatsArtist" style="border:3px solid black ; width:90%";></table>
+<div id="nbResultats"> </div>
+<table class="center" id="resultatsArtist"></table>
 <div id="infosArtist"></div>
 <!-- ----- -->
 
 <!-- Album -->
-<div id="nbResultatsAlbum" style="visibility: hidden"> </div>
-<table class="center" id="resultatsAlbum" style="border:3px solid black ; width:90%";></table>
+<div id="nbResultatsAlbum"> </div>
+<table class="center" id="resultatsAlbum"></table>
 <div id="infosAlbum"></div>
 <!-- ----- -->
 
 <br>
-<address id="address" class= "address">Fait le 1 décembre 2021<br>
+<footer>
+    <address id="address" class= "address initial">Fait le 1 décembre 2021<br>
     par l'hexanome 4124.</address></h1>
+</footer>
+
 
 
 </body>
