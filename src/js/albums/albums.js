@@ -220,7 +220,7 @@ function rechercherLienArtiste(idParam) {
   }
 //
 //
-//Recuperer la de sortie de l album
+//Recuperer la date de sortie de l album
 //
 function rechercherDateSortie(idParam) {
     var contenu_requete = queryHeader + 
@@ -254,7 +254,10 @@ function rechercherDateSortie(idParam) {
       released = r.released.value;
     });
 
-    document.getElementById("released").innerHTML += released;
+    if(released==null || released==""){
+        document.getElementById("released").delete;
+    }
+    document.getElementById("released").innerHTML = "<strong>Released date : </strong>" + released;
   }
 //
 //
@@ -332,8 +335,12 @@ function rechercherProducteur(idParam) {
       producer = r.producer.value;
     });
     
-    producer = clean(producer);
-    document.getElementById("producer").innerHTML += producer;
+    if(producer==null || producer==""){
+        document.getElementById("producer").delete;
+    }else{
+        producer = clean(producer);
+        document.getElementById("producer").innerHTML = "<strong>Producer(s) : </strong>" +producer;    
+    }
   }
 //
 //
@@ -371,7 +378,11 @@ function rechercherVentes(idParam) {
       sales = r.sales.value;
     });
 
-    document.getElementById("sales").innerHTML += sales;
+    if(sales==null || sales==""){
+        document.getElementById("sales").delete    
+    }else{
+        document.getElementById("sales").innerHTML = "<strong>Sales : </strong>" + sales;
+    }
   }
 //
 //
@@ -408,8 +419,13 @@ function rechercherLabel(idParam) {
       label = r.label.value;
     });
 
-    label = clean(label);
-    document.getElementById("label").innerHTML += label;
+    if(label==null || label==""){
+        document.getElementById("label").delete    
+    }else{
+        label = clean(label);
+        document.getElementById("label").innerHTML = "<strong>Label(s) : </strong>" + label;    
+    }
+    
   }
 //
 //
@@ -446,8 +462,12 @@ function rechercherGenre(idParam) {
       genre = r.genre.value;
     });
 
-    genre = clean(genre);
-    document.getElementById("genre").innerHTML += genre;
+    if(genre==null || genre==""){
+        document.getElementById("genre").delete;
+    }else{
+        genre = clean(genre);
+        document.getElementById("genre").innerHTML = "<strong>Musical style(s) : </strong>" + genre;
+    }
   }
 //
 //
@@ -484,8 +504,11 @@ function rechercherDuree(idParam) {
     data.results.bindings.forEach(r => {
       totallength = r.totallength.value;
     });
-
-    document.getElementById("totallength").innerHTML += totallength;
+    if(totallength==null || totallength==""){
+        document.getElementById("totallength").delete;   
+    }else{
+        document.getElementById("totallength").innerHTML = "<strong>Duration : </strong>" + totallength;
+    }
   }
 //
 //
@@ -577,6 +600,10 @@ function rechercherPrix(idParam) {
     data.results.bindings.forEach(r => {
       listePrix += r.awards.value + " / ";
     });
-      
-    document.getElementById("awards").innerHTML += listePrix;
+    
+    if(listePrix==null || listePrix==""){
+        document.getElementById("awards").delete
+    }else{
+        document.getElementById("awards").innerHTML = "<strong>Awards : </strong>" + listePrix;
+    }
   }
