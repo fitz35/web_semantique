@@ -28,7 +28,7 @@ function rechercherArtist(entredTitle) {
         ?a dbo:thumbnail ?image.
         }
         FILTER(regex ( ?name , "(?i)`+searchedArtist +`" ) && langMatches( lang( ?abstract ) ,"EN"))
-        }`
+        }LIMIT 50`
 
   // Encodage de l'URL à transmettre à DBPedia
   var url_base = "http://dbpedia.org/sparql";
