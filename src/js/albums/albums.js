@@ -216,6 +216,7 @@ function rechercherLienArtiste(idParam) {
         var path = path.replace("albums/albums.html","");
         lienArtist = lienArtist.replace("http://dbpedia.org/resource/","");
         lienArtist = path + "artistes/artistes.html?name=" + lienArtist;
+        console.log("HOO")
         document.getElementById("artist").setAttribute("href",lienArtist);
     }else{
         document.getElementById("artist").removeAttribute("href");
