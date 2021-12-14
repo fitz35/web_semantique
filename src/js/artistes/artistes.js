@@ -47,17 +47,24 @@ function getArtistDetails(name){
          OPTIONAL
          {
             dbr:${name} dbo:thumbnail ?image.
+           
+         }
+         OPTIONAL
+         {
             dbr:${name} dbp:caption ?description.
          }
          OPTIONAL
          {
             dbr:${name} dbo:birthDate ?dateOfBirth.
+         }
+         OPTIONAL
+         {
             dbr:${name} dbo:birthName ?birthName.
          }
        
          FILTER(langMatches( lang( ?abstract ) ,"EN") && langMatches( lang( ?job ) ,"EN") && langMatches( lang( ?description), "EN")   )
          }
-         LIMIT 50`
+         LIMIT 1`
          
  
      // Encodage de l'URL à transmettre à DBPedia
@@ -265,7 +272,6 @@ function getNumberOfSongs(name){
 function afficherListeResultats(data){
     console.log(data);
     data.results.bindings.forEach((v, i) => {
-        
             var resultTableList=document.getElementsByClassName("titleSing");
             for(let parcours of resultTableList)
             {
@@ -395,7 +401,11 @@ function afficherResultatsArtistDetails(data){
                 {
                     parcours.innerHTML="<img src=\""+ v.image.value+ "\" alt=\""+ v.description.value +"\" width=\"100\" height=\"150\">";
                 }
-                else if(v.description!=null)
+                else if(v.description==null && v.image!=undefined)
+                {
+                    parcours.innerHTML="<img src=\""+v.image.value+ "\" alt=\"Description of image NOT FOUND\">";
+                }
+                else if(v.description!=null && v.image==undefined)
                 {
                     parcours.innerHTML="<img src=\"../../../img/inconue.jpg\" alt=\""+ v.description.value +"\">";
                 }else{
