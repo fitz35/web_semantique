@@ -101,7 +101,6 @@ function afficherResultatsArtiste(data, entredTitle)
       //Image par défaut
       path="../img/imageNotFoundArtist.png";
     }
-
     contenuTableau += '<div id='+idImg+'> <img  src="'+path + '" width="200" height="250" alt=" "></div>';
     contenuTableau += "<div><a href="+"file://"+page + "html/artistes/artistes.html?name="+ rightCover+">" +newRightCover+ "</a></div>";
     idImg=idImg+1;
