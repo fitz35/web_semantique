@@ -64,7 +64,7 @@ function getArtistDetails(name){
        
          FILTER(langMatches( lang( ?abstract ) ,"EN") && langMatches( lang( ?job ) ,"EN") && langMatches( lang( ?description), "EN")   )
          }
-         LIMIT 50`
+         LIMIT 1`
          
  
      // Encodage de l'URL à transmettre à DBPedia
@@ -272,7 +272,6 @@ function getNumberOfSongs(name){
 function afficherListeResultats(data){
     console.log(data);
     data.results.bindings.forEach((v, i) => {
-        
             var resultTableList=document.getElementsByClassName("titleSing");
             for(let parcours of resultTableList)
             {

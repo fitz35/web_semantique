@@ -20,7 +20,7 @@ header{
 .element{
     overflow: hidden;
     width: 400px;
-    height: 100px;
+    /*height: 100px*/;
     contain: content;
     display: display-inside;
     margin-top: 2%;
